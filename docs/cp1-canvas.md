@@ -8,7 +8,11 @@
 
 **1 · Hướng:** Track **A — VLearn Tutor**, đề **A1** (tối ưu AI tutor hiện có).
 
-**2 · Job executor:** Học viên khoá K4 đang mở tài liệu trong trang học VLearn và gõ câu hỏi *quanh* buổi học (cách nộp bài, deadline, lab chấm thế nào) chứ không phải hỏi kiến thức trong slide.
+**2 · Job executor + quy trình hiện tại:** Học viên khoá K4 đang mở tài liệu trong trang học VLearn và gõ câu hỏi *quanh* buổi học (cách nộp bài, deadline, lab chấm thế nào) chứ không phải hỏi kiến thức trong slide.
+
+*Hôm nay họ giải quyết bằng gì:* hỏi tutor trước (ngay trong trang học, nhanh nhất) → nghi ngờ thì đi hỏi TA trên Discord, tra Syllabus, hoặc hỏi bạn. Người cẩn thận tự thêm câu *"nếu không có thì nói không biết"* vào prompt.
+*Fail ở đâu:* không có tín hiệu nào cho biết **khi nào nên nghi**.
+*Vì sao chưa bỏ:* vẫn là cách nhanh nhất, và phần lớn câu hỏi kiến thức tutor trả lời đúng thật.
 
 **3 · Pain một câu:** Học viên K4 hỏi một câu mà tài liệu đang mở không chứa câu trả lời thì **86,7% số lần nhận được câu trả lời trôi chảy nhưng không dựa trên nguồn nào**, và không phân biệt được nó với 13,3% số lần câu trả lời là thật — dẫn tới làm sai quy chế nộp bài và **mất điểm**.
 
@@ -35,4 +39,4 @@ Lý do theo cost-of-error: sai kiểu **bịa** → học viên làm theo → **
 | TRẦN THỊ THUÝ | 2A202602960 | Evidence A/B · golden set · chấm kết quả |
 | NGUYỄN VĂN SƠN | 2A202602744 | 4 đường đi UX · prototype UI · slide + video |
 
-**Willing users (≥2, khai từ CP1):** ⬜ _điền tên thật trước khi bấm nộp form_
+**Willing users (≥2, khai từ CP1):** ✅ **Nguyễn Anh Tú** · **Phạm Văn Nghị** — cả hai là học viên 3A nhóm khác, user thật của VLearn tutor, đã đồng ý thử prototype trước CP5.

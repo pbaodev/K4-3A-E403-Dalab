@@ -22,8 +22,11 @@
 
 ## Willing users (khai từ CP1 — điều kiện cho khối bonus R6 tại CP5)
 
-| # | Tên | Vai / lớp | Liên hệ | Đã xác nhận |
+| # | Tên | Vai — loại user nào | Liên hệ | Đã xác nhận |
 |---|---|---|---|---|
-| 1 | _(điền tên thật)_ | Học viên 3A, nhóm khác | | ⬜ |
-| 2 | _(điền tên thật)_ | Học viên 3A, nhóm khác | | ⬜ |
-| 3 | _(điền tên thật)_ | Học viên 3A / TA | | ⬜ |
+| 1 | **Nguyễn Anh Tú** | Học viên 3A, nhóm khác — user thật của VLearn tutor | | ✅ đã đồng ý |
+| 2 | **Phạm Văn Nghị** | Học viên 3A, nhóm khác — user thật của VLearn tutor | | ✅ đã đồng ý |
+
+> Hai bạn trên đã đồng ý cho nhóm mượn ~10 phút bấm thử prototype trước CP5.
+> Tại CP5 sẽ giao task theo **kết quả** (không chỉ nút), nhóm **im lặng quan sát**
+> và chép **nguyên văn** câu họ nói — log vào `validation/user_testing_log.md`.

@@ -22,6 +22,16 @@ Không phải "học viên nói chung": 70 học viên có thật trong chatlog 
 - Khi tôi mở phần "Nộp bài và đánh giá Lab" mà không hiểu, tôi muốn **biết lab của mình được chấm theo tiêu chí nào**, để tôi làm đúng trọng tâm.
 - Khi tôi nghỉ một buổi, tôi muốn **biết phải hỏi ai / xem ở đâu** cho phần mình lỡ, để bắt kịp lớp.
 
+### Quy trình hiện tại — họ đang giải quyết bằng gì, fail ở đâu
+
+| | |
+|---|---|
+| **Hôm nay làm gì** | Hỏi tutor trước vì nó nằm ngay trong trang học, không phải chuyển cửa sổ. Nghi ngờ thì đi hỏi TA trên Discord, tra Syllabus, hoặc hỏi bạn cùng lớp. |
+| **Chỗ nó fail** | Không có tín hiệu nào cho biết **khi nào nên nghi**. Câu trả lời có căn cứ và câu bịa được viết bằng cùng một giọng tự tin. |
+| **Vì sao chưa bỏ** | Vẫn là cách nhanh nhất, và phần lớn câu hỏi kiến thức tutor trả lời đúng thật — bỏ hẳn thì mất cả phần đang dùng tốt. |
+
+**Bằng chứng học viên đã tự phòng thân** — ca `T02736`: học viên gõ *"Deadline nộp bài AI Product Hackathon là ngày nào? **Nếu tài liệu không có thì nói rõ là không biết.**"* Việc phải tự dặn trước cho thấy họ **đã từng bị lừa**. Đáng chú ý: lần đó tutor trả lời đúng — tức hành vi mong muốn **có thể kích hoạt được**, nhưng đang phụ thuộc vào việc học viên biết cách nhắc.
+
 ### Problem statement *(KHÔNG chữ AI)*
 > **Học viên K4 hỏi một câu mà tài liệu đang mở không chứa câu trả lời thì 86,7% số lần nhận được một câu trả lời trôi chảy, tự tin, nhưng không dựa trên bất kỳ nguồn nào — và không có cách nào phân biệt nó với 13,3% số lần câu trả lời là thật.** Hậu quả: học viên làm theo thông tin sai về quy chế nộp bài và mất điểm, hoặc mất niềm tin rồi bỏ hẳn công cụ và quay lại đi hỏi TA từng câu một.
 
@@ -164,7 +174,7 @@ Vì chi phí lệch khoảng hai bậc, hệ thống được thiết kế **l�
 | Evidence chuẩn A/B + golden set + chấm kết quả | **TRẦN THỊ THUÝ** (2A202602960) |
 | 4 đường đi trải nghiệm, prototype UI, HAX/PAIR, slide + video | **NGUYỄN VĂN SƠN** (2A202602744) |
 
-**Willing users (≥2 tên):** ⬜ khai trong `TEAMMATES.md` — **bắt buộc điền tên thật trước khi nộp form CP1**.
+**Willing users (≥2 tên):** ✅ **Nguyễn Anh Tú** · **Phạm Văn Nghị** — học viên 3A nhóm khác, đã đồng ý thử prototype trước CP5 (chi tiết trong `TEAMMATES.md`).
 **Multi-prototype:** ⬜ nếu kịp giữa CP2 và CP3 — trục khác biệt dự kiến: *chặn hẳn khi 🔴* vs *trả lời kèm cảnh báo đỏ*.
 
 ## §9. Changelog
