@@ -1,0 +1,18 @@
+# --- BẢO MẬT: tuyệt đối không commit data pack của BTC ---
+data/
+*.csv
+!eval/*.csv
+tutor_turns*
+*-pack/
+
+# Secrets
+.env
+.env.*
+*.key
+
+# Rác hệ thống
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+.venv/
