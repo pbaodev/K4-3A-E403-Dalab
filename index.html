@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K4-3A-E403-Dalab — AI Tutor biết mình không biết</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#16225a;--ink:#2b3350;--body:#3d4661;--muted:#6b7593;
+        --cream:#fdfaf4;--line:#e3e6ea;--accent:#a2490b;--accent-soft:#fdf0df}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);color:var(--body);font-family:"Be Vietnam Pro",system-ui,sans-serif;
+       font-size:15.5px;line-height:1.6;padding:44px 20px 60px}
+  .wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+  .pill{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);
+        border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;letter-spacing:.12em;
+        color:var(--navy);align-self:flex-start}
+  .pill::before{content:"";width:9px;height:9px;border-radius:50%;background:#f0781e}
+  h1{font-size:clamp(28px,5.5vw,40px);font-weight:800;color:var(--navy);letter-spacing:-.02em;line-height:1.1}
+  .lede{font-size:17px;color:var(--ink);max-width:60ch}
+  .lede b{color:var(--navy);font-weight:600}
+  .cta{background:#fff;border:1.5px solid var(--accent);border-radius:14px;padding:24px 26px;
+       box-shadow:0 2px 14px rgba(22,34,90,.06)}
+  .cta h2{font-size:19px;color:var(--navy);font-weight:700;margin-bottom:6px}
+  .cta p{font-size:14.5px;color:var(--muted);margin-bottom:16px}
+  a.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;
+        border-radius:10px;padding:13px 24px;font-size:16px}
+  a.btn:hover{background:#8a3e09}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:13px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px 19px;
+        text-decoration:none;color:inherit;display:block}
+  .card:hover{border-color:var(--accent)}
+  .card b{display:block;color:var(--navy);font-size:15.5px;margin-bottom:3px}
+  .card span{font-size:13.5px;color:var(--muted);line-height:1.5}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;background:#fff;
+        border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--line)}
+  th{background:#f5f6f9;color:var(--navy);font-weight:700;font-size:13px}
+  tr:last-child td{border-bottom:0}
+  footer{border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted);line-height:1.6}
+  @media(max-width:520px){th:nth-child(3),td:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="pill">MINI HACKATHON AI · BATCH 04 · LỚP 3A · E403</div>
+  <h1>Tutor biết mình không biết</h1>
+  <p class="lede">Bản vá cho <b>AI tutor trên VLearn</b>: phân loại câu hỏi <b>có hay không có căn cứ trong tài liệu đang mở</b> trước khi trả lời. Không có căn cứ thì nói thẳng và chỉ chỗ hỏi đúng, thay vì trả lời cho có. — <b>Nhóm Dalab</b>, Track A1.</p>
+
+  <div class="cta">
+    <h2>▶ Bấm thử prototype</h2>
+    <p>Bốn nút mẫu chạy đúng bốn đường đi trải nghiệm. Không cần cài gì.</p>
+    <a class="btn" href="codebase/">Mở prototype</a>
+  </div>
+
+  <div class="grid">
+    <a class="card" href="docs/cp2-flow.png"><b>Sơ đồ luồng</b><span>Điểm gọi quyết định AI và các nhánh xử lý ngoại lệ</span></a>
+    <a class="card" href="docs/cp1-canvas.png"><b>Canvas CP1</b><span>Người dùng · bằng chứng · lát cắt · phân công</span></a>
+    <a class="card" href="https://github.com/pbaodev/K4-3A-E403-Dalab/blob/main/spec.md"><b>AI Spec</b><span>8 phần — tài liệu bàn giao trung tâm</span></a>
+    <a class="card" href="https://github.com/pbaodev/K4-3A-E403-Dalab/blob/main/evidence/mining-notes.md"><b>Bằng chứng</b><span>Mining 13.494 lượt hỏi–đáp thật, script đếm lại được</span></a>
+  </div>
+
+  <table>
+    <tr><th>Nhãn</th><th>Khi nào</th><th>Tutor làm gì</th></tr>
+    <tr><td>🟢 Có căn cứ</td><td>Trích được câu trong tài liệu</td><td>Trả lời kèm <code>[trang N]</code></td></tr>
+    <tr><td>🟡 Chưa đủ rõ</td><td>Câu hỏi mơ hồ</td><td>Hỏi lại một câu, không đoán</td></tr>
+    <tr><td>🔴 Ngoài tài liệu</td><td>Deadline · điểm · quy chế</td><td><b>Không sinh nội dung</b> — chỉ chỗ hỏi</td></tr>
+  </table>
+
+  <footer>
+    <b>Phan Duy Bảo</b> (lead · spec) · <b>Đoàn Duy Bách</b> (quyết định trung tâm · AI call) ·
+    <b>Trần Thị Thuý</b> (evidence · eval) · <b>Nguyễn Văn Sơn</b> (UX · demo)<br>
+    Mức prototype hiện tại: <b>Mock</b> — quyết định bằng luật cứng. Bản gọi AI thật bật tại CP3.
+    Repo này không chứa dữ liệu nào từ <code>data/</code> của ban tổ chức.
+  </footer>
+</div>
+</body>
+</html>
