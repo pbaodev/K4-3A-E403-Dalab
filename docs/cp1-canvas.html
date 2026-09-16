@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Canvas CP1 — Dalab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16225a; --ink:#2b3350; --body:#3d4661; --muted:#6b7593;
+    --cream:#fdfaf4; --line:#e9eaf0;
+    --green:#3fb98a; --blue:#5b9bd5; --purple:#8b7ad6; --orange:#efa040;
+    --tint-blue:#eaf2fb; --tint-purple:#f1eefb; --tint-orange:#fdf3e4; --tint-green:#eaf7f1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{width:1920px;height:1080px;background:var(--cream);
+       font-family:"Be Vietnam Pro",system-ui,sans-serif;color:var(--body);
+       position:relative;overflow:hidden}
+
+  /* hoa văn nền mờ */
+  .deco{position:absolute;inset:0;pointer-events:none;opacity:.5}
+  .deco svg{width:100%;height:100%}
+
+  .sheet{position:relative;padding:40px 58px 0;height:100%;display:flex;flex-direction:column}
+
+  .pill{display:inline-flex;align-items:center;gap:11px;background:#fff;
+        border:1px solid var(--line);border-radius:8px;padding:8px 16px;
+        font-size:13px;font-weight:700;letter-spacing:.13em;color:var(--navy);
+        box-shadow:0 1px 3px rgba(22,34,90,.05)}
+  .pill::before{content:"";width:10px;height:10px;border-radius:50%;background:#f0781e}
+
+  .head{display:flex;justify-content:space-between;align-items:flex-start;gap:40px}
+  h1{font-size:46px;font-weight:800;color:var(--navy);letter-spacing:-.018em;
+     margin:18px 0 0;line-height:1.05}
+  .sub{font-size:19.5px;color:var(--ink);margin-top:11px;font-weight:400}
+  .sub b{font-weight:600;color:var(--navy)}
+
+  .note{background:var(--tint-blue);border-radius:11px;padding:16px 20px;
+        max-width:430px;font-size:13.5px;line-height:1.58;color:var(--ink);flex-shrink:0;margin-top:4px}
+  .note b{color:var(--navy);font-weight:700}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+        gap:22px;margin-top:28px;flex:1;min-height:0;padding-bottom:18px}
+
+  .card{background:#fff;border-radius:15px;padding:24px 30px 22px;position:relative;
+        overflow:hidden;box-shadow:0 2px 14px rgba(22,34,90,.055);display:flex;flex-direction:column}
+  .card::after{content:"";position:absolute;top:0;right:0;width:140px;height:8px;
+               border-radius:0 0 0 9px;background:var(--bar)}
+  .c1{--bar:var(--green)} .c2{--bar:var(--blue)} .c3{--bar:var(--purple)} .c4{--bar:var(--orange)}
+
+  .tag{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+  .card h2{font-size:24px;font-weight:700;color:var(--navy);margin:9px 0 0;
+           letter-spacing:-.012em;line-height:1.22}
+  .rule{height:1px;background:var(--line);margin:13px 0 12px}
+
+  .card p{font-size:15.5px;line-height:1.58;margin-bottom:10px}
+  .card p b{color:var(--navy);font-weight:700}
+  .card p:last-of-type{margin-bottom:0}
+
+  ul{list-style:none;font-size:15.5px;line-height:1.56}
+  li{position:relative;padding-left:18px;margin-bottom:8px}
+  li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;
+             border-radius:50%;background:var(--blue)}
+  li b{color:var(--navy);font-weight:700}
+
+  .callout{display:flex;gap:11px;border-radius:10px;padding:14px 17px;
+           font-size:14px;line-height:1.55;margin-top:auto}
+  .callout::before{content:"";width:10px;height:10px;border-radius:50%;flex-shrink:0;
+                   margin-top:5px;background:var(--dot)}
+  .callout b{color:var(--navy);font-weight:700}
+  .ct-blue{background:var(--tint-blue);--dot:#3c7cc0}
+  .ct-purple{background:var(--tint-purple);--dot:#6f5cc4}
+  .ct-orange{background:var(--tint-orange);--dot:#c07a1e}
+  .ct-green{background:var(--tint-green);--dot:#2e9b70}
+
+  .chips{display:flex;gap:9px;margin:12px 0 2px}
+  .chip{font-size:12px;font-weight:700;letter-spacing:.09em;padding:6px 13px;
+        border-radius:6px;background:#f1f2f7;color:var(--ink)}
+  .chip.g{background:var(--tint-green);color:#1d7a56}
+  .chip.p{background:var(--tint-orange);color:#a06a14}
+  .chip.u{background:#fdeceb;color:#b3261e}
+
+  .foot{display:flex;justify-content:space-between;align-items:center;
+        padding:0 0 24px;font-size:13.5px;color:var(--muted)}
+  .foot b{color:var(--navy);font-weight:700}
+  .foot .right{background:var(--tint-orange);border-radius:9px;padding:11px 20px;
+               color:#7a5510;text-align:right;line-height:1.5;font-size:13px}
+</style>
+</head>
+<body>
+<div class="deco">
+  <svg viewBox="0 0 1920 1080" fill="none">
+    <g stroke="#e8dfc9" stroke-width="2" opacity=".62">
+      <path d="M-40 128 H300 a22 22 0 0 0 22-22 V44"/>
+      <path d="M1400 34 H1642 a20 20 0 0 1 20 20 V150"/>
+      <path d="M1920 240 H1760 a20 20 0 0 1-20-20 V96"/>
+      <path d="M96 1080 V960 a20 20 0 0 1 20-20 H340"/>
+      <path d="M1920 900 H1820 a20 20 0 0 0-20 20 V1080"/>
+    </g>
+    <g fill="#e8dfc9" opacity=".8">
+      <circle cx="322" cy="44" r="7"/><circle cx="1662" cy="150" r="7"/>
+      <circle cx="1740" cy="96" r="7"/><circle cx="340" cy="940" r="7"/>
+    </g>
+    <g stroke="#efe7d4" stroke-width="2" fill="none" opacity=".75">
+      <circle cx="1128" cy="52" r="86"/><circle cx="1128" cy="52" r="132"/>
+      <circle cx="1128" cy="52" r="180"/>
+    </g>
+    <g fill="#f4edda" opacity=".55">
+      <circle cx="176" cy="612" r="120"/><circle cx="1842" cy="700" r="96"/>
+    </g>
+  </svg>
+</div>
+
+<div class="sheet">
+  <div class="head">
+    <div>
+      <div class="pill">MINI HACKATHON AI · CHECKPOINT 1</div>
+      <h1>CANVAS CP1 · NHÓM DALAB</h1>
+      <p class="sub">Hướng A · <b>Tutor biết mình không biết</b> — phân loại có căn cứ hay không, trước khi trả lời</p>
+    </div>
+    <div class="note">
+      <b>Lớp 3A · Phòng E403 · Track A1.</b> Đội trưởng: Phan Duy Bảo — 2A202602767.
+      Repo: <b>github.com/pbaodev/K4-3A-E403-Dalab</b>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card c1">
+      <div class="tag">01 · Người dùng &amp; nỗi đau</div>
+      <h2>Học viên hỏi câu mà tài liệu không trả lời được</h2>
+      <div class="rule"></div>
+      <p><b>Job:</b> học viên K4 đang mở tài liệu trong trang học VLearn, gõ một câu <i>quanh</i> buổi học — cách nộp bài, deadline, lab được chấm thế nào — chứ không phải hỏi kiến thức trong slide.</p>
+      <p><b>Pain:</b> 86,7% số lần tutor trả lời trôi chảy nhưng không dựa trên nguồn nào, và học viên không có cách phân biệt với 13,3% số lần câu trả lời là thật → làm sai quy chế nộp bài và <b>mất điểm</b>.</p>
+      <div class="callout ct-green">
+        <div><b>Không phải “thấy bất tiện”:</b> hậu quả đo được — làm theo thông tin bịa về hạn nộp thì mất trọn <b>5 điểm</b> của mốc, không sửa được sau deadline.</div>
+      </div>
+    </div>
+
+    <div class="card c2">
+      <div class="tag">02 · Bằng chứng ban đầu</div>
+      <h2>Mining 13.494 lượt hỏi–đáp thật</h2>
+      <div class="rule"></div>
+      <ul>
+        <li><b>150 câu</b> ngoài phạm vi tài liệu / 10.427 câu học viên tự gõ — <b>70 học viên</b>, trong đó <b>130 ca (86,7%) thuộc chính khoá K4</b>.</li>
+        <li>Tutor từ chối đúng <b>20 ca (13,3%)</b> · trả lời như thể biết <b>130 ca (86,7%)</b>, <b>10 ca</b> gắn <b>[trang N] giả</b>.</li>
+        <li>Đối chứng: tutor hỏi lại chỉ <b>28/13.494 lượt (0,2%)</b>.</li>
+      </ul>
+      <div class="callout ct-blue">
+        <div><b>T04628 —</b> “t nộp bài từ 6h chiều, sau 12h có thêm commit thì có chấm không?” → tutor <b>bịa ra chính sách chấm bài</b>. Script đếm lại được: <b>evidence/count_ungrounded.py</b></div>
+      </div>
+    </div>
+
+    <div class="card c3">
+      <div class="tag">03 · Lát cắt &amp; automation</div>
+      <h2>Phân loại căn cứ trước, trả lời sau</h2>
+      <div class="chips">
+        <span class="chip g">GROUNDED</span>
+        <span class="chip p">PARTIAL</span>
+        <span class="chip u">UNGROUNDED</span>
+      </div>
+      <div class="rule"></div>
+      <p><b>Một học viên K4 đang mở tài liệu</b> cần <b>hỏi một câu slide không trả lời được</b>, được <b>AI phân loại có / không có căn cứ trong tài liệu trước khi trả lời</b>, giúp <b>biết ngay câu nào đáng tin và phải hỏi ai cho phần còn lại</b>.</p>
+      <div class="callout ct-purple">
+        <div><b>Conditional:</b> chỉ tự trả khi trích được câu cụ thể trong tài liệu; ngoài phạm vi thì <b>không sinh nội dung</b>, chỉ thẳng chỗ hỏi đúng. Bịa → mất điểm không sửa được; thận trọng thừa → tốn 2 phút.</div>
+      </div>
+    </div>
+
+    <div class="card c4">
+      <div class="tag">04 · Người thử &amp; phân công</div>
+      <h2>Có người thử, có người chịu trách nhiệm</h2>
+      <div class="rule"></div>
+      <p><b>Willing users dự kiến:</b> mời <b>≥2 học viên 3A ngoài nhóm</b> thử prototype trước CP5 — đã khai tên trong <b>TEAMMATES.md</b>.</p>
+      <ul>
+        <li><b>Phan Duy Bảo</b> — lead · spec §1–§4 · nộp 5 form</li>
+        <li><b>Đoàn Duy Bách</b> — quyết định trung tâm · AI call thật · trace log</li>
+        <li><b>Trần Thị Thuý</b> — evidence A/B · golden set · chấm kết quả</li>
+        <li><b>Nguyễn Văn Sơn</b> — 4 đường đi UX · prototype · slide &amp; video</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div><b>Checkpoint 1:</b> Canvas 4 ô · Nhóm Dalab · 16/9/2026</div>
+    <div class="right">Bằng chứng chuẩn B đã xong và kiểm lại được.<br>Chuẩn A (khảo sát ≥20 người) hoàn tất trước CP4.</div>
+  </div>
+</div>
+</body>
+</html>
