@@ -5,6 +5,10 @@
 **Track:** A — VLearn Tutor · **Đề:** A1 (tối ưu AI tutor hiện có)
 **Lát cắt:** Tutor phân loại câu hỏi **có / không có căn cứ trong tài liệu đang mở** trước khi trả lời — không có căn cứ thì nói rõ và chỉ chỗ hỏi đúng, thay vì bịa.
 
+### ▶ Bấm thử prototype: **https://pbaodev.github.io/K4-3A-E403-Dalab/**
+
+Không cần clone, không cần cài. Bốn nút mẫu chạy đúng bốn đường đi trải nghiệm trong `spec.md` §6.
+
 ## 👥 Thành viên nhóm & Phân công vai trò
 
 **Lớp:** 3A · **Phòng:** E403 · **Cụm:** ____ · **Track:** A (A1)
