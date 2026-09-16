@@ -1,0 +1,124 @@
+/**
+ * QUYẾT ĐỊNH TRUNG TÂM của lát cắt (spec.md §4).
+ *
+ * Trước khi trả lời bất cứ điều gì, phân loại câu hỏi vào 1 trong 3 nhãn:
+ *   GROUNDED     🟢  trích được câu cụ thể trong tài liệu đang mở
+ *   PARTIAL      🟡  liên quan nhưng tài liệu chỉ nói một phần / câu hỏi quá mơ hồ
+ *   UNGROUNDED   🔴  tài liệu không chứa câu trả lời  -> KHÔNG sinh nội dung, định tuyến người
+ *
+ * CP2 (16/9): chạy bằng `mockDecide` — luật cứng, chưa gọi AI. Flow bấm hết được.
+ * CP3 (17/9): bật USE_REAL_AI = true, `aiDecide` gọi LLM thật. Chữ ký hàm giữ nguyên.
+ *
+ * Phụ trách: ĐOÀN DUY BÁCH (2A202602515)
+ */
+import { DOC, ROUTES } from "./fixtures.js";
+
+export const CONFIG = { USE_REAL_AI: false, model: "gemini-2.0-flash" };
+
+/** Luật cứng lớp ④ — mọi câu chạm deadline/điểm/quy chế LUÔN đi đường 🔴.
+ *  Không để mô hình tự quyết, vì đây đúng chỗ sai thì học viên mất điểm (spec.md §4). */
+const HARD_BLOCK = [
+  { re: /(hạn nộp|deadline|nộp bài|commit|muộn|trễ hạn)/i,        route: "deadline",  topic: "quy định hạn nộp bài" },
+  { re: /(chấm|rubric|tiêu chí|bao nhiêu điểm|thang điểm|đánh giá lab)/i, route: "grading", topic: "cách chấm điểm" },
+  { re: /(điểm của (mình|em|tôi)|xem điểm|điểm lab|điểm danh)/i,  route: "grades",    topic: "điểm cá nhân" },
+  { re: /(lịch học|buổi sau|zoom|link lớp|lms|tải slide|tài liệu ở đâu|học phí|chứng chỉ)/i, route: "logistics", topic: "thông tin hành chính của khoá" }
+];
+
+const AMBIGUOUS = /^(hi|hii|hello|chào|xin chào|hả|ok|\?|\.{1,3}|[a-z]{1,6})$/i;
+
+/** Tìm trang có nội dung khớp — bản mock dùng khớp từ khoá, CP3 thay bằng retrieval thật.
+ *  Nhận là "có căn cứ" khi khớp >=2 từ, hoặc khớp 1 thuật ngữ đặc trưng (>=6 ký tự). */
+function findGrounding(question) {
+  const words = [...new Set(question.toLowerCase().match(/[\p{L}]{4,}/gu) || [])];
+  let best = null, bestScore = 0;
+  for (const p of DOC.pages) {
+    const lower = p.text.toLowerCase();
+    const hits = words.filter(w => lower.includes(w));
+    const score = hits.length + (hits.some(w => w.length >= 6) ? 1 : 0);
+    if (score > bestScore) { bestScore = score; best = p; }
+  }
+  return bestScore >= 2 ? best : null;
+}
+
+/** CP2 — quyết định bằng luật, không gọi mạng. */
+export function mockDecide(question) {
+  const q = question.trim();
+
+  for (const rule of HARD_BLOCK) {
+    if (rule.re.test(q)) {
+      const r = ROUTES[rule.route];
+      return {
+        label: "UNGROUNDED",
+        reason: `Tài liệu "${DOC.lecture}" (trang ${DOC.pages[0].page}–${DOC.pages.at(-1).page}) không có nội dung về ${rule.topic}.`,
+        answer: `Mình không có thông tin về ${rule.topic} trong tài liệu bạn đang mở, nên mình không trả lời câu này để bạn khỏi làm theo thông tin sai.`,
+        route: r, citation: null
+      };
+    }
+  }
+
+  if (AMBIGUOUS.test(q) || q.length < 8) {
+    return {
+      label: "PARTIAL",
+      reason: "Câu hỏi chưa đủ rõ để biết bạn đang hỏi nội dung bài hay thủ tục lớp học.",
+      answer: `Chào bạn. Bạn đang mở "${DOC.lecture}". Bạn muốn mình giải thích nội dung trong tài liệu, hay bạn đang vướng thủ tục của buổi học?`,
+      clarify: ["Giải thích nội dung trang đang mở", "Mình vướng thủ tục nộp bài"],
+      route: null, citation: null
+    };
+  }
+
+  const page = findGrounding(q);
+  if (page) {
+    return {
+      label: "GROUNDED",
+      reason: `Trích được nội dung ở trang ${page.page} của tài liệu đang mở.`,
+      answer: `${page.text} [trang ${page.page}]`,
+      citation: page, route: null
+    };
+  }
+
+  return {
+    label: "UNGROUNDED",
+    reason: `Không tìm thấy đoạn nào trong "${DOC.lecture}" trả lời được câu này.`,
+    answer: "Câu này mình không tìm được căn cứ trong tài liệu bạn đang mở. Mình không đoán để tránh nói sai.",
+    route: ROUTES.logistics, citation: null
+  };
+}
+
+/** CP3 — thay thân hàm bằng lời gọi LLM thật. Prompt đã viết sẵn theo spec.md §4. */
+export async function aiDecide(question, apiKey) {
+  const prompt = `Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.
+
+TÀI LIỆU ĐANG MỞ (${DOC.lecture}):
+${DOC.pages.map(p => `[trang ${p.page}] ${p.text}`).join("\n")}
+
+LUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:
+- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, thao tác hệ thống => luôn UNGROUNDED.
+- Chỉ trả nhãn GROUNDED khi trích được nguyên văn một câu trong tài liệu trên.
+- Nhãn UNGROUNDED thì KHÔNG được sinh nội dung trả lời.
+
+CÂU HỎI: "${question}"
+
+Trả về JSON: {"label":"GROUNDED|PARTIAL|UNGROUNDED","reason":"...","answer":"...","citation_page":<số|null>}`;
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.model}:generateContent?key=${apiKey}`,
+    { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) }
+  );
+  const raw = await res.json();
+  logTrace({ ts: new Date().toISOString(), question, prompt, raw });   // CP3: trace vào codebase/logs/
+  const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+  return JSON.parse(text.replace(/```json|```/g, "").trim());
+}
+
+const TRACE = [];
+export function logTrace(entry) { TRACE.push(entry); return TRACE; }
+export function getTrace() { return TRACE; }
+
+export async function decide(question, apiKey) {
+  const t0 = performance.now();
+  const out = CONFIG.USE_REAL_AI ? await aiDecide(question, apiKey) : mockDecide(question);
+  out.ms = Math.round(performance.now() - t0);
+  out.source = CONFIG.USE_REAL_AI ? "AI THẬT" : "MOCK (CP2)";
+  return out;
+}

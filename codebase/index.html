@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VLearn Tutor — bản vá "biết mình không biết"</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#fff; --ink:#15181d; --muted:#666e7a; --line:#e3e6ea;
+    --green:#0f7b4f; --green-bg:#e8f6ef; --amber:#8a5a00; --amber-bg:#fdf3e0;
+    --red:#b3261e; --red-bg:#fdeceb; --accent:#2f5fd0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       background:var(--bg);color:var(--ink)}
+  header{background:var(--panel);border-bottom:1px solid var(--line);padding:14px 20px}
+  header h1{margin:0;font-size:16px}
+  header p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+  .badge{display:inline-block;background:var(--amber-bg);color:var(--amber);border-radius:4px;
+         padding:2px 7px;font-size:11px;font-weight:600;margin-left:8px}
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px;
+        max-width:1180px;margin:18px auto;padding:0 18px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .panel h2{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .page{border-left:3px solid var(--line);padding:8px 0 8px 12px;margin-bottom:12px}
+  .page b{font-size:12px;color:var(--accent)}
+  .page p{margin:4px 0 0;font-size:14px}
+  .samples{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+  .samples button{background:#f0f2f5;border:1px solid var(--line);border-radius:16px;
+                  padding:6px 12px;font-size:12.5px;cursor:pointer;font-family:inherit}
+  .samples button:hover{background:#e6e9ee}
+  .composer{display:flex;gap:8px}
+  .composer input{flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:8px;
+                  font-size:14px;font-family:inherit}
+  .composer button{background:var(--accent);color:#fff;border:0;border-radius:8px;
+                   padding:10px 18px;font-size:14px;cursor:pointer;font-family:inherit}
+  .hint{font-size:12.5px;color:var(--muted);margin:10px 0 0;padding:8px 10px;
+        background:#f0f2f5;border-radius:6px}
+  .turn{border:1px solid var(--line);border-radius:9px;margin-top:12px;overflow:hidden}
+  .q{background:#f0f2f5;padding:9px 13px;font-size:14px}
+  .q b{color:var(--muted);font-weight:600;font-size:12px}
+  .label{display:flex;align-items:center;gap:7px;padding:9px 13px;font-size:13px;font-weight:600;
+         border-bottom:1px solid var(--line)}
+  .GROUNDED .label{background:var(--green-bg);color:var(--green)}
+  .PARTIAL  .label{background:var(--amber-bg);color:var(--amber)}
+  .UNGROUNDED .label{background:var(--red-bg);color:var(--red)}
+  .why{font-weight:400;color:var(--muted);font-size:12.5px}
+  .body{padding:12px 13px}
+  .body p{margin:0 0 9px}
+  .route{background:var(--red-bg);border-radius:7px;padding:10px 12px;font-size:13.5px;margin-top:4px}
+  .route b{color:var(--red)}
+  .acts{display:flex;flex-wrap:wrap;gap:7px;padding:0 13px 12px}
+  .acts button{background:#fff;border:1px solid var(--line);border-radius:15px;padding:5px 11px;
+               font-size:12.5px;cursor:pointer;font-family:inherit}
+  .acts button:hover{border-color:var(--accent);color:var(--accent)}
+  .fb{padding:0 13px 12px;font-size:12.5px;color:var(--muted)}
+  .fb .chips{display:none;gap:6px;margin-top:7px;flex-wrap:wrap}
+  .fb.open .chips{display:flex}
+  .trace{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:#1c1f25;color:#cfd6e0;
+         border-radius:8px;padding:11px;max-height:190px;overflow:auto;white-space:pre-wrap}
+  .legend{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .legend span{display:inline-block;margin-right:12px}
+  @media(max-width:860px){.wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>VLearn · Trang học — AI Tutor <span class="badge">BẢN VÁ · Nhóm Dalab</span></h1>
+  <p>Lát cắt: tutor phân loại câu hỏi <b>có / không có căn cứ trong tài liệu đang mở</b> trước khi trả lời.
+     Trạng thái: <b id="mode">MOCK (CP2)</b> — CP3 bật lời gọi AI thật.</p>
+</header>
+
+<div class="wrap">
+  <section class="panel">
+    <h2>📄 Tài liệu đang mở</h2>
+    <div id="doc"></div>
+    <p class="hint"><b>G1 — làm rõ hệ thống làm được gì:</b> Mình trả lời được nội dung trong tài liệu bạn đang mở.
+       Deadline, điểm số, cách nộp bài → mình sẽ chỉ bạn hỏi ai.</p>
+    <h2 style="margin-top:18px">🔍 Trace log <span style="text-transform:none;font-weight:400">(bằng chứng lời gọi AI — R5)</span></h2>
+    <div class="trace" id="trace">Chưa có lượt nào.</div>
+  </section>
+
+  <section class="panel">
+    <h2>💬 Hỏi tutor</h2>
+    <div class="samples" id="samples"></div>
+    <form class="composer" id="form">
+      <input id="input" placeholder="Nhập câu hỏi của bạn…" autocomplete="off">
+      <button type="submit">Gửi</button>
+    </form>
+    <p class="legend">
+      <span>🟢 Có căn cứ</span><span>🟡 Chưa đủ rõ</span><span>🔴 Ngoài tài liệu</span>
+    </p>
+    <div id="thread"></div>
+  </section>
+</div>
+
+<script type="module">
+import { DOC, SAMPLES } from "./fixtures.js";
+import { decide, getTrace, CONFIG } from "./tutor-core.js";
+
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
+
+$("#doc").innerHTML = DOC.pages.map(p =>
+  `<div class="page"><b>trang ${p.page}</b><p>${esc(p.text)}</p></div>`).join("");
+
+$("#samples").innerHTML = SAMPLES.map(s =>
+  `<button data-q="${esc(s.q)}">${s.label}</button>`).join("");
+$("#samples").onclick = e => {
+  const q = e.target.dataset.q;
+  if (q) { $("#input").value = q; $("#form").requestSubmit(); }
+};
+
+const LABELS = {
+  GROUNDED:  ["🟢", "Có căn cứ"],
+  PARTIAL:   ["🟡", "Chưa đủ rõ"],
+  UNGROUNDED:["🔴", "Ngoài tài liệu"]
+};
+
+async function ask(q) {
+  const r = await decide(q);
+  const [icon, name] = LABELS[r.label];
+  const cite = r.citation ? ` — trang ${r.citation.page}` : "";
+
+  const el = document.createElement("div");
+  el.className = `turn ${r.label}`;
+  el.innerHTML = `
+    <div class="q"><b>Bạn hỏi:</b> ${esc(q)}</div>
+    <div class="label">${icon} ${name}${cite}
+      <span class="why">· ${esc(r.reason)}</span></div>
+    <div class="body">
+      <p>${esc(r.answer)}</p>
+      ${r.route ? `<div class="route"><b>Hỏi ai:</b> ${esc(r.route.who)}<br>
+                    <span class="why">Vì ${esc(r.route.why)}.</span></div>` : ""}
+    </div>
+    <div class="acts">
+      ${(r.clarify || []).map(c => `<button data-ask="${esc(c)}">${esc(c)}</button>`).join("")}
+      ${r.label === "UNGROUNDED" ? `<button data-fix="1">📌 Tài liệu có nói mà</button>` : ""}
+    </div>
+    <div class="fb">
+      <button data-fb="up">👍</button> <button data-fb="down">👎</button>
+      <span>Sai chỗ nào?</span>
+      <span class="chips">
+        <button>Bịa</button><button>Thiếu</button><button>Lạc đề</button><button>Đúng mà khó hiểu</button>
+      </span>
+    </div>`;
+
+  el.querySelector(".acts").onclick = e => {
+    if (e.target.dataset.ask) { $("#input").value = e.target.dataset.ask; $("#form").requestSubmit(); }
+    if (e.target.dataset.fix) {
+      const seg = prompt("G9 — Sửa dễ dàng:\nDán đoạn trong tài liệu mà bạn cho là có nói tới câu này:");
+      if (seg) ask(`${q} ${seg}`);
+    }
+  };
+  el.querySelector(".fb").onclick = e => {
+    if (e.target.dataset.fb) e.currentTarget.classList.add("open");
+  };
+
+  $("#thread").prepend(el);
+  renderTrace(q, r);
+}
+
+function renderTrace(q, r) {
+  const line = `[${new Date().toLocaleTimeString("vi-VN")}] ${r.source} · ${r.ms}ms
+  q      : ${q}
+  label  : ${r.label}
+  reason : ${r.reason}
+  route  : ${r.route ? r.route.who : "—"}`;
+  const t = $("#trace");
+  t.textContent = (t.textContent.startsWith("Chưa") ? "" : t.textContent + "\n\n") + line;
+  t.scrollTop = t.scrollHeight;
+}
+
+$("#form").onsubmit = e => {
+  e.preventDefault();
+  const q = $("#input").value.trim();
+  if (q) { ask(q); $("#input").value = ""; }
+};
+$("#mode").textContent = CONFIG.USE_REAL_AI ? "AI THẬT (CP3)" : "MOCK (CP2)";
+</script>
+</body>
+</html>
