@@ -3,8 +3,8 @@
 **Mục tiêu:** ≥20 học viên **ngoài nhóm** · **≥50% xác nhận** · log **nguyên văn** từng câu trả lời.
 **Hạn:** trước CP4 — 21:00 ngày 17/9. **Chia việc:** mỗi thành viên hỏi 5 người.
 
-**Form thu câu trả lời:** https://claude.ai/artifact/U1donkkETyhJYXLjS4WsL9
-Gửi link cho học viên 3A ngoài nhóm. Câu trả lời tự lưu, đổ ngược vào bảng dưới trước CP4.
+**Form thu câu trả lời:** tạo bằng `tao-google-form.gs` (dán vào script.google.com → Run).
+Câu trả lời đổ vào Google Sheet, tải .csv rồi nhập vào bảng dưới trước CP4.
 Phỏng vấn trực tiếp vẫn tốt hơn — form chỉ để với tới đủ 20 người trong thời gian ngắn.
 
 > ⚠️ Rubric R1: *"log đủ câu hỏi + **từng câu trả lời nguyên văn**"*. Ghi tóm tắt ý = **không được tính điểm**. Chép đúng chữ người ta nói, kể cả nói cụt hay sai chính tả.
