@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Luồng CP2 — Dalab</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16225a; --ink:#2b3350; --body:#3d4661; --muted:#6b7593;
+    --cream:#fdfaf4; --line:#e3e6ea;
+    --green:#1d7a56; --greenbg:#e8f6ef; --greenbar:#3fb98a;
+    --amber:#8a5a00; --amberbg:#fdf3e0; --amberbar:#efa040;
+    --red:#b3261e;   --redbg:#fdeceb;   --redbar:#e06a62;
+    --purple:#5f4fc0; --purplebg:#f1eefb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{width:1920px;height:1080px;background:var(--cream);position:relative;overflow:hidden;
+       font-family:"Be Vietnam Pro",system-ui,sans-serif;color:var(--body)}
+  svg.wires{position:absolute;inset:0;width:1920px;height:1080px;pointer-events:none}
+
+  .pill{position:absolute;left:58px;top:38px;display:inline-flex;align-items:center;gap:11px;
+        background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 16px;
+        font-size:13px;font-weight:700;letter-spacing:.13em;color:var(--navy)}
+  .pill::before{content:"";width:10px;height:10px;border-radius:50%;background:#f0781e}
+  h1{position:absolute;left:58px;top:82px;font-size:44px;font-weight:800;color:var(--navy);
+     letter-spacing:-.018em;line-height:1.05}
+  .sub{position:absolute;left:58px;top:140px;font-size:19px;color:var(--ink)}
+  .sub b{color:var(--navy);font-weight:600}
+  .legend{position:absolute;right:58px;top:44px;background:#eaf2fb;border-radius:11px;
+          padding:15px 20px;font-size:13.5px;line-height:1.6;color:var(--ink);text-align:right}
+  .legend b{color:var(--navy);font-weight:700}
+
+  .node{position:absolute;background:#fff;border:1px solid var(--line);border-radius:13px;
+        box-shadow:0 2px 12px rgba(22,34,90,.06);padding:15px 20px;text-align:center}
+  .node .t{font-size:18px;font-weight:700;color:var(--navy);line-height:1.3}
+  .node .s{font-size:14.5px;color:var(--muted);margin-top:5px;line-height:1.45}
+
+  .decide{position:absolute;left:600px;top:352px;width:720px;height:132px;border-radius:15px;
+          background:linear-gradient(135deg,#1b2a6b,#2f3f8f);color:#fff;
+          box-shadow:0 8px 26px rgba(22,34,90,.28);padding:22px 30px;text-align:center}
+  .decide .k{font-size:12.5px;font-weight:700;letter-spacing:.17em;opacity:.75}
+  .decide .t{font-size:27px;font-weight:800;margin-top:7px;letter-spacing:-.01em}
+  .decide .s{font-size:15px;opacity:.85;margin-top:7px}
+  .decide code{font-family:ui-monospace,Menlo,monospace;background:rgba(255,255,255,.16);
+               padding:2px 8px;border-radius:5px;font-size:14px}
+
+  .col{position:absolute;width:498px}
+  .cond{background:#fff;border:1.5px dashed #c9cfdd;border-radius:11px;padding:13px 17px;
+        font-size:15.5px;line-height:1.45;color:var(--ink);text-align:center}
+  .cond b{color:var(--navy);font-weight:700}
+
+  .out{border-radius:14px;padding:17px 22px;margin-top:42px}
+  .out .lab{font-size:20px;font-weight:800;letter-spacing:.02em;display:flex;align-items:center;gap:9px}
+  .out ul{list-style:none;margin-top:12px}
+  .out li{font-size:15.5px;line-height:1.5;padding-left:17px;position:relative;margin-bottom:8px;color:var(--body)}
+  .out li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--d)}
+  .out li b{color:var(--navy);font-weight:700}
+  .g{background:var(--greenbg);--d:var(--greenbar)}  .g .lab{color:var(--green)}
+  .a{background:var(--amberbg);--d:var(--amberbar)}  .a .lab{color:var(--amber)}
+  .r{background:var(--redbg);  --d:var(--redbar)}    .r .lab{color:var(--red)}
+
+  .fin{margin-top:13px;padding-top:11px;border-top:1.5px solid rgba(22,34,90,.12);
+        font-size:15px;line-height:1.4;text-align:center}
+  .fin b{color:var(--navy);font-weight:700}
+
+  .side{position:absolute;background:var(--purplebg);border-radius:12px;padding:14px 19px;
+        font-size:14.5px;line-height:1.5;color:var(--ink)}
+  .side .h{font-size:15px;font-weight:800;color:var(--purple);margin-bottom:5px}
+  .side b{color:var(--navy);font-weight:700}
+
+  .foot{position:absolute;left:58px;bottom:26px;font-size:14px;color:var(--muted)}
+  .foot b{color:var(--navy);font-weight:700}
+  .foot2{position:absolute;right:58px;bottom:22px;background:#fdf3e4;border-radius:9px;
+         padding:11px 19px;font-size:13px;line-height:1.5;color:#7a5510;text-align:right}
+</style>
+</head>
+<body>
+<svg class="wires">
+  <defs>
+    <marker id="ar" markerWidth="11" markerHeight="11" refX="8.5" refY="4" orient="auto">
+      <path d="M0 0 L9 4 L0 8 z" fill="#9aa3bb"/>
+    </marker>
+    <marker id="arP" markerWidth="11" markerHeight="11" refX="8.5" refY="4" orient="auto">
+      <path d="M0 0 L9 4 L0 8 z" fill="#8b7ad6"/>
+    </marker>
+  </defs>
+  <g stroke="#9aa3bb" stroke-width="2.4" fill="none" marker-end="url(#ar)">
+    <path d="M960 240 V 268"/>
+    <path d="M960 330 V 346"/>
+  </g>
+  <g stroke="#9aa3bb" stroke-width="2.4" fill="none">
+    <path d="M960 484 V 512"/>
+    <path d="M311 512 H 1609"/>
+  </g>
+  <g stroke="#9aa3bb" stroke-width="2.4" fill="none" marker-end="url(#ar)">
+    <path d="M311 512 V 542"/>
+    <path d="M960 512 V 542"/>
+    <path d="M1609 512 V 542"/>
+    <path d="M311 614 V 650"/>
+    <path d="M960 614 V 650"/>
+    <path d="M1609 614 V 650"/>
+  </g>
+  <!-- vòng correction: từ cột đỏ quay lại quyết định -->
+  <path d="M1862 760 H 1892 Q 1904 760 1904 748 V 428 Q 1904 416 1892 416 H 1330"
+        stroke="#8b7ad6" stroke-width="2.6" fill="none" stroke-dasharray="8 6" marker-end="url(#arP)"/>
+</svg>
+
+<div class="pill">MINI HACKATHON AI · CHECKPOINT 2</div>
+<h1>LUỒNG TRẢI NGHIỆM · NHÓM DALAB</h1>
+<p class="sub">Hướng A1 · <b>Tutor biết mình không biết</b> — phân loại căn cứ trước, trả lời sau</p>
+<div class="legend">
+  <b>Mức prototype: Mock.</b> CP2 quyết định bằng luật cứng.<br>
+  CP3 đổi <b>USE_REAL_AI = true</b> → gọi LLM thật, cùng 3 nhãn.
+</div>
+
+<div class="node" style="left:730px;top:176px;width:460px">
+  <div class="t">Học viên mở trang học VLearn</div>
+  <div class="s">Tài liệu hiện bên trái · dòng chào nêu rõ phạm vi <b>(HAX G1)</b></div>
+</div>
+
+<div class="node" style="left:760px;top:272px;width:400px">
+  <div class="t">Gõ câu hỏi vào ô tutor</div>
+</div>
+
+<div class="decide">
+  <div class="k">★ QUYẾT ĐỊNH AI — TRUNG TÂM CỦA LÁT CẮT</div>
+  <div class="t">Câu này có căn cứ trong tài liệu đang mở không?</div>
+  <div class="s"><code>decide()</code> phân loại <b>TRƯỚC</b> khi sinh bất kỳ nội dung nào</div>
+</div>
+
+<!-- CỘT 1 -->
+<div class="col" style="left:62px;top:546px">
+  <div class="cond">Khớp <b>≥2 từ</b> với một trang<br>trong tài liệu đang mở</div>
+  <div class="out g">
+    <div class="lab">🟢 GROUNDED</div>
+    <ul>
+      <li>Nhãn xanh <b>“Có căn cứ — trang 22”</b> hiện trước nội dung <b>(G2)</b></li>
+      <li>Trả lời kèm trích dẫn <b>[trang 22]</b></li>
+      <li>Giữ nguyên hành vi tutor hiện tại</li>
+    </ul>
+    <div class="fin">Kết thúc: <b>câu trả lời truy được về nguồn</b></div>
+  </div>
+</div>
+
+<!-- CỘT 2 -->
+<div class="col" style="left:711px;top:546px">
+  <div class="cond">Câu cụt <b>&lt; 8 ký tự</b> hoặc<br>chưa rõ hỏi nội dung hay thủ tục</div>
+  <div class="out a">
+    <div class="lab">🟡 PARTIAL</div>
+    <ul>
+      <li><b>Hỏi lại đúng một câu</b> để thu hẹp — không đoán <b>(G10)</b></li>
+      <li>2 nút chọn nhanh: <i>“nội dung trang đang mở”</i> / <i>“vướng thủ tục nộp bài”</i></li>
+      <li>Tutor thật hiện chỉ hỏi lại <b>0,2%</b> số lượt</li>
+    </ul>
+    <div class="fin">Kết thúc: <b>quay lại vòng hỏi với câu rõ hơn</b></div>
+  </div>
+</div>
+
+<!-- CỘT 3 -->
+<div class="col" style="left:1360px;top:546px">
+  <div class="cond">Chạm <b>deadline · điểm · quy chế</b> → luật cứng ④<br>hoặc không tìm được căn cứ nào</div>
+  <div class="out r">
+    <div class="lab">🔴 UNGROUNDED</div>
+    <ul>
+      <li><b>KHÔNG sinh nội dung trả lời</b> — đây là cả lát cắt</li>
+      <li>Nói thẳng không có trong tài liệu + <b>lý do</b> <b>(G11)</b></li>
+      <li>Hộp <b>“Hỏi ai”</b>: TA · giảng viên · Syllabus · kênh lớp</li>
+    </ul>
+    <div class="fin">Kết thúc: <b>chỉ đúng người, không phải câu trả lời</b></div>
+  </div>
+</div>
+
+<div class="side" style="left:1360px;top:906px;width:498px">
+  <div class="h">📌 “Tài liệu có nói mà” — nhánh CORRECTION (G9)</div>
+  Học viên chỉ vào đoạn cụ thể → <b>chạy lại quyết định</b> chỉ trên đoạn đó. Bắt ca tutor từ chối nhầm.
+</div>
+
+<div class="side" style="left:62px;top:906px;width:498px">
+  <div class="h">👍 👎 — nhánh FEEDBACK (G15)</div>
+  Chấm kèm chip bắt buộc: <b>Bịa · Thiếu · Lạc đề · Đúng mà khó hiểu</b>. Vá tỷ lệ rating <b>1,3%</b> hiện tại.
+</div>
+
+<div class="side" style="left:711px;top:906px;width:498px;background:#eef1f6">
+  <div class="h" style="color:#3d4661">🔍 TRACE LOG — mọi nhánh đều ghi</div>
+  <b>thời điểm · nguồn · ms · câu hỏi · nhãn · lý do · route.</b> Sang CP3 đổi thành <b>AI THẬT</b> — bằng chứng R5.
+</div>
+
+<div class="foot"><b>Checkpoint 2:</b> Luồng trải nghiệm · Nhóm Dalab · 16/9/2026 · <b>codebase/</b></div>
+<div class="foot2">4 đường đi khớp <b>spec.md §6</b> · 4 nút mẫu trong prototype chạy đúng 4 nhánh này</div>
+</body>
+</html>

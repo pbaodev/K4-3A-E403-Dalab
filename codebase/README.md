@@ -37,6 +37,12 @@ export const CONFIG = { USE_REAL_AI: true, model: "gemini-2.0-flash" };
 
 > ⚠️ **Không commit API key.** Key truyền vào qua biến môi trường hoặc ô nhập tạm trong phiên demo.
 
+## Sơ đồ luồng
+
+![Luồng trải nghiệm](../docs/cp2-flow.png)
+
+Nguồn render: `docs/cp2-flow.html` · ảnh: `docs/cp2-flow.png`
+
 ## 4 đường đi trải nghiệm — bấm thử
 
 | Nút mẫu | Đường đi (spec.md §6) | Kết quả mong đợi |
