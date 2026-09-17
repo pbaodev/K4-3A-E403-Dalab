@@ -40,7 +40,7 @@ Không cần clone, không cần cài. Bốn nút mẫu chạy đúng bốn đư
 |---|---|---|
 | CP1 · Canvas + repo công khai | 19:30 · 16/9 | ✅ |
 | CP2 · Flow bấm được | 21:00 · 16/9 | ✅ |
-| CP3 · AI thật + đo lượt 1 | 16:00 · 17/9 | ✅ **20/20** ca · `gemini-3.6-flash` · [kết quả](eval/run_results.md) |
+| CP3 · AI thật + đo lượt 1 | 16:00 · 17/9 | ✅ **27/28 = 96%** · `qwen3.8-27b` trên Groq · [kết quả](eval/run_results.md) |
 | CP4 · Chốt spec + khoá quality bar | 21:00 · 17/9 | ⬜ |
 | CP5 · Slide PDF + video dự phòng | 13:00 · 18/9 | ⬜ |
 | CP6 · Thuyết trình | 17:30 · 18/9 | ⬜ |

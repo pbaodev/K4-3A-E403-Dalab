@@ -14,9 +14,25 @@
 import { DOC, ROUTES } from "./fixtures.js";
 
 export const CONFIG = {
-  USE_REAL_AI: true,                       // CP3 (17/9): đã bật lời gọi AI thật
-  model: "models/gemini-3.6-flash",        // gemini-2.0-flash đã bị khai tử 17/9
-  endpoint: "https://generativelanguage.googleapis.com/v1beta/interactions"
+  USE_REAL_AI: true,        // CP3 (17/9): đã bật lời gọi AI thật
+  provider: "groq",         // đổi sang "gemini" là chạy provider kia, không sửa gì khác
+  providers: {
+    // Đo ngày 17/9 với đúng prompt của nhóm (3.348 ký tự):
+    //   groq   qwen3.8-27b        0,5s/lượt · 1000 req/~3ph · 8.000 token/phút
+    //   gemini gemini-3.6-flash   7,3s/lượt · 20 req/phút  <- hết hạn mức giữa lượt chạy
+    groq: {
+      model: "qwen/qwen3.8-27b",
+      endpoint: "https://api.groq.com/openai/v1/chat/completions",
+      keyHint: "console.groq.com/keys"
+    },
+    gemini: {
+      model: "models/gemini-3.6-flash",   // gemini-2.0-flash đã bị khai tử 17/9
+      endpoint: "https://generativelanguage.googleapis.com/v1beta/interactions",
+      keyHint: "aistudio.google.com/apikey"
+    }
+  },
+  get model()    { return this.providers[this.provider].model; },
+  get endpoint() { return this.providers[this.provider].endpoint; }
 };
 
 /** Luật cứng lớp ④ — mọi câu chạm deadline/điểm/quy chế LUÔN đi đường 🔴.
@@ -112,19 +128,31 @@ Chỉ trả về JSON, không kèm giải thích:
 {"label":"GROUNDED|PARTIAL|UNGROUNDED","reason":"vì sao xếp nhãn này, 1 câu","answer":"câu trả lời gửi học viên","citation_page":<số trang hoặc null>}`;
 }
 
-/** Bóc phần chữ model sinh ra khỏi response Interactions API (mảng steps). */
+/** Bóc phần chữ model sinh ra — Groq dùng choices[], Gemini dùng steps[]. */
 export function extractText(raw) {
-  const out = (raw?.steps ?? []).filter(s => s.type === "model_output");
+  if (raw?.choices) return (raw.choices[0]?.message?.content ?? "").trim();   // Groq (OpenAI-compatible)
+  const out = (raw?.steps ?? []).filter(s => s.type === "model_output");      // Gemini Interactions
   return out.flatMap(s => (s.content ?? []).filter(c => c.type === "text").map(c => c.text)).join("").trim();
 }
 
-export async function aiDecide(question, apiKey) {
-  const prompt = buildPrompt(question);
-  const res = await fetch(`${CONFIG.endpoint}?key=${encodeURIComponent(apiKey)}`, {
+/** Hai provider, hai dạng request/response. Giữ cả hai để đổi được khi một bên hết hạn mức. */
+const CALL = {
+  groq: (prompt, key) => ([CONFIG.endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+    body: JSON.stringify({ model: CONFIG.model, temperature: 0, messages: [{ role: "user", content: prompt }] })
+  }]),
+  gemini: (prompt, key) => ([`${CONFIG.endpoint}?key=${encodeURIComponent(key)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ model: CONFIG.model, input: prompt })
-  });
+  }])
+};
+
+export async function aiDecide(question, apiKey) {
+  const prompt = buildPrompt(question);
+  const [url, init] = CALL[CONFIG.provider](prompt, apiKey);
+  const res = await fetch(url, init);
   const raw = await res.json();
   logTrace({ ts: new Date().toISOString(), question, prompt, raw });   // ghi vết prompt + response THÔ
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${raw?.error?.message ?? "loi khong ro"}`);
@@ -157,6 +185,6 @@ export async function decide(question, apiKey) {
   const t0 = performance.now();
   const out = CONFIG.USE_REAL_AI ? await aiDecide(question, apiKey) : mockDecide(question);
   out.ms = Math.round(performance.now() - t0);
-  out.source = CONFIG.USE_REAL_AI ? "AI THẬT" : "MOCK (CP2)";
+  out.source = CONFIG.USE_REAL_AI ? `AI THẬT · ${CONFIG.provider} · ${CONFIG.model}` : "MOCK (luật cứng)";
   return out;
 }

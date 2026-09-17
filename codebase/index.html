@@ -90,10 +90,10 @@
   <section class="panel">
     <h2>💬 Hỏi tutor</h2>
     <div class="keybox">
-      <label for="apikey">🔑 Gemini API key <span>— dán key của bạn để chạy AI thật. Key chỉ nằm trong tab này (sessionStorage), không gửi đi đâu ngoài Google, không nằm trong repo.</span></label>
-      <input id="apikey" type="password" placeholder="dán key rồi bấm Lưu — lấy free tại aistudio.google.com/apikey" autocomplete="off">
+      <label for="apikey">🔑 API key <span id="keyhint"></span></label>
+      <input id="apikey" type="password" autocomplete="off">
       <button type="button" id="savekey">Lưu</button>
-      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Lấy key</a>
+      <a id="keylink" target="_blank" rel="noopener">Lấy key free</a>
     </div>
     <div class="samples" id="samples"></div>
     <form class="composer" id="form">
@@ -133,12 +133,16 @@ const LABELS = {
 };
 
 // Key sống trong sessionStorage: đóng tab là mất, không bao giờ vào repo.
-const KEY_ID = "vlearn_dalab_gemini_key";
+const KEY_ID = `vlearn_dalab_key_${CONFIG.provider}`;   // mỗi provider một key riêng
+const HINT = CONFIG.providers[CONFIG.provider].keyHint;
+$("#keyhint").textContent = `— dán key ${CONFIG.provider} của bạn. Key chỉ nằm trong tab này (sessionStorage), không vào repo, không gửi đi đâu ngoài ${CONFIG.provider}.`;
+$("#apikey").placeholder = `dán key rồi bấm Lưu — lấy free tại ${HINT}`;
+$("#keylink").href = `https://${HINT}`;
 const readKey = () => { try { return sessionStorage.getItem(KEY_ID) || ""; } catch { return ""; } };
 function setMode() {
   const has = !!readKey();
   $("#mode").textContent = CONFIG.USE_REAL_AI
-    ? (has ? `AI THẬT · ${CONFIG.model}` : "AI THẬT — cần dán API key trước")
+    ? (has ? `AI THẬT · ${CONFIG.provider} · ${CONFIG.model}` : `AI THẬT (${CONFIG.provider}) — cần dán API key trước`)
     : "MOCK (luật cứng, chưa gọi AI)";
   $(".keybox").classList.toggle("ok", has);
 }

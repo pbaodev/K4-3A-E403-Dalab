@@ -9,8 +9,11 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { decide, getTrace, CONFIG } from "../codebase/tutor-core.js";
 
-const KEY = process.env.GEMINI_API_KEY;
-if (!KEY) { console.error("Thiếu GEMINI_API_KEY. Chạy: GEMINI_API_KEY=xxx node eval/run_eval.mjs"); process.exit(1); }
+// Key theo provider đang chọn trong CONFIG — luôn đọc từ BIẾN MÔI TRƯỜNG, không từ file.
+const ENV = { groq: "GROQ_API_KEY", gemini: "GEMINI_API_KEY" }[CONFIG.provider];
+const KEY = process.env[ENV];
+if (!KEY) { console.error(`Thiếu ${ENV}. Chạy: ${ENV}=xxx node eval/run_eval.mjs`); process.exit(1); }
+console.log(`Provider: ${CONFIG.provider} · ${CONFIG.model}`);
 
 const gs = JSON.parse(readFileSync(new URL("./golden_set.json", import.meta.url), "utf8"));
 
@@ -57,7 +60,7 @@ for (const c of todo) {
                  answer: (r.answer || "").replace(/\s+/g, " ").slice(0, 200),
                  reason: (r.reason || "").replace(/\s+/g, " ").slice(0, 160), ms: r.ms });
   process.stdout.write(pass ? "." : "X");
-  await new Promise(s => setTimeout(s, 4000));   // nới nhịp, tránh rate limit
+  await new Promise(s => setTimeout(s, CONFIG.provider === "groq" ? 9000 : 4000));   // nới nhịp, tránh rate limit
 }
 console.log("\n");
 results.sort((a, b) => a.id.localeCompare(b.id));
@@ -78,8 +81,8 @@ const pct = (a, b) => `${a}/${b} = ${(a / b * 100).toFixed(0)}%`;
 const L = [];
 L.push(`# Kết quả chạy golden set — lượt 1`);
 L.push(``);
-L.push(`**Chạy lúc:** ${new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })} · **Model:** \`${CONFIG.model}\` · **AI thật:** ${CONFIG.USE_REAL_AI ? "CÓ" : "KHÔNG"}`);
-L.push(`**Lệnh chạy lại:** \`GEMINI_API_KEY=xxx node eval/run_eval.mjs\``);
+L.push(`**Chạy lúc:** ${new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })} · **Provider:** \`${CONFIG.provider}\` · **Model:** \`${CONFIG.model}\` · **AI thật:** ${CONFIG.USE_REAL_AI ? "CÓ" : "KHÔNG"}`);
+L.push(`**Lệnh chạy lại:** \`${ENV}=xxx node eval/run_eval.mjs\``);
 L.push(`**Log prompt + response thô:** \`codebase/logs/trace-${stamp}.json\` · **Kết quả máy đọc:** \`eval/run1-raw.json\``);
 L.push(``);
 L.push(`## Tỷ lệ đạt: **${pct(pass, results.length)}**`);
