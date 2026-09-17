@@ -33,7 +33,9 @@ Không phải "học viên nói chung": 70 học viên có thật trong chatlog 
 **Bằng chứng học viên đã tự phòng thân** — ca `T02736`: học viên gõ *"Deadline nộp bài AI Product Hackathon là ngày nào? **Nếu tài liệu không có thì nói rõ là không biết.**"* Việc phải tự dặn trước cho thấy họ **đã từng bị lừa**. Đáng chú ý: lần đó tutor trả lời đúng — tức hành vi mong muốn **có thể kích hoạt được**, nhưng đang phụ thuộc vào việc học viên biết cách nhắc.
 
 ### Problem statement *(KHÔNG chữ AI)*
-> **Học viên K4 hỏi một câu mà tài liệu đang mở không chứa câu trả lời thì 86,7% số lần nhận được một câu trả lời trôi chảy, tự tin, nhưng không dựa trên bất kỳ nguồn nào — và không có cách nào phân biệt nó với 13,3% số lần câu trả lời là thật.** Hậu quả: học viên làm theo thông tin sai về quy chế nộp bài và mất điểm, hoặc mất niềm tin rồi bỏ hẳn công cụ và quay lại đi hỏi TA từng câu một.
+> **Học viên K4 hỏi một câu mà tài liệu đang mở không chứa câu trả lời thì 89,2% số lần (116/130 ca thật) nhận được một câu trả lời trôi chảy, tự tin, không dựa trên bất kỳ nguồn nào — viết bằng đúng giọng văn tutor dùng khi nó thật sự có căn cứ, nên học viên không có dấu hiệu nào để nhận ra. Chỉ 10,8% số lần tutor nói thẳng là mình không biết.** Hậu quả: học viên làm theo thông tin sai về quy chế nộp bài và mất điểm, hoặc mất niềm tin rồi bỏ hẳn công cụ và quay lại đi hỏi TA từng câu một.
+>
+> *(Mức chung cả dataset K3+K4 là 86,7% — 130/150. Lát cắt nhắm học viên K4 nên phát biểu bằng số của K4.)*
 
 ### Evidence
 **Chuẩn B — mining (đã xong, log đầy đủ):** [`evidence/mining-notes.md`](evidence/mining-notes.md) · script đếm lại được: [`evidence/count_ungrounded.py`](evidence/count_ungrounded.py)
@@ -43,11 +45,13 @@ Không phải "học viên nói chung": 70 học viên có thật trong chatlog 
 | Lượt hỏi-đáp thật trong pack | 13.494 | `tutor_turns.csv` |
 | Câu học viên tự gõ (bỏ 3.067 câu mẫu) | 10.427 | `is_preset = False` |
 | Trả lời không có trích dẫn | 3.781 (**28,0%**) | `has_citation = False` |
-| **Câu ngoài phạm vi tài liệu** | **150** · 70 học viên | regex hành chính, xem script |
-| → thuộc khoá K4 | **130 (86,7%)** | `cohort_hint = K4` |
-| → tutor **từ chối đúng** | 20 (**13,3%**) | khớp cụm từ chối |
-| → tutor **trả lời như thể biết** | **130 (86,7%)** | phần còn lại |
+| **Câu ngoài phạm vi tài liệu** (K3+K4) | **150** · 70 học viên | regex hành chính, xem script |
+| → tutor **từ chối đúng** | 20 (**13,3%** của 150) | khớp cụm từ chối |
+| → tutor **trả lời như thể biết** | **130 (86,7%** của 150) | phần còn lại |
 | → trong đó gắn `[trang N]` giả | **10** | `has_citation = True` |
+| **Riêng khoá K4** — câu ngoài phạm vi | **130** / 2.555 câu tự gõ · 54 học viên | `cohort_hint = K4` |
+| → tutor **trả lời như thể biết** | **116 (89,2%** của 130) | ← số dùng trong problem statement |
+| → tutor **từ chối đúng** | 14 (10,8%) | |
 | `ask_probing_question` (tutor hỏi lại) | **28 / 13.494 = 0,2%** | `move_used` |
 | Lượt có rating | 177 (1,3%) — trong đó **85 👎 / 92 👍** | `rating` |
 
