@@ -267,15 +267,35 @@ Học viên hỏi *"trang 22 nói gì về token?"*, token thật ra ở trang 2
 
 ## §8. Phân công & kế hoạch
 
-| Đầu việc | Người phụ trách |
-|---|---|
-| Spec §1-§4, điều phối, nộp 5 form checkpoint | **PHAN DUY BẢO** (2A202602767) |
-| Module quyết định trung tâm + lời gọi AI thật + trace log | **ĐOÀN DUY BÁCH** (2A202602515) |
-| Evidence chuẩn A/B + golden set + chấm kết quả | **TRẦN THỊ THUÝ** (2A202602960) |
-| 4 đường đi trải nghiệm, prototype UI, HAX/PAIR, slide + video | **NGUYỄN VĂN SƠN** (2A202602744) |
+> ⚠️ **Vibe-coding rule:** giám khảo hỏi ngẫu nhiên bất kỳ thành viên nào về phần có tên mình trong `README.md`. Không giải thích được bản chất kỹ thuật hoặc quyết định thiết kế → **0 điểm phần cá nhân đó**. Bảng dưới phải khớp việc thật đã làm, không phải việc dự định.
 
-**Willing users (≥2 tên):** ✅ **Nguyễn Anh Tú** · **Phạm Văn Nghị** — học viên 3A nhóm khác, đã đồng ý thử prototype trước CP5 (chi tiết trong `TEAMMATES.md`).
-**Multi-prototype:** ⬜ nếu kịp giữa CP2 và CP3 — trục khác biệt dự kiến: *chặn hẳn khi 🔴* vs *trả lời kèm cảnh báo đỏ*.
+| Đầu việc | Người phụ trách | Phải giải thích được gì khi bị hỏi |
+|---|---|---|
+| Spec §1–§4, điều phối, nộp 5 form checkpoint | **PHAN DUY BẢO** (2A202602767) | Vì sao đổi problem statement ngày 17/9; vì sao loại 3 ứng viên kia bằng số |
+| Module quyết định trung tâm + lời gọi AI thật + trace log | **ĐOÀN DUY BÁCH** (2A202602515) | `fabricated_page` phát hiện trang bịa bằng cách nào; vì sao `PARSE_ERROR` tính là trượt chứ không nuốt |
+| Evidence chuẩn A/B + golden set + chấm kết quả | **TRẦN THỊ THUÝ** (2A202602960) | Bốn phép đếm sai đã bỏ (mining-notes §5); vì sao 12,8% là **sàn** chứ không phải trần |
+| 4 đường đi trải nghiệm, prototype UI, HAX/PAIR, slide + video | **NGUYỄN VĂN SƠN** (2A202602744) | Vì sao trích dẫn phải kèm nguyên văn dòng trích chứ không chỉ số trang (§4b) |
+
+### Kế hoạch LEC 6 + LAB 6 (18/9)
+
+| Khi nào | Việc | Ai |
+|---|---|---|
+| Tối 17/9, sau CP4 | Gửi form khảo sát chuẩn A, thu về trước sáng 18/9 | BẢO gửi · THUÝ tổng hợp vào `evidence/survey-log.md` |
+| Sáng 18/9 (LEC 6) | **Vòng validation:** cho ≥5 người thử prototype, ghi `validation/user_testing_log.md` — mỗi người ≥3 câu tự gõ, ghi nguyên văn phản ứng | SƠN chủ trì · THUÝ ghi log |
+| Sáng 18/9 | Vá theo feedback **chỉ ở mức copy/luật prompt** — sau CP4 không thêm feature mới (guide §3.1) | BÁCH |
+| Trước 13:00 18/9 (CP5) | `demo-slides.pdf` 6 trang + video demo dự phòng | SƠN dựng · BẢO duyệt nội dung |
+| Trước 13:00 18/9 | **Dry run bấm giờ** — chạy đủ kịch bản demo, đo đúng 6 phút (E403) | Cả nhóm · BẢO bấm giờ |
+| 17:30 18/9 (LAB 6) | Thi cụm 6 phút + chung kết 10 phút nếu qua vòng | Mỗi người nói ≥1 phần |
+
+**Kịch bản demo đã chốt (dry run theo đúng thứ tự này):**
+1. Bấm mẫu 🟢 → khối trích dẫn hiện **nguyên văn dòng trang 22** → đối chiếu tại chỗ
+2. Gõ `giải thích giúp mình trang 99` → khối đỏ chặn số trang bịa (ca `H04`)
+3. Gõ `t nộp bài từ 6h chiều, sau 12h có thêm commit thì có chấm không?` → 🔴 + định tuyến (ca `U01`)
+4. Mở `eval/run_results.md` → 27/28 = 96% vs bar 90%, **nói thẳng ca trượt `H03`**
+
+**Willing users (≥2 tên):** ✅ **Nguyễn Anh Tú** · **Phạm Văn Nghị** — học viên 3A nhóm khác, user thật của VLearn tutor, đã đồng ý thử prototype trước CP5 (chi tiết `TEAMMATES.md`). Cần thêm ≥3 người nữa cho bonus R6.
+
+**Multi-prototype:** ❌ **Không làm.** Cửa sổ dự kiến là giữa CP2 và CP3, nhưng toàn bộ thời gian đó đã dùng để chuyển provider (Gemini hết hạn mức) và dựng thêm 8 ca biên khó. Trục khác biệt từng cân nhắc: *chặn hẳn khi 🔴* vs *trả lời kèm cảnh báo đỏ*. Ghi lại để không khai khống.
 
 ## §9. Changelog
 

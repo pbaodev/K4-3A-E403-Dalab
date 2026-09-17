@@ -16,7 +16,7 @@ Không cần clone, không cần cài. Bốn nút mẫu chạy đúng bốn đư
 | Họ và Tên | Mã Học Viên | Vai trò chính | Phần việc đảm nhiệm trong dự án |
 |---|---|---|---|
 | PHAN DUY BẢO | 2A202602767 | Team lead · Product owner | Đội trưởng — nộp form cả 5 mốc CP1–CP5; chốt lát cắt & non-goals; viết `spec.md` §1–§4; điều phối tiến độ theo checkpoint |
-| ĐOÀN DUY BÁCH | 2A202602515 | AI engineer | Module quyết định trung tâm trong `codebase/`; tích hợp lời gọi AI thật (Gemini API); thiết kế prompt phân loại có/không căn cứ; logging trace prompt–response |
+| ĐOÀN DUY BÁCH | 2A202602515 | AI engineer | Module quyết định trung tâm trong `codebase/`; tích hợp lời gọi AI thật (Groq — Gemini là đường lui); thiết kế prompt phân loại có/không căn cứ; logging trace prompt–response |
 | TRẦN THỊ THUÝ | 2A202602960 | Evidence & Eval lead | Mining `tutor_turns.csv` (chuẩn B) + khảo sát ≥20 học viên (chuẩn A); dựng golden set ≥20 ca trong `eval/`; chấm kết quả & viết `eval/run_results.md` |
 | NGUYỄN VĂN SƠN | 2A202602744 | UX & Demo lead | Thiết kế 4 đường đi trải nghiệm; dựng prototype UI trong `codebase/`; đối chiếu 4 nguyên tắc HAX/PAIR; slide 6 trang + video demo dự phòng |
 
