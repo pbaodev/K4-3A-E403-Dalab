@@ -47,6 +47,12 @@
   .why{font-weight:400;color:var(--muted);font-size:12.5px}
   .body{padding:12px 13px}
   .body p{margin:0 0 9px}
+  .cite{background:var(--green-bg);border-left:3px solid var(--green);border-radius:0 7px 7px 0;
+        padding:9px 12px;font-size:13.5px;margin:0 0 9px}
+  .cite b{color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  .cite q{display:block;margin-top:4px;font-style:normal;color:var(--ink)}
+  .fake{background:var(--red-bg);border-left:3px solid var(--red);border-radius:0 7px 7px 0;
+        padding:9px 12px;font-size:13.5px;margin:0 0 9px;color:var(--red);font-weight:600}
   .route{background:var(--red-bg);border-radius:7px;padding:10px 12px;font-size:13.5px;margin-top:4px}
   .route b{color:var(--red)}
   .acts{display:flex;flex-wrap:wrap;gap:7px;padding:0 13px 12px}
@@ -73,7 +79,8 @@
 <body>
 <header>
   <h1>VLearn · Trang học — AI Tutor <span class="badge">BẢN VÁ · Nhóm Dalab</span></h1>
-  <p>Lát cắt: tutor phân loại câu hỏi <b>có / không có căn cứ trong tài liệu đang mở</b> trước khi trả lời.
+  <p>Lát cắt: tutor phân loại câu hỏi <b>có / không có căn cứ trong tài liệu đang mở</b> trước khi trả lời,
+     và <b>chỉ gắn số trang khi neo được vào một trang có thật</b> — kèm nguyên văn dòng trích để bạn tự đối chiếu.
      Trạng thái: <b id="mode">đang tải…</b></p>
 </header>
 
@@ -81,8 +88,8 @@
   <section class="panel">
     <h2>📄 Tài liệu đang mở</h2>
     <div id="doc"></div>
-    <p class="hint"><b>G1 — làm rõ hệ thống làm được gì:</b> Mình trả lời được nội dung trong tài liệu bạn đang mở.
-       Deadline, điểm số, cách nộp bài → mình sẽ chỉ bạn hỏi ai.</p>
+    <p class="hint"><b>G1 — làm rõ hệ thống làm được gì:</b> Mình trả lời được nội dung trong tài liệu bạn đang mở,
+       và chỉ đưa số trang khi mở ra đúng chỗ. Deadline, điểm số, cách nộp bài → mình sẽ chỉ bạn hỏi ai.</p>
     <h2 style="margin-top:18px">🔍 Trace log <span style="text-transform:none;font-weight:400">(bằng chứng lời gọi AI — R5)</span></h2>
     <div class="trace" id="trace">Chưa có lượt nào.</div>
   </section>
@@ -154,12 +161,20 @@ $("#apikey").value = ""; setMode();
 
 async function ask(q) {
   const key = readKey();
-  if (CONFIG.USE_REAL_AI && !key) { alert("Dán Gemini API key vào ô phía trên rồi bấm Lưu."); return; }
+  if (CONFIG.USE_REAL_AI && !key) { alert(`Dán ${CONFIG.provider} API key vào ô phía trên rồi bấm Lưu.`); return; }
   let r;
   try { r = await decide(q, key); }
   catch (e) { r = { label: "ERROR", reason: "Không gọi được AI.", answer: e.message, citation: null, route: null, ms: 0, source: "AI THẬT" }; }
   const [icon, name] = LABELS[r.label] ?? ["⚠️", r.label];
   const cite = r.citation ? ` — trang ${r.citation.page}` : "";
+  // §4b — trích dẫn phải KIỂM ĐƯỢC: hiện nguyên văn dòng được trích, không chỉ số trang.
+  const citeBlock = r.citation
+    ? `<div class="cite"><b>Đối chiếu — trang ${r.citation.page}</b><q>${esc(r.citation.text)}</q></div>`
+    : "";
+  // Số trang mô hình khai mà tài liệu không có -> phải lộ ra, không được nuốt.
+  const fakeBlock = r.fabricated_page
+    ? `<div class="fake">⚠️ Mô hình khai [trang ${r.fabricated_page}] nhưng tài liệu đang mở không có trang đó — trích dẫn này bị chặn.</div>`
+    : "";
 
   const el = document.createElement("div");
   el.className = `turn ${r.label}`;
@@ -168,6 +183,7 @@ async function ask(q) {
     <div class="label">${icon} ${name}${cite}
       <span class="why">· ${esc(r.reason)}</span></div>
     <div class="body">
+      ${fakeBlock}${citeBlock}
       <p>${esc(r.answer)}</p>
       ${r.route ? `<div class="route"><b>Hỏi ai:</b> ${esc(r.route.who)}<br>
                     <span class="why">Vì ${esc(r.route.why)}.</span></div>` : ""}
@@ -180,7 +196,7 @@ async function ask(q) {
       <button data-fb="up">👍</button> <button data-fb="down">👎</button>
       <span>Sai chỗ nào?</span>
       <span class="chips">
-        <button>Bịa</button><button>Thiếu</button><button>Lạc đề</button><button>Đúng mà khó hiểu</button>
+        <button>Sai trang</button><button>Bịa</button><button>Thiếu</button><button>Lạc đề</button>
       </span>
     </div>`;
 
