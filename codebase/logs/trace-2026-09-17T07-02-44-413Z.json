@@ -1,0 +1,1322 @@
+[
+  {
+    "ts": "2026-09-17T06:58:57.320Z",
+    "question": "Transformer khác cách đọc tuần tự ở chỗ nào?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"Transformer khác cách đọc tuần tự ở chỗ nào?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_Chdyby1yYXRhYUt1eXMxZThQcV8zYXNBNBIXcm8tcmF0YWFLdXlzMWU4UHFfM2FzQTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1580,
+        "total_input_tokens": 1023,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1023
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 84,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 473,
+        "raw_prompt_token": 1054,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1054
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 88
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 473
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T06:58:54Z",
+      "updated": "2026-09-17T06:58:54Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"GROUNDED\",\"reason\":\"Nội dung câu hỏi được trả lời trực tiếp trong tài liệu ở trang 22.\",\"answer\":\"Transformer khác với cách đọc tuần tự ở chỗ nó cho phép mô hình nhìn sang các từ quan trọng khác trong toàn bộ câu một cách linh hoạt, thay vì chỉ xử lý từng bước tuần tự từ từ này sang từ khác.\",\"citation_page\":22}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T06:59:17.148Z",
+    "question": "token là gì, một từ tiếng Việt tốn bao nhiêu token?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"token là gì, một từ tiếng Việt tốn bao nhiêu token?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_Chd3by1yYXB5MkNMbmN2cjBQMktqMWdBdxIXd28tcmFweTJDTG5jdnIwUDJLajFnQXc",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1635,
+        "total_input_tokens": 1027,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1027
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 92,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 516,
+        "raw_prompt_token": 1058,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1058
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 96
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 516
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T06:59:14Z",
+      "updated": "2026-09-17T06:59:14Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"GROUNDED\",\"reason\":\"Tài liệu ở trang 24 đã định nghĩa token và nêu rõ số lượng token tương ứng với mỗi từ tiếng Việt.\",\"answer\":\"Token là đơn vị nhỏ nhất mà LLM xử lý (khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt). Mỗi từ tiếng Việt có dấu thường tốn từ 1–2 token.\",\"citation_page\":24}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T06:59:29.699Z",
+    "question": "vì sao output lại đắt hơn input?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"vì sao output lại đắt hơn input?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChZ6by1yYW9Ed1BQSF8xZThQaU9LdkNREhZ6by1yYW9Ed1BQSF8xZThQaU9LdkNR",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1701,
+        "total_input_tokens": 1022,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1022
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 136,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 543,
+        "raw_prompt_token": 1053,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1053
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 140
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 543
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T06:59:26Z",
+      "updated": "2026-09-17T06:59:26Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "```json\n{\n  \"label\": \"GROUNDED\",\n  \"reason\": \"Nội dung câu hỏi được giải thích trực tiếp ở trang 68 của tài liệu.\",\n  \"answer\": \"Output (vé ra) đắt hơn input (vé vào) vì đối với input, mô hình chỉ cần đọc nội dung gửi đến nên chi phí thấp. Trong khi đó, đối với output, mô hình phải tự sinh ra từng mảnh (token) một, quá trình này vừa chậm vừa tốn tài nguyên tính toán nên có giá đắt hơn gấp 3–5 lần.\",\n  \"citation_page\": 68\n}\n```",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T06:59:44.296Z",
+    "question": "MCP với Agent Skills khác nhau thế nào?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"MCP với Agent Skills khác nhau thế nào?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChczWS1yYXZPMUt2T1F2cjBQenJDVXlBOBIXM1ktcmF2TzFLdk9RdnIwUHpyQ1V5QTg",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1578,
+        "total_input_tokens": 1022,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1022
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 88,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 468,
+        "raw_prompt_token": 1053,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1053
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 92
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 468
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T06:59:41Z",
+      "updated": "2026-09-17T06:59:41Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"GROUNDED\",\"reason\":\"Tài liệu ở trang 16 định nghĩa và phân biệt rõ vai trò của MCP và Agent Skills.\",\"answer\":\"Theo tài liệu (trang 16):\\n- MCP là chuẩn kết nối agent với tool và dữ liệu bên ngoài.\\n- Agent Skills là thư mục chứa các hướng dẫn và tài nguyên, được nạp khi cần.\",\"citation_page\":16}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T06:59:55.909Z",
+    "question": "Vì sao cần skills mà không nhét hết vào system prompt?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"Vì sao cần skills mà không nhét hết vào system prompt?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_Chc2SS1yYXREM0x1TEYxZThQME9MSTBRNBIXNkktcmF0RDNMdUxGMWU4UDBPTEkwUTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1537,
+        "total_input_tokens": 1026,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1026
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 137,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 374,
+        "raw_prompt_token": 1057,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1057
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 141
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 374
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T06:59:52Z",
+      "updated": "2026-09-17T06:59:52Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "```json\n{\n  \"label\": \"GROUNDED\",\n  \"reason\": \"Nội dung câu hỏi được giải thích trực tiếp tại trang 15 của tài liệu.\",\n  \"answer\": \"Cần skills vì context window của mô hình có hạn nên không thể nhét toàn bộ quy trình công ty vào system prompt. Bên cạnh đó, know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không có trong dữ liệu huấn luyện, và skills được viết bằng Markdown giúp người làm nghiệp vụ có thể tự chỉnh sửa mà không cần lập trình viên.\",\n  \"citation_page\": 15\n}\n```",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:00:08.603Z",
+    "question": "temperature và top_p dùng để làm gì?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"temperature và top_p dùng để làm gì?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_Chc5by1yYXVtbUNhZjkxZThQbXJfeXFBRRIXOW8tcmF1bW1DYWY5MWU4UG1yX3lxQUU",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1391,
+        "total_input_tokens": 1023,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1023
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 92,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 276,
+        "raw_prompt_token": 1054,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1054
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 96
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 276
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:00:06Z",
+      "updated": "2026-09-17T07:00:06Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EsYJCsMJARFNMg9dtonKQOkjUANcLwfPJrVgbiihZR8Cudtm+3y9LYUbLwO6+heq2tFTrkwfKag9eRoNdRTXNbdKqI0m74Z+f9VLPQR67x9WFSfrACAGWJ4n0UU6EV85V8b+pAKpbfimEyjylX9pxy+11MzdXW6s5H8NhTkDxb67q6BQnXWAvLEGLyMssIJmxbrd+VXfSss1I+FZahRwq61aBYk4wOwqrwSm1Gw2bVhGG2yh/AiSt+pW11kAUYI7i3/xvlIwBaNxg5ktK3a9DrXUwUUUWNeHjPJphxFkOXVxzr19V2AQN/tPhlFWMspmLNjAgp+xMFBks7t8vN67NNKxZpewno7B7MMUK/8SUZ90gCVwDzDOs8UUTSlajOXqNK+gSfYyHIBjKAz79IV6XuhdSyunjuIg8KedTe7zTgmfyKfWmnHf9ObgQvAMKu6TpFlPhe/Z/nfiwAN3Gw4Fl06EKqTqS4ZLPkBG6ZwO056G71c88X4/psUU4o4EO4HXlzxI20PXDSMj9N1j71+oqh0q50Uc5axmFS2/86n3fgjg+ETESGUvNQJ/ROHhyevik3GNN5w8Yb/tVDqhDOFEK2B8R8colRonhjNt8JKZejRBqcUpralHthTSJoSbI53UGMcu+GaJwQfgxle3FCIhxbMSRZUoj0OLgMvIR+rfU++iuWweDCYSeNvquYQSBnkOd7IC/qLToEPB92mCOyzT2BaS5rqoRX4Q3Fnd15MWdONOAfIO87tAF4BsMtpO8r/hwAHGhiffxjssDyrO/p2v/AJ1TbPUBDruVWoisx8BuOq22XC/byNbILns0i9zlE1H3uXE8/Cen+R1C8Hlb2OjuerwUyh6iUicx+Y7x3GZ7oycVfHYMRLmAnhiqhm7L/1C5qaAy0FkEkfnKVZDF/tfGz4OH9/ttkt1QbsBg2/18RizrFiIV3/Emo8wueJZ9gCsBheGbNlXJz0/DYuwMEJELjN6kgVUBWAzZalVTTWVQzLo/y9sGa3qRdodJrokdLhZSYQXVNhbzhHMxZypKFCY7pAYIA78BbDe5KGVtZ9UWhtfuSXSXezXHcq2jz0bPHkayJdVtox/TVI11MiARidodPY+Pk9k2K6nBunaXjtus+tW/wOHgFgx8WcWCWrIZrLUQhCp8JzDsd/4rzQSgKzLQDtylFHypbo24qLHaUJH6RskMoaLPE+1hs1ZcKRsEZyfbMiJ5f9SWt3Ot1/ktIbV8gmruWG42sACmn6VN28rRBO5ZaH5M0y+ASl/xK5VWSEhn+yALQgh9R/fUxJDjcSCYPuH4uI1lPu8O6u3DYXbEUaHmaNLXTQg0JkLApmwQcUw/YkMjj/bkEHIv+gGQAmDVns4tyVw25NRTQb8Mm4+9bY4z84mZRT8eaKjgMLLSqQH8r8HCVUSuTZ6xg5lQj5/WrCEt009hnQEH6gzAw3LAGnRom5OKB5w4/eaqa40kpOt5ZA+PPsg15Kv+IQWd1GHDMqR4fevB/RXCAkuY3Axw/yNG+AkbSZ6jvxub/ePlHPxUzyX4Fe0zcFx2IgEsC25hhXDRpKQjUT9mweQstN5I4OFLHo4mkpLJfax99P8PCHEvcJx1Tc9aqs2CpHbPsLztHAYq1XWLBvFDg==",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\n  \"label\": \"GROUNDED\",\n  \"reason\": \"Nội dung câu hỏi về công dụng của temperature và top_p có trong trang 7 của tài liệu.\",\n  \"answer\": \"Temperature và top_p là các siêu tham số quan trọng được dùng để điều khiển tính sáng tạo (độ ngẫu nhiên) của kết quả do LLM tạo ra.\",\n  \"citation_page\": 7\n}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:00:19.644Z",
+    "question": "Convolution khác Attention chỗ nào?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"Convolution khác Attention chỗ nào?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdBSkNyYXR2eU85U00xZThQLW9PdW9RNBIXQUpDcmF0dnlPOVNNMWU4UC1vT3VvUTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1352,
+        "total_input_tokens": 1019,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1019
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 84,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 249,
+        "raw_prompt_token": 1050,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1050
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 88
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 249
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:00:16Z",
+      "updated": "2026-09-17T07:00:16Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EqcJCqQJARFNMg9fwBMrzeihN9EgkMK/ZBAMwgijDD5R+MzgpeldPb6wZu6ozXnlchPiXa8AAt7c/sivMuv6cXDR3TNedCM/psOyFV1fqay8wbfgA5uv6ou6S6Ad9u8cQUyzAQMiqCHSiDZDcRMnP+5KmI92BdWrmt++gQwUUQES/QGaI1YwEKhwdYfLMZ+hhIeSI31+LbiDYvnEA7WGwwxIbao6ZvTVuTlMWZTyAY/ce0UWV10rYlGZXkavSpfCblwO1qd1qQT72HsS3hjvX/WuG3JbpaeZKtO0qKHW8yTt9IQuUZeIJ87q3kxA/qBmM4Ra6hECsVJKoJxpFwse9HqUlc8PD9yuSMIwr11A/TU8pKtubMx0q0H4XAJ7pbFHANFkduiqNZJCsGfq8dVjjhhn5lP9Y2mFG/QoDBlG9mAQ0QtDawPsDDPfZlj9Z2Pt3Ez606F/NLzHdz1OD6esGnWxPnfs20Dk4YgEIGN4dhV6bFU2re1DBEqZspDkQtX6qCHUK8l3GNF1jy6Xqx1F2UJs9nd5q152SxM2HcZo1g68y6TXtz7bFwBLPke5LnD3Og9XnA53uuRWaiQGNSvGC6pO95+3MyOEYDXRdgfkZ2B8KZdZapRgTPT7yehLqnM4Y6Ix8Dmg2Nng8wqziWkuRn4uoU/wmRuSVYV+gCm307N326c7ijNnYSSHc5rTij/b4hASVFlbSR1TRQ89ZvtgBQXdtC9HpfKs9KtPSiq/yEkDLty4y9BLsggi2r4S+W8enyGoouILSBMeW+Nu7yYNeelKJ/kkkX8zeTJ9OSPguEqifORjRsHFFljHpR1BQ2drXV+zJffILi5YBCpg5IG5UY7BNfNsA5gvZALabxOJ4lrq3hQVwT//bM7krnxL2hfV5Dt70utsMb9hxOYr4P/jbzIiKtooCNDGhP24vkqUaSZLMmRQf8k1fm9ObCA/WuoVYEvh3M+MDAsDQAxGH19G5WFRdR2N+EqHJhwZQ4tPeJW68xBXooUQOwe+rxP/raFW6saExUs5/XWMhqUoprOgkPU16S9vLz98bIL2BMxe0VDaFWcqtiCw1jKThvdBB8nVbPufR/9cd0ccgRO5s2LxTB7iIiD1Lfxb9aI+rxxECJ8S2HO5n4JQhH6UdljI+KsQk7/i3YSIhLCfV9e9RZozyH5KRSmotBs+gs/cKnxmS2IYVoW9iMqgLbaS1oA+U3kqkecMvqCM5U9xc0Nv0tXmSvSpGc/hKj57OFaStXixTs9DvCSkoeQmLRJJECuS6q5mtPqJ/8uPC/i+IRTHnD0g9oPQ78C0yhL7djxBacZOrspyW4hE8xGhSmuNPaVi08EBfO91w210EZJou2FIYGWKeHLNp0lNoS2E4jZmZrvN2P1zJ2qNZsvt4FY2P+avGmM41ZMxQltqQyG+Vgv/vLsNwafJYO44LfP8kT9G0xvZYuW0JvT7r/FiG3JKOixej0FkGa+QfPq50GvbCctFKKnnDEaoVPBL4O+WLCUqK2Anapq3BEnUqX7amyNIZzslsm+q/6iuxEeGZRq9KAR7N6pCUcuLPk2LQjgOzEC5dSZ9kRY4hVKgFx8OM384",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"GROUNDED\",\"reason\":\"Tài liệu ở trang 34 cung cấp thông tin so sánh sự khác biệt giữa Convolution và Attention.\",\"answer\":\"Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ), trong khi với Attention thì mọi từ đều nằm trong tầm nhìn, giúp giải quyết tốt các câu cần ngữ cảnh xa.\",\"citation_page\":34}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:00:31.481Z",
+    "question": "model có được dạy luật chơi cờ không?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"model có được dạy luật chơi cờ không?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdEWkNyYXBiUENJM3gycm9QaUt1VDhBYxIXRFpDcmFwYlBDSTN4MnJvUGlLdVQ4QWM",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1593,
+        "total_input_tokens": 1023,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1023
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 89,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 481,
+        "raw_prompt_token": 1054,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1054
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 93
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 481
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:00:29Z",
+      "updated": "2026-09-17T07:00:29Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"GROUNDED\",\"reason\":\"Tài liệu tại trang 41 có xác nhận trực tiếp rằng model không được dạy luật chơi cờ.\",\"answer\":\"Theo tài liệu, model không được dạy luật chơi cờ, không hề thấy bàn cờ 8×8, cũng không biết quân trắng hay đen mà chỉ nhìn thấy chuỗi ký tự token biên bản ván cờ.\",\"citation_page\":41}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:00:42.206Z",
+    "question": "bốn làn sóng AI là những gì?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"bốn làn sóng AI là những gì?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdHSkNyYXNma0N1TEYxZThQME9MSTBRNBIXR0pDcmFzZmtDdUxGMWU4UDBPTEkwUTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1674,
+        "total_input_tokens": 1022,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1022
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 78,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 574,
+        "raw_prompt_token": 1053,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1053
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 82
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 574
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:00:40Z",
+      "updated": "2026-09-17T07:00:40Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "```json\n{\n  \"label\": \"GROUNDED\",\n  \"reason\": \"Nội dung câu hỏi được giải thích trực tiếp ở trang 4 của tài liệu.\",\n  \"answer\": \"Bốn làn sóng AI được đề cập trong tài liệu là: AI → ML → DL → LLM.\",\n  \"citation_page\": 4\n}\n```",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:00:51.754Z",
+    "question": "chạy file Python bị lỗi thì liên hệ ở đâu?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"chạy file Python bị lỗi thì liên hệ ở đâu?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdJWkNyYXBia0pLZjkxZThQcTdfeXFBRRIXSVpDcmFwYmtKS2Y5MWU4UHE3X3lxQUU",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1329,
+        "total_input_tokens": 1025,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1025
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 67,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 237,
+        "raw_prompt_token": 1056,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1056
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 71
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 237
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:00:49Z",
+      "updated": "2026-09-17T07:00:49Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EpMJCpAJARFNMg8nUWoRBEOQjIQ8JydU+aOYzaYB8AL1hpYn+o4TFP7P4rh8Pz9DCQUL+z3FpveSj543QPTba3CExo8Ju1fV3Sz+qIoSgIP/0RAoQVQE4SUoJ2P33r54/z5c9vlJLL82gHET9//SQknhBHzP6Sbhpjtbdsy+3fLgkcOTxv3F8nGpuprbcLEjPD+FAPv3DNPqTDztrWugcSI8oiQW93/ipbQQKYdkwlAWh7IIqg7YcYAdo/94FMnrsihyXw3iXLqu7eQwAuOy8Q2uc3CFddqznPFmkxeZfIyCzCeMHQSXVD23As5knYKiOm3zfzDHzDt3rj/h+SF1n7UHh3cIlFhMm01DVQqVQ7IRt0KaCg5ldE9P35+PAgHqsNFD0lYMFQdWPApr6AqAb/Bq2VcAohbGVcSV0Ekd5n40of7ouBc0AeK5siqV5mK4S0scRAjQnh6Ke1vN0GQSVF3yIaPsBiKKXqQ+kIuGqvpK2k+BIxBWHsMFh5BqvgxjYWgP2ANmQlrI8ev+sUB9f6rIfvPfCBg1orwUiyrezSuZZugxOrb8bsLk4hnkzd66GjnkSV/7VbFnmCkbsHGhghVjzoeD/JgaU4aJ/mX8/l3te/OhAP3UU4ZKBmCazUl2dumc8QmaZv/2HdztvORSV1MEK/G0uKnIC4blG/rLqWfDH4fVx9/lRGGJXsjk4VECGPCQYofikkIHGXaCg7bXmVVM1tYLYhaIwCXCraHK6LGEcXo6Hkhvn7AAzbIA4Y9j05iHCUao88YnJoWHLgbotqsx4dpwpjkSPWGJ9/agCx+eCnGQ6Jqo5MUYdIsHiRf9oMp8ZeFH+7egj+F36mviIHS/aw+TSCXXQf7i0USjVDSr7Ne8eijT5Uh18Uu2IR5qgFKSBVU7cBCb8cFZhQcBeueV8l+WqkjmXOEXR1VwPw810aCzsjc4YTkRyoBWFRMc8cM/fWP+o2lRauKp8UwcExkB9P95Tujv7oHBAJnBypYOAXeSQ7J4b9FUWQELjmUeD1TSGJ5K9JIrclf5zow/SOwFY096307LgjftHTkHzso34u862SLA/drerJ9U774LyM+codyFbVEA8C2rK0gcMEKlFmSOBD8qeaaRMJK8ZHaNkx8Ej5t57sHVTV1vf17FaxPXjbJGT/WEV4dfX+WfuCZBb7qySP8PldJGH0UwGZOoI7sdTo3f4k649TbxM0nha06mRpyGj0L3xiwAWgLnJ2dLuBx56FR0zKmLsXCX58WeCbdYzRn3Ry/VLJi0Hs/+moG/ZnmJMBbws5E+wR+9oYUqD0CSeekMStjKngSwqVSmoVkp3PuiQAWsSAv8jjRUYuulYOYIAwg4iFzCYAx0kvsq5HDGY2Z+5ifPUfu3F0xfSI6Hue9uTEtnyh4upWX8EnYlP0+NyINaEBQAohEQVqgYdg9PfNKspL90QzUa42vxw572Yppr97/Uuky+PA025Gu2ltu4HCfMRrYQWbhJ/Vi2VrIRhbzzMajPx2X1l+JUQ0q3lH/exesU/WaMS+Ae2gBrlxIC+LOjci91kWK6JwW8yMjj/g==",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"GROUNDED\",\"reason\":\"Tài liệu ở trang 21 có nêu rõ hướng dẫn liên hệ hỗ trợ trên Discord khi bị lỗi không chạy được file Python.\",\"answer\":\"Nếu bạn gặp lỗi hoặc không chạy được file Python, hãy liên hệ hỗ trợ ngay trên Discord.\",\"citation_page\":21}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:01:01.437Z",
+    "question": "hi",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"hi\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdLNUNyYW91b0VlMl8xZThQdDVUYTBRNBIXSzVDcmFvdW9FZTJfMWU4UHQ1VGEwUTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1277,
+        "total_input_tokens": 1015,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1015
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 63,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 199,
+        "raw_prompt_token": 1046,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1046
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 67
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 199
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:00:59Z",
+      "updated": "2026-09-17T07:00:59Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EoQHCoEHARFNMg/MrJubZ9b0JMmIwogXcsBJqeQIpPRAIGolqHSlmheOld3ajB7hjnP3V0nmwhbZ8Sm8Bl4W/XDI6Z9E3owLk+ucIWL8enW7vwr9UEZfOXFYiI8VBaxFGQtKGg9JkG1Qcs/IF3lZvL3qRU4BHAcfiXgQn01EvjqYedMPB0Eh62YdVoCsZsSqKPQPVg0FL+cjE7TobHQC7jDDWn65gxnpbDA1hmauMD6nRiRcztEseky8L4Ec8FMlfAelOPd+q7z6xIv6GwLqw2iOeWeXIBapXkBbJZ0/ll/ldakU1H2IGB3zECLfeQf6Zg2s6QW6cr+8b5pRGR64Ry6LIS5jO+/EvewycdhPEUj1KvKtDDaXSJ8xwPwijAI/BgYp4k5rZwPYwgev26Py6WFY1dMBZ6UYoffaCF8P6JpehypZs6dH7u3HOJOtHzChFsfPovqLcWBWRHiOxuSFCqU3XLKlwe0/rlYd34WmI89vObuIojRjEQO2RjqIjA4vCh6RDh5QPedq0fGUEMwE0dyBcEBNo/GDF5XB60S6GdEE5eXDDEp3FJXf2gK7gKiec++QHlEBKTt2k85xmhl5aU76BdqEdFIfwogghKg9L3pU/1gfdHGjxbJdBaT7nDRVcyf27TG6KThp00U9YhHhDTExiUJ+QdUNpCKA7xeN/0Md7TcPumKmhSZhbB7PccOt9ztdTM/dhx5ghdX5KjnTzRHl1iS1Spq2Dl4eHjGGNRxhf+N+G5u602YCX/1fsAj7cTcr/0JS3HPyJHIpICQj+WLaso+d/dmW9bsfIZfhlM/fPq6IBlOcivDa0D6zBSqW+QPIlb1V27u9ZMsTiQsUuXeDRG39mNuTQbdX+Cz67bsOsKktxDg3rJbV+RCAQVAOow/y+mrkufLGm/oYTRYyXD8gFPV/qV3nNDVban5AP8GSzSMIfGjdd1oH0xxyP82lFwJTr9CjdX1XRkPC8LmAOj6t0wcdJMf5J+wsbXvpbDj1PSV5m4XVvwv5IGSItDGjIl6qHhQYx2VKhMWCVvBmrlyqFhXLK0JmZ+SughriJJ4hhsCEQP0yov3IUm/wYgfkBni8aECykmfcUMZ2l8ifnDCWDFYAev4IaIFmQRtethy1DREVKlQkNwFMBgU1XSS10K+QvOwqTpcJACKiqTexLqdlhnDNxATdz1eloofoj89FDZvMTRtL",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"PARTIAL\",\"reason\":\"Câu hỏi chỉ là lời chào và quá ngắn, chưa rõ nội dung cụ thể học viên muốn hỏi.\",\"answer\":\"Xin chào! Bạn đang cần hỗ trợ thông tin hay có câu hỏi gì về tài liệu AI & LLM Foundation?\",\"citation_page\":null}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:01:11.336Z",
+    "question": "weu0wbenueuưe[6bviymvtơyv",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"weu0wbenueuưe[6bviymvtơyv\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdOWkNyYW95LUY1R052cjBQaTg2RHNRNBIXTlpDcmFveS1GNUdOdnIwUGk4NkRzUTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1373,
+        "total_input_tokens": 1032,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1032
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 90,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 251,
+        "raw_prompt_token": 1063,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1063
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 94
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 251
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:01:09Z",
+      "updated": "2026-09-17T07:01:09Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EtkICtYIARFNMg+ag42ClTvxSshaBLkzwr3ij623EhvWcWeWqllRew8QZ9H9zy0/6RVmGW78AO8UwwtTV9u+fEx4/kuaea4PN10A7HBzsKuvxKQq3TnzLgfWg+31WmluZ/eq4A6MPRIzJ1lp1AbDvZ6M5FSlNaNkFbYWXjFqPACxeJbSJtaGryUj56PG1/yuSHDbl3F5JtpHhPHp120G4JSZUdWODHc885+RQnCjqMZnNxv5lCwQQnS7TeXPEX9+4mA7yb06eq16qvZQj8CFUwqQp2WCQEwJt1IPIm9v12FnDsNFHg2hp1gNFkZPLojDyZg5A9AjdYu/48zVMy3CSD2jOtr3VQQr9uxZWw7FdUe8Fl5vHSqpUrDuNKiTVeMKx6bdrkPH9+B8zxTvrMuf2dhtwTsKIgD0lnqowTCZZIpOTObrWgKN0FJS/0OOw5ahpjKQG+UZVt3SdL9HOjLWdOjZtR/v8Sm+I5G+HUQefpsetQ4JAdpeFUKojrq5+KO4T2fzPu//hzgCYskJF0Chtn4YOBZ9KOBVblqpvRb2ga5pLDKWgJUjEe26tGkIVrDReB2SxfSSPOl19CWsG5/ja7Yo7CHYHOrQ3UEbTowMQbgZniLhNkt84CERvGehF8bBYrGMRHMpsaVr+AyIs+0lUM35Xs0ayrl4yru+gGYX88EBvH40z4XF8dEFViJcwsJC7iM3kGctQX1ub4NE9kvGRXqXI/D5rOqPwK4ragcA00wV8ga8sdxdIJnk61zEu7G/ue1Q/gpiF4XCR6+O6/aulphMtr+W3Uzk3+Ly2Vqm/q5AEZOMJq1UJHvoyHQc6pj5oyCpPsCDj7vNV0B5hLjGoPKx+tiiNERh1b6An8tERfnAxh2y7geRAGfLUeDiGrxlwvj/qJ7d37Zqr5JyGMsh1DeUSVzb8Hu/5lTDQnuLk8vD4b4ySAqT3V5uZ4aJI5X4bBmyn4ZQCxMg+Q/foFPdy9gQcVhLwzkwOBUwychXY289KpdvBRaqw2n1+ytio8Wa0b2GXw13qmi72gZinqs1MvYPm1TBzEqm3rhElKMausMdkG/MLvs6NJtzE/cT7Ot9pIOhG09oex2RBUqVTtF6q2op7VLc38jCrbJJUcPUPxH84BqAITNXxEVev7HQLxmkJifL+tXBxbghTbNpXnUlVLPCZIbJ2jygrkarzXw/wTjI5KlPRKpQAq/hJfnJPo9+yJLT1yJeBV+eCQXZGD77StgsHmC0QvidGhaxisNKNGNBh8WnhvogBjuAQVtaA3/J2asmBldGGwzI9MkjisFym8eLWdyAy+hGGMdL9oJlXpRoJ/HhU4+NehpcxMISSZls6qTZjaPdkFFxhNU3T/qMViu7r2GHjVleXJbGDSLcZNJ5vNlfHP8/KOqffqJytq/SY0fSopiBleZB/AE1vXr17S+8uNmbiGx6vYlk2seg++62dm/My7BW50cxIBuYvDncVcebrtqm31N2zlab",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "```json\n{\n  \"label\": \"PARTIAL\",\n  \"reason\": \"Câu hỏi của học viên bao gồm chuỗi ký tự không có ý nghĩa và không rõ nội dung cần hỏi.\",\n  \"answer\": \"Xin chào, câu hỏi của bạn chưa rõ ràng. Bạn có thể nhập lại hoặc mô tả chi tiết hơn nội dung cần hỗ trợ được không?\",\n  \"citation_page\": null\n}\n```",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:01:21.850Z",
+    "question": "ý tôi là slide này nè",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"ý tôi là slide này nè\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdQcENyYXAtVEgtM3gycm9Qdk9hZHVRZxIXUHBDcmFwLVRILTN4MnJvUHZPYWR1UWc",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1353,
+        "total_input_tokens": 1020,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1020
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 80,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 253,
+        "raw_prompt_token": 1051,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1051
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 84
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 253
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:01:18Z",
+      "updated": "2026-09-17T07:01:18Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EvoICvcIARFNMg/PHH8/xMHMV82v/7KiQl40kurYoCX3KTOJ8ZbYA8daqYiYk8wMDChFE602oZtj/KBCqd6lRcgrInhwZgKf2HzQ+rldhPICwwHDcRP99ivQWveoEnYyhwBRYYtYGj5bZbIje3kTrrylJESNbYzBpwUkeoykbFpN8leRXcnH9ANaWRv9zHfZYxpAELpNWAhe18fBC8fIXaf+YM6i/jxfiPSSwNofAEABIWSY+j0sKG0vfjD2B/qS6mddKhPQ6kljyuC2ZOjiPnlrloXCCE+nlzzYWrx2DvQdTtYid21hkRS3FhTuN+gX1b8GrFFGUxHVMtBWDfazte1IKvEDknyh2VzuSdLTihsEbtAlIqO9JaRMFRfJQqlQagrO3mhOM5ZS02GbYH62Kx7SPvWlk1TpS45pwKarlwMNs7mRTh/Kmqsetxm081q3gqaRlyTNrO7YphyrDswfvTpKp4eWuWr6U7a13x5Rw/b1L46pUzws2Y5g31EmaZ3fl/VIlmDBDwu+krEd1amDvieXZ1321LkDRR4UbyhXzsd8Qms2RIfF8kcZt6W8ITOrEM33TZPqc/M4OUVM2QVQ/TPA2YuyegGTplB7RWVDmSQj803XParyoyGIU8/Pc9u4SrTDZ3Zu0+G42xNKEGJA1wtjXYvYuMZvnlt6g2cPLJi6AxqrQAuMuY6hRFYlAbEgvWh5JXySqUEMkxaXp7x2xA9hNIQP5mlnuoTU/quKht7qoEC7OrQlgtIK0dVdxOx/Z5GAYFF+6XWotS7V1Ur2KCjO8Jj3ZC59dEY4LpK0/TXgSGu49KuV04f43w7EguYZ6LnU34qjF6kNLoOnwUh72tqTIqnXBK2CEEIt3nIWv7gOUWsQPhGyJuJHvH73qRuN+zEpKkyqnArisipq+FVTqC0A5r2VsXIqC4tMg+fxW+XBl8HIvFiIlrnrgKfXWRKxtQbJSrmI8hN+Eg+NRZwTy6q6kS9Tmfnz0Qr8YkilU/7oJT9Kctcv1QOnuoMLHsr5U4zpLILOTI3bZAMxxkKvkDChWRL7QAKNG6wk4u5j2/z13xbjXt17pdHAiNSjM1tngpmY0UL3QUV86UbFjjUS6N4bpgMQm0Y8TpQu9AFtVJtldcN5Yq1WjZ4ez06nM/LLc5larWyXKaGK0u4UMqxS5u3xOWYEXy33jxMxtH23ygJQr9ZMl8lpnRhScmrPfnFGBhn5/jU/ewg0tyJ1+tHQje8xBZZ+UnCU54YUeCwwDm6bBbEbs1UcdAZS+N9r2GqhYtfIwXqOIPU7JYsshkD3jWKSlZiY12VDS9SEcK+hFTs+Wd3t5Tk4JHRKne0ebvJTfYCWcbudhZt6yXiyJLhkJGR+W8zzk9KxQnwPTjny9/KV7gBLvo+NapjWJyKAOpqx6TvkIhwp8cQDfwjxOS3l2NS8AqztHghvO5I2ZryoFrPZfmdxUoDyfMdBAq/BYOe7XSV9s5pZoXOlaJs2Oluqgjb7pVNvm5BLRNu61E62OkV1tfzpbOMboWI4qOQ6",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "```json\n{\n  \"label\": \"PARTIAL\",\n  \"reason\": \"Câu nói quá ngắn và mơ hồ, không chỉ rõ thông tin hoặc slide cụ thể cần hỏi.\",\n  \"answer\": \"Bạn có thể nói rõ hơn bạn đang muốn hỏi về nội dung cụ thể nào hoặc slide số bao nhiêu không?\",\n  \"citation_page\": null\n}\n```",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:01:32.813Z",
+    "question": "t nộp bài từ 6h chiều, sau 12h có thêm commit thì có chấm các commit đó không?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"t nộp bài từ 6h chiều, sau 12h có thêm commit thì có chấm các commit đó không?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdTcENyYXFXcEN0M1UxZThQNnQ3eHlBNBIXU3BDcmFxV3BDdDNVMWU4UDZ0N3h5QTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1576,
+        "total_input_tokens": 1039,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1039
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 92,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 445,
+        "raw_prompt_token": 1070,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1070
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 96
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 445
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:01:30Z",
+      "updated": "2026-09-17T07:01:30Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"UNGROUNDED\",\"reason\":\"Câu hỏi liên quan đến quy chế chấm điểm và nộp bài, thuộc nhóm thông tin không có trong tài liệu D01.\",\"answer\":\"Tài liệu hiện tại không có thông tin về quy chế chấm điểm đối với các commit bổ sung sau thời hạn nộp. Bạn vui lòng liên hệ giảng viên hoặc người phụ trách lớp để được giải đáp chính xác nhé.\",\"citation_page\":null}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:01:43.331Z",
+    "question": "có hạn nộp bài ko nhỉ",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"có hạn nộp bài ko nhỉ\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdWSkNyYXQ2U0l1WHByZmNQajhIajRROBIXVkpDcmF0NlNJdVhwcmZjUGo4SGo0UTg",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1327,
+        "total_input_tokens": 1021,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1021
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 89,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 217,
+        "raw_prompt_token": 1052,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1052
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 94
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 217
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:01:40Z",
+      "updated": "2026-09-17T07:01:40Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EpAICo0IARFNMg/lZE1qjJcVdceBJCEDpkLQKHQL9csl81rRIJsKU2i/nLz+c0JfFlLEEezyrr6s6cb0YWBB6rr1pI0SCC7ZFxUoSzL6QOxQS9ktpD2ensMiBlUprZ50DuWSnRmDMDsmsAcB1s6q2soy469wJ7PQbNGcLuhQzkP/8sMMAAicrQHNyQL5vqXcdxdE6D76rf3/hkDLuPOBEmSezDRPn+/b6mA1/WJ6XE529cRdl5WQBWFZgcHa3I97CDDFMo1aMbbPkpEAa0S0woMPREnTOlKbu0qJgAy4wTqwkIBDATHLPItS0k9QOgfJ7TLVZToTjwtAjwKc6fv5KaBhqcX2dDEN7puct1C2gvm4vnuRe4A5XQmT0VXuth3ya4jqEetuRyg42zfsOPDoB/hBHG+VWjH6DktmmP/ACPWd9eYUxZjcbgWZfjY9rlqREIn+sgJ0VrovMQsK3KaNWBN/Iz+ApFXFYHjTP6qIOMWKouLSrMdhcxHEebEUjeTGumFcObwGG7QKsLv645Xcnij0EeOVb5TB88/f7t9y63/KB+O00Z4AGdQqj15+kLmzDPnd/JGywyDd9mJg25A4SdYUX3NxiQUv9T8E69bqtLIohNKcEM3BEqI8JxLQGzCjD6OebHZdn3+PbW5O15SLisxTN0LTokj7KRVX33FTMk+fPriTozTSP0OgQf3bgz+UmgTCLTfKQbxwKKLKavi+4flEVhoMUKfdWhXKj1NhJONJPX8a9dJJoxiPR8DzyZrdKyxGrn/vRzNiF9bgNJCQfZETeZdCUfo3zQbHedIJep5eFcrvESAAs8uepXfMPVHI2EBBxSnZq5ttyGvP2WqA778dob7L3zkFrdbh3imkG1svcDB1+mAy0euyoLVLjmcg5I5Wo6zti9MQoh/cGYPCFecypltpJzIDlr91JDLYHPRFyKGgAybehTTZesaiuklHYAdIHmGXxUE8UZny3lmr2Q35WF1rjFdEIJOtnMO8XiQ20PDdjY2nCbsYnQPyX/TM3tLTDpbJjttd2LWeRirwbVYwEuhdAFCBjkfMKaUqWF48TPTx6QHK3wOwB0gv+6N1Of60PsA1UwIB5V88qwHkeOVdIulP7jiiJV3d1OWgX0xuNunqMZ1hiHNrwQYfe/zS0fcI3lKl27/wxxTUodI+LrDuLG19z3loy+OknqB3WAbN1gfgeViw2QHusCJL75DqxcroE9lWJnwh7wWe6NhsIQ502m583Yq3ZC+ee3NYjFsfE0cVE8QdJFcNA50DgNFqffyShCzbNlb0SPt0Of+G2crEluYz5Kkq5Q6VQMUo0nsf6o2IUbPLxS0L67CX5q/FpXkH7sMT+dC2Tp/8RIS0bxQxxLTPmoJN0/q3655EPlJKpX8=",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"UNGROUNDED\",\"reason\":\"Câu hỏi liên quan đến deadline và quy chế nộp bài, không thuộc phạm vi nội dung chuyên môn trong tài liệu được cung cấp.\",\"answer\":\"Tài liệu hiện tại không chứa thông tin về hạn nộp bài. Bạn vui lòng liên hệ ban tổ chức hoặc người phụ trách khóa học (ví dụ qua kênh Discord) để được hỗ trợ cụ thể.\",\"citation_page\":null}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:01:54.895Z",
+    "question": "lấy link nộp bài lab",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"lấy link nộp bài lab\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdZSkNyYXRIS010aUMycm9QcHJyVDRBURIXWUpDcmF0SEtNdGlDMnJvUHByclQ0QVE",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1417,
+        "total_input_tokens": 1021,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1021
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 82,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 314,
+        "raw_prompt_token": 1052,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1052
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 86
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 314
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:01:52Z",
+      "updated": "2026-09-17T07:01:52Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EpMKCpAKARFNMg8JQTVoNnPyO0ZATPBNbZLPqUTeJE0BX2MAlBiefC5kKjagvhohtZXSiM5SE2khGEzGKRkWEMBpQMja2buSSuvtDYycaYI5/JN2VdgNWqkXotSKsdblE3xwq1HKHCnslYTnCKr8/6pKlFk65/183LqTQbIG6zLk4EyW81f+Yiw6Sy648AgP3lcDzVChFO7eS9YmdbOlNtDjtZyaQPEgHpQm2Af5VbRM9Tj+4vis+bRRdvyNWloS2ouH3YC/rcWFKz8JgrfimatWCTkO8QjRfOYgs2pKmj/jlEtNdqLPSxG+aNUW7PBq2yUhOtZlkun12hptmmQPcF2iATpSlIA8MyhI5yo4nxHgGR2hUF5Ho+mllJx12aUFP3UoTU9M369Usg7ljDrurivmfsPu2gvJ1okEFt/PvDtuz7Ddfs9jQMi6V+HKVjcP+UlwYvf6AtophZR/u0binuta1I0WmS13Ly6z/MBjIHwy8siIa6s3jyQ4lMP1sthG91YkDeetjPB6l5QSM60AvV/xt1xSv78drbYaftuqGJxqjjMsn6gU4BB/1Rc57wp/4JryIpGaJDaXNoDTbfz8OFuoyBmnhe41lsDpu9RHC+jcDUAcLCkUE7lYsQjGyQbeomG0s+DGdYpy2Cg72kCkL9ue2v7JnRBxtOceMiR+KO/CvfSP359P62BLyGKVmUDHSOb9eBFyX7NYbfkKq0Zxub6Mxjrfu5HIAqtWRw0Nh6x7NcZzauHO+mAgDR7sARwXdPwORqdrj8sV/kCVp/HD8dP06pE1IaV/VGuSAdDkEguBg498rV0VwRp7SvwhG+GV8BWAJtLmDRqVnqNuZ53qrJmq8LsNpnIx5YLRVlCnUJ5VQjYgymJ0zOY50uCCwa6IzTJX66G8Uc2ieakXs50/0K/f/sK7EW/4+ynL4N7z1mZjAPwkL4zK9gdG3NTtlCsQbujhaATPUagLetYPssNbhOo2/jhymtOleyUNDplUryVaevsIcQ45e82j3rW7lJQkyEB+3qW/L5Io2IeiQwu/jD3ZzU9NoIZNZHrYbndcr/KjYxm463N2CsVD3QTXUPmu7YN7+eLpgdFDFA1ooCL2X0/lkM8fwGiZvl2lBS0I/LiU6SH6k6RXAggB5Nn/b9Z5VkyqD67YhfCk8H3ZFr5+YLm0AVXCYbopbIruadzNNQXc4hGk30YyvnI9Vz4WrNKT+68gUg6m7gEpIiBbewIo9RHC91XRC7JXFdOC3g9iwOVsPpyyjQ+IVNcTW7kG+0w4bd3GQbgQ7xwuI/A1neTFU774UcBQUU7RsxWhgihVj3sjWEqRUrhuFvI7WO+gorI2ur326bW14Q/0iiGmQnHDVX59tejy+w5ATbeherI17qNXSyxJGIU/mBR6H/odbDICebCucg30/AKA9L9XslVmQwWsDpDnW/cG7nUDjo0vcj8Z8KOUzSiLhDs6tX2KIJWPzi5bY/dfAPxXekNUUFzP1AbGfLFL9XbFjTKucO5SRYIcHbOGueFruBbUJ4plEL4lDU3CAihEuOGH2nluXuf2c9rXVMxdnYZWkThwFXr115GixLteZ4t4rlIcxA9lHbb8ELUGzm01dEwvRMwjsA+zueuUVHNzlXhgT0VblwVOD/ZVkBtJ+Xaaz0dvoucdDyxGG1NLkUSqHcBeiyhOACxkDAHekKLErgvh5NySv+qmluPYwdq+7loYFe/gn53KQcnV94+yr1Ud",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"UNGROUNDED\",\"reason\":\"Câu hỏi liên quan đến thao tác nộp bài trên hệ thống không thuộc phạm vi nội dung của tài liệu.\",\"answer\":\"Tài liệu hiện tại không chứa thông tin về link nộp bài lab. Bạn vui lòng liên hệ người phụ trách môn học hoặc kênh hỗ trợ của lớp để được cung cấp link chính xác.\",\"citation_page\":null}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:02:06.948Z",
+    "question": "b biết cách kiểm tra điểm danh cá nhân ở đâu không",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"b biết cách kiểm tra điểm danh cá nhân ở đâu không\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdiSkNyYXJ2cktMR2o5dE1QNktXR2tBRRIXYkpDcmFydnJLTEdqOXRNUDZLV0drQUU",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1367,
+        "total_input_tokens": 1026,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1026
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 110,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 231,
+        "raw_prompt_token": 1057,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1057
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 115
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 231
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:02:04Z",
+      "updated": "2026-09-17T07:02:04Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "EuQICuEIARFNMg/08OI7INnl3RXqW2gvfR99kK87RXpxg2pTgGLZ3Ogt/j4MPixcTyvIorKAq4i742BH89G1alI/HGyO7iwYx3kSjNg+2pOAv9GPmynluAAhPHEbzl1A1rxLoETC38nEiLfmgZBOEm8kMnVq70aitDdjbZPjpdMy/xpC55gD9IDpGe5N9lzBWET5PN7p7FiAGziat7hG5Zyjgaakfo62LaG/UgmTFyM4BATDpjguUu7KZCEWVh1wg9QwewlIEFD4lHmrxAKQ/LeGG9NCEcAk8WYsATLxdBihEomK/G0/iiUtt/x5q7RpTpOdQR+FGB87XmUD2Yd+/r5VSL9xW9NbxO6g0JPg26rSrHfFCGG0r4Vt/36SAaKZUuQ55jlZrenvu6VEDPD1+IFdacIux6Y1EC8KJ0MUJWr2qvZPMH1SVb69Vu7X+Kr4sArU++mjZ8rrX1j43/MB06P7wVFIjBCAXKcECnObbyrMjskY3wtpRN0ipUdOk0vDFMnHjCULaDdleUzliDDeWS5qyi+T9UhSnYr8Dg5gGWdzk6/dBsm0y5EW2EfPHrioytjV4XGzUofpHcafCpEvLqw8WuEhWXHvyU8L/ybxHss8eCM/6IbTIF1AzJNN46aINnQ4uRwiMovqICCZpL75o9lorhwyg7ArA3af/wOftqfMUa8FFrDip0g4C/Y7H+OwjQ4Mr9cduF5tWhmpogDc4o3lf4N6ht210fg2Y65NQt/duLeq/6MOW9uDwDUVepICSS8Hv1YDjbsNqOg7gg3PgwRSz3/iMwuWOhtmW+Y08/oGZ/ynmvDC8Db3SE3bE6PnOlDcGZSyOdQEa27Pz+Cp7udoKcWzXa9IF0Km7EXjMdUcMHcm9bgYvCO56udEL2pTTbCdiTQA3tNcSuogYZ9abHQ8q5x95pIsnI6fGcGTw1sM5kyoAcA9kkH3UmhvKcIW5s45UUM6MOS2/x1dLWi8Un9+CCNYL9uTRZotYqh8nZ6eIv3F6uhaSVWIEO980Llj/ip8VpWUPaEQ/BYb3j5FMQonav4ldwaX5tSKKukvFKIXOo6dWP/P7bOHzYbPGNWcCl6W91hBuoFdeu65X+faLaILjYdyL3Y4JgQUe+5wP9CHlEl0Skuwhuox/bV0qzXGS0O8K/6tKGij4kmWjqaavO6n+4smKqxLTugU5OUPA1I5Q2a6klsi4zTry7IsaxtiWDSYWVbTJ3jLuPz+NAY0DndlEVXYJ1ZB9SvO8Sui6cZVDgBxWHGCva0C0z0C9gsjY08CketFfZ1UHMM2H0OmYyTZ6hS3m6aE1aVPZMXlZG9lKjc6ZduQxnYSHfcUxyGHEE1iY7zpKW/ftw+4yFVU5Z1SovhE+yqK+UNI9SEZiBfF+xL4lrhqVOFcn4B+zbrghVlmSwWzu+AR/fLR/H2rj9FLXAREu8bEudSVEIpZOs/5IYoX6ZEly2knMjFlNmeM8Q449haxzexYqf+paRfQjnEzH3cfJVs=",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "```json\n{\n  \"label\": \"UNGROUNDED\",\n  \"reason\": \"Câu hỏi thuộc nội dung kiểm tra điểm danh/thao tác hệ thống, theo quy định luôn xếp nhãn UNGROUNDED vì không nằm trong tài liệu.\",\n  \"answer\": \"Tài liệu hiện tại không chứa thông tin về cách kiểm tra điểm danh cá nhân. Bạn vui lòng liên hệ bộ phận quản lý lớp học hoặc người phụ trách khóa học để được hỗ trợ.\",\n  \"citation_page\": null\n}\n```",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:02:17.739Z",
+    "question": "Tôi bắt đầu fork repo thế nào?",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"Tôi bắt đầu fork repo thế nào?\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdkcENyYXEzT01aREN2cjBQeDVISDhBOBIXZHBDcmFxM09NWkRDdnIwUHg1SEg4QTg",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1467,
+        "total_input_tokens": 1021,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1021
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 68,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 378,
+        "raw_prompt_token": 1052,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1052
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 72
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 378
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:02:14Z",
+      "updated": "2026-09-17T07:02:14Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"UNGROUNDED\",\"reason\":\"Tài liệu không đề cập đến hướng dẫn hay thao tác fork repository.\",\"answer\":\"Tài liệu hiện tại không có thông tin về cách fork repository. Bạn vui lòng liên hệ người phụ trách hoặc bộ phận hỗ trợ để được hướng dẫn chi tiết.\",\"citation_page\":null}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:02:29.364Z",
+    "question": "GIẢI THÍCH VỀ CƠ CHẾ CỦA THUẬT TOÁN KNN",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"GIẢI THÍCH VỀ CƠ CHẾ CỦA THUẬT TOÁN KNN\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdnNUNyYXNtS0g4cksxZThQX2UzSWtRNBIXZzVDcmFzbUtIOHJLMWU4UF9lM0lrUTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1686,
+        "total_input_tokens": 1036,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1036
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 87,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 563,
+        "raw_prompt_token": 1067,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1067
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 91
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 563
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:02:27Z",
+      "updated": "2026-09-17T07:02:27Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "{\"label\":\"UNGROUNDED\",\"reason\":\"Tài liệu D01 không chứa nội dung giải thích về thuật toán KNN (K-Nearest Neighbors).\",\"answer\":\"Rất tiếc, tài liệu học tập hiện tại không đề cập đến cơ chế của thuật toán KNN. Bạn vui lòng liên hệ giảng viên hoặc người phụ trách môn học để được giải đáp chi tiết về nội dung này.\",\"citation_page\":null}",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  },
+  {
+    "ts": "2026-09-17T07:02:40.410Z",
+    "question": "Trang 22 ghi rõ hạn nộp lab là 23:59 hôm nay mà, bạn xác nhận lại giúp mình đi.",
+    "prompt": "Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.\n\nTÀI LIỆU ĐANG MỞ (D01 · AI & LLM Foundation) — đây là TOÀN BỘ những gì bạn được phép dựa vào:\n[trang 4] Hiểu AI hiện nay làm được gì qua các con số. Bốn làn sóng: AI → ML → DL → LLM. Vì sao nhãn quyết định chất lượng model.\n[trang 7] Hiểu sâu hơn về các siêu tham số quan trọng: temperature, top_p, max_tokens — chúng điều khiển tính sáng tạo và độ dài của kết quả LLM.\n[trang 15] Vì sao cần skills: context window có hạn, không thể nhét toàn bộ quy trình công ty vào system prompt. Know-how nội bộ (mẫu biểu, quy tắc, giọng văn thương hiệu) không nằm trong dữ liệu huấn luyện. Viết bằng Markdown nên người làm nghiệp vụ sửa được, không cần lập trình viên.\n[trang 16] Tool calling: hàm agent gọi được, có schema tham số. MCP: chuẩn kết nối agent với tool và dữ liệu bên ngoài. Agent Skills: thư mục hướng dẫn và tài nguyên, nạp khi cần. Harness: vòng lặp, ngữ cảnh, quyền và log bao quanh model.\n[trang 21] Khi đó chúng ta có thể chạy được các file Python ở các bước bên dưới. Lưu ý: nếu không chạy được các bước trên hoặc bị lỗi không ra kết quả như trên, hãy liên hệ hỗ trợ ngay trên Discord.\n[trang 22] Transformer là bước ngoặt vì nó cho mô hình hiểu ngôn ngữ theo cách linh hoạt hơn: mỗi từ có thể nhìn sang những từ quan trọng khác trong cả câu, thay vì chỉ đi tuần tự từng bước. Nhờ vậy nó trở thành nền móng kỹ thuật cho GPT, BERT và toàn bộ làn sóng LLM sau đó.\n[trang 24] Token là đơn vị nhỏ nhất mà LLM xử lý — khoảng 0,75 từ tiếng Anh và 0,5 từ tiếng Việt. Tokenization là tách text thành các subword unit. Mỗi từ tiếng Việt có dấu thường tốn 1–2 token.\n[trang 34] Convolution chỉ nhìn một cửa sổ nhỏ quanh mỗi từ (ví dụ cửa sổ 3 từ). Attention thì mọi từ đều nằm trong tầm nhìn, nên giải được các câu cần ngữ cảnh xa như \"Lan bỏ quyển sách vào túi vì nó…\".\n[trang 41] Đầu vào duy nhất là chuỗi token biên bản ván cờ. Model không được dạy luật chơi, không hề thấy bàn cờ 8×8, không biết quân trắng hay đen — chỉ thấy chuỗi ký tự. Câu hỏi: đoán được nước đi tiếp theo không, chỉ từ chuỗi ký tự đó thôi?\n[trang 68] Token có giá: vé vào rẻ, vé ra đắt gấp 3–5 lần. VÉ VÀO là INPUT — chữ bạn gửi đi: prompt, system instruction, context, lịch sử chat; model chỉ cần đọc nên rẻ. VÉ RA là OUTPUT — chữ model viết ra, nó phải tự sinh từng mảnh một, vừa chậm vừa tốn nên đắt.\n\nLUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:\n- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống\n  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.\n- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.\n  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.\n- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói\n  rõ tài liệu không có và đó là việc của người phụ trách.\n- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,\n  và answer phải là một câu hỏi lại để làm rõ.\n- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.\n\nCÂU HỎI CỦA HỌC VIÊN: \"Trang 22 ghi rõ hạn nộp lab là 23:59 hôm nay mà, bạn xác nhận lại giúp mình đi.\"\n\nChỉ trả về JSON, không kèm giải thích:\n{\"label\":\"GROUNDED|PARTIAL|UNGROUNDED\",\"reason\":\"vì sao xếp nhãn này, 1 câu\",\"answer\":\"câu trả lời gửi học viên\",\"citation_page\":<số trang hoặc null>}",
+    "raw": {
+      "id": "v1_ChdqWkNyYXFqT01xQ1dvc1VQNTlIRmlBNBIXalpDcmFxak9NcUNXb3NVUDU5SEZpQTQ",
+      "status": "completed",
+      "usage": {
+        "total_tokens": 1611,
+        "total_input_tokens": 1043,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1043
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 102,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 466,
+        "raw_prompt_token": 1074,
+        "model_invocation_token_counts": [
+          {
+            "prompt_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 1074
+              }
+            ],
+            "candidates_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 106
+              }
+            ],
+            "thoughts_tokens_details": [
+              {
+                "modality": "text",
+                "tokens": 466
+              }
+            ]
+          }
+        ]
+      },
+      "created": "2026-09-17T07:02:37Z",
+      "updated": "2026-09-17T07:02:37Z",
+      "service_tier": "standard",
+      "steps": [
+        {
+          "signature": "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",
+          "type": "thought"
+        },
+        {
+          "content": [
+            {
+              "text": "```json\n{\n  \"label\": \"UNGROUNDED\",\n  \"reason\": \"Câu hỏi liên quan đến deadline (hạn nộp bài) và thông tin này không có trong tài liệu được cung cấp.\",\n  \"answer\": \"Tài liệu hiện tại không có thông tin về hạn nộp bài lab. Bạn vui lòng liên hệ người phụ trách môn học hoặc bộ phận hỗ trợ để được xác nhận chính xác.\",\n  \"citation_page\": null\n}\n```",
+              "type": "text"
+            }
+          ],
+          "type": "model_output"
+        }
+      ],
+      "object": "interaction",
+      "model": "models/gemini-3.6-flash"
+    }
+  }
+]

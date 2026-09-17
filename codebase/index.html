@@ -58,6 +58,13 @@
   .fb.open .chips{display:flex}
   .trace{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:#1c1f25;color:#cfd6e0;
          border-radius:8px;padding:11px;max-height:190px;overflow:auto;white-space:pre-wrap}
+  .keybox{border:1px solid var(--line);border-radius:8px;padding:10px 11px;margin-bottom:12px;background:rgba(127,127,127,.05)}
+  .keybox label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px}
+  .keybox label span{font-weight:400;color:var(--muted)}
+  .keybox input{width:100%;box-sizing:border-box;padding:7px 9px;margin-bottom:6px;border:1px solid var(--line);border-radius:6px;font:inherit;font-size:13px;background:transparent;color:inherit}
+  .keybox button{padding:5px 12px;font:inherit;font-size:12.5px;cursor:pointer;border:1px solid var(--line);border-radius:6px;background:transparent;color:inherit}
+  .keybox a{font-size:12.5px;margin-left:10px}
+  .keybox.ok{border-color:#2e7d32}
   .legend{font-size:12.5px;color:var(--muted);margin-top:10px}
   .legend span{display:inline-block;margin-right:12px}
   @media(max-width:860px){.wrap{grid-template-columns:1fr}}
@@ -67,7 +74,7 @@
 <header>
   <h1>VLearn · Trang học — AI Tutor <span class="badge">BẢN VÁ · Nhóm Dalab</span></h1>
   <p>Lát cắt: tutor phân loại câu hỏi <b>có / không có căn cứ trong tài liệu đang mở</b> trước khi trả lời.
-     Trạng thái: <b id="mode">MOCK (CP2)</b> — CP3 bật lời gọi AI thật.</p>
+     Trạng thái: <b id="mode">đang tải…</b></p>
 </header>
 
 <div class="wrap">
@@ -82,6 +89,12 @@
 
   <section class="panel">
     <h2>💬 Hỏi tutor</h2>
+    <div class="keybox">
+      <label for="apikey">🔑 Gemini API key <span>— dán key của bạn để chạy AI thật. Key chỉ nằm trong tab này (sessionStorage), không gửi đi đâu ngoài Google, không nằm trong repo.</span></label>
+      <input id="apikey" type="password" placeholder="dán key rồi bấm Lưu — lấy free tại aistudio.google.com/apikey" autocomplete="off">
+      <button type="button" id="savekey">Lưu</button>
+      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Lấy key</a>
+    </div>
     <div class="samples" id="samples"></div>
     <form class="composer" id="form">
       <input id="input" placeholder="Nhập câu hỏi của bạn…" autocomplete="off">
@@ -114,12 +127,34 @@ $("#samples").onclick = e => {
 const LABELS = {
   GROUNDED:  ["🟢", "Có căn cứ"],
   PARTIAL:   ["🟡", "Chưa đủ rõ"],
-  UNGROUNDED:["🔴", "Ngoài tài liệu"]
+  UNGROUNDED:["🔴", "Ngoài tài liệu"],
+  ERROR:     ["⚠️", "Lỗi gọi AI"],
+  PARSE_ERROR:["⚠️", "AI trả sai định dạng"]
 };
 
+// Key sống trong sessionStorage: đóng tab là mất, không bao giờ vào repo.
+const KEY_ID = "vlearn_dalab_gemini_key";
+const readKey = () => { try { return sessionStorage.getItem(KEY_ID) || ""; } catch { return ""; } };
+function setMode() {
+  const has = !!readKey();
+  $("#mode").textContent = CONFIG.USE_REAL_AI
+    ? (has ? `AI THẬT · ${CONFIG.model}` : "AI THẬT — cần dán API key trước")
+    : "MOCK (luật cứng, chưa gọi AI)";
+  $(".keybox").classList.toggle("ok", has);
+}
+$("#savekey").onclick = () => {
+  try { sessionStorage.setItem(KEY_ID, $("#apikey").value.trim()); } catch {}
+  $("#apikey").value = ""; setMode();
+};
+$("#apikey").value = ""; setMode();
+
 async function ask(q) {
-  const r = await decide(q);
-  const [icon, name] = LABELS[r.label];
+  const key = readKey();
+  if (CONFIG.USE_REAL_AI && !key) { alert("Dán Gemini API key vào ô phía trên rồi bấm Lưu."); return; }
+  let r;
+  try { r = await decide(q, key); }
+  catch (e) { r = { label: "ERROR", reason: "Không gọi được AI.", answer: e.message, citation: null, route: null, ms: 0, source: "AI THẬT" }; }
+  const [icon, name] = LABELS[r.label] ?? ["⚠️", r.label];
   const cite = r.citation ? ` — trang ${r.citation.page}` : "";
 
   const el = document.createElement("div");

@@ -13,7 +13,11 @@
  */
 import { DOC, ROUTES } from "./fixtures.js";
 
-export const CONFIG = { USE_REAL_AI: false, model: "gemini-2.0-flash" };
+export const CONFIG = {
+  USE_REAL_AI: true,                       // CP3 (17/9): đã bật lời gọi AI thật
+  model: "models/gemini-3.6-flash",        // gemini-2.0-flash đã bị khai tử 17/9
+  endpoint: "https://generativelanguage.googleapis.com/v1beta/interactions"
+};
 
 /** Luật cứng lớp ④ — mọi câu chạm deadline/điểm/quy chế LUÔN đi đường 🔴.
  *  Không để mô hình tự quyết, vì đây đúng chỗ sai thì học viên mất điểm (spec.md §4). */
@@ -84,31 +88,65 @@ export function mockDecide(question) {
   };
 }
 
-/** CP3 — thay thân hàm bằng lời gọi LLM thật. Prompt đã viết sẵn theo spec.md §4. */
-export async function aiDecide(question, apiKey) {
-  const prompt = `Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.
+/** CP3 — lời gọi AI THẬT. Prompt theo spec.md §4 (ba câu cam kết + luật cứng). */
+export function buildPrompt(question) {
+  return `Bạn là bộ phân loại của AI tutor VLearn. TRƯỚC KHI trả lời, hãy phân loại câu hỏi.
 
-TÀI LIỆU ĐANG MỞ (${DOC.lecture}):
+TÀI LIỆU ĐANG MỞ (${DOC.lecture}) — đây là TOÀN BỘ những gì bạn được phép dựa vào:
 ${DOC.pages.map(p => `[trang ${p.page}] ${p.text}`).join("\n")}
 
 LUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng định tài liệu có nói:
-- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, thao tác hệ thống => luôn UNGROUNDED.
-- Chỉ trả nhãn GROUNDED khi trích được nguyên văn một câu trong tài liệu trên.
-- Nhãn UNGROUNDED thì KHÔNG được sinh nội dung trả lời.
+- Mọi câu về deadline, quy chế chấm điểm, điểm cá nhân, điểm danh, thao tác hệ thống
+  (LMS, nộp bài ở đâu, lịch học) => luôn UNGROUNDED, tuyệt đối KHÔNG suy đoán.
+- Chỉ trả nhãn GROUNDED khi nội dung trả lời bám vào một trang CÓ THẬT ở trên.
+  citation_page phải là số trang có trong danh sách trên, không được bịa số trang.
+- Nhãn UNGROUNDED thì answer KHÔNG được chứa nội dung trả lời câu hỏi — chỉ nói
+  rõ tài liệu không có và đó là việc của người phụ trách.
+- Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,
+  và answer phải là một câu hỏi lại để làm rõ.
+- Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.
 
-CÂU HỎI: "${question}"
+CÂU HỎI CỦA HỌC VIÊN: "${question}"
 
-Trả về JSON: {"label":"GROUNDED|PARTIAL|UNGROUNDED","reason":"...","answer":"...","citation_page":<số|null>}`;
+Chỉ trả về JSON, không kèm giải thích:
+{"label":"GROUNDED|PARTIAL|UNGROUNDED","reason":"vì sao xếp nhãn này, 1 câu","answer":"câu trả lời gửi học viên","citation_page":<số trang hoặc null>}`;
+}
 
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.model}:generateContent?key=${apiKey}`,
-    { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) }
-  );
+/** Bóc phần chữ model sinh ra khỏi response Interactions API (mảng steps). */
+export function extractText(raw) {
+  const out = (raw?.steps ?? []).filter(s => s.type === "model_output");
+  return out.flatMap(s => (s.content ?? []).filter(c => c.type === "text").map(c => c.text)).join("").trim();
+}
+
+export async function aiDecide(question, apiKey) {
+  const prompt = buildPrompt(question);
+  const res = await fetch(`${CONFIG.endpoint}?key=${encodeURIComponent(apiKey)}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ model: CONFIG.model, input: prompt })
+  });
   const raw = await res.json();
-  logTrace({ ts: new Date().toISOString(), question, prompt, raw });   // CP3: trace vào codebase/logs/
-  const text = raw.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-  return JSON.parse(text.replace(/```json|```/g, "").trim());
+  logTrace({ ts: new Date().toISOString(), question, prompt, raw });   // ghi vết prompt + response THÔ
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${raw?.error?.message ?? "loi khong ro"}`);
+
+  const text = extractText(raw);
+  let parsed;
+  try {
+    parsed = JSON.parse(text.replace(/```json|```/g, "").trim());
+  } catch {
+    // Model không trả JSON hợp lệ — tính là ca THẤT BẠI, không được che giấu.
+    return { label: "PARSE_ERROR", reason: "Model không trả về JSON hợp lệ.", answer: text.slice(0, 300), citation: null, route: null };
+  }
+  const page = DOC.pages.find(p => p.page === Number(parsed.citation_page)) ?? null;
+  return {
+    label: parsed.label,
+    reason: parsed.reason ?? "",
+    answer: parsed.answer ?? "",
+    citation: page,
+    // Trang model khai nhưng KHÔNG có trong tài liệu => trích dẫn bịa, phải lộ ra.
+    fabricated_page: parsed.citation_page != null && !page ? Number(parsed.citation_page) : null,
+    route: parsed.label === "UNGROUNDED" ? ROUTES.logistics : null
+  };
 }
 
 const TRACE = [];

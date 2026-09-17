@@ -1,55 +1,77 @@
-# Prototype — "Tutor biết mình không biết"
+# codebase — quyết định trung tâm của lát cắt
 
-**Mức prototype:** Mock (spec.md §4) · **Phụ trách:** ĐOÀN DUY BÁCH (code) · NGUYỄN VĂN SƠN (UX)
+Một quyết định duy nhất: **câu hỏi này có căn cứ trong tài liệu đang mở không?**
+Ba nhãn, mọi thứ khác bám theo nhãn.
+
+| Nhãn | Nghĩa | Hệ thống làm gì |
+|---|---|---|
+| 🟢 `GROUNDED` | Trích được nội dung trong tài liệu | Trả lời **kèm số trang** để học viên tự kiểm |
+| 🟡 `PARTIAL` | Câu hỏi chưa đủ rõ | **Hỏi lại**, không đoán |
+| 🔴 `UNGROUNDED` | Tài liệu không chứa câu trả lời | **Không sinh nội dung** — nói rõ + chỉ đúng người cần hỏi |
 
 ## Chạy
 
+Cần một HTTP server — ES module không chạy qua `file://`.
+
 ```bash
-cd codebase && python3 -m http.server 8777
-# mở http://localhost:8777
+python3 -m http.server 8000        # rồi mở http://localhost:8000/codebase/
 ```
-Dùng ES modules nên **phải chạy qua http server**, mở thẳng `file://` sẽ lỗi CORS.
 
-## Tệp
+Hoặc bấm thẳng trên GitHub Pages: **https://pbaodev.github.io/K4-3A-E403-Dalab/**
 
-| Tệp | Vai trò |
-|---|---|
-| `tutor-core.js` | **Quyết định trung tâm** — phân loại GROUNDED 🟢 / PARTIAL 🟡 / UNGROUNDED 🔴 trước khi trả lời |
-| `fixtures.js` | Tài liệu fixture (trích ngắn slide D01) + bảng định tuyến + 4 câu mẫu |
-| `index.html` | Giao diện mô phỏng khung tutor trong trang học VLearn |
+Dán **Gemini API key** vào ô trên giao diện rồi bấm *Lưu*. Key nằm trong `sessionStorage`
+của tab đó, **không vào repo, không gửi đi đâu ngoài Google**. Đóng tab là mất.
+Lấy key free tại [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
 
-## Thật / mock — khai báo trung thực
+## Thật hay mock — khai báo đầy đủ
 
 | Phần | Trạng thái |
 |---|---|
-| Quyết định phân loại có/không có căn cứ | 🟡 **CP2: mock bằng luật cứng** (`mockDecide`) → 🟢 **CP3: `aiDecide` gọi Gemini thật** |
-| Nội dung tài liệu đang mở | 🟡 Fixture — 3 trang trích từ slide D01 trong data pack |
-| Bảng "hỏi ai cho phần này" | 🟡 Mock — 4 dòng cứng |
-| Giao diện trang học | 🟡 Mock tĩnh |
+| Quyết định phân loại + sinh câu trả lời | 🟢 **AI THẬT** — `gemini-3.6-flash`, Interactions API, 1 lời gọi/câu |
+| Ghi vết prompt + response thô | 🟢 **THẬT** — `logTrace()`, đổ ra `codebase/logs/trace-*.json` |
+| Nội dung tài liệu đang mở | 🟡 Fixture — 10 trang trích ngắn từ slide D01 trong data pack |
+| Giao diện trang học VLearn | 🟡 Mock — trang tĩnh mô phỏng khung tutor |
+| Bảng định tuyến "hỏi ai" | 🟡 Mock — 4 dòng cứng trong `fixtures.js` |
+| `mockDecide()` | 🔵 Giữ lại làm đường lui khi không có key — **không dùng để đo** |
 
-## Bật AI thật tại CP3
+## File
 
-Sửa đúng một dòng trong `tutor-core.js`:
-```js
-export const CONFIG = { USE_REAL_AI: true, model: "gemini-2.0-flash" };
+| File | Việc |
+|---|---|
+| `tutor-core.js` | Quyết định trung tâm. `decide()` → `aiDecide()` (thật) hoặc `mockDecide()` (lui) |
+| `fixtures.js` | 10 trang tài liệu + bảng định tuyến + 4 câu mẫu |
+| `index.html` | Giao diện hai cột, nhãn màu, trace log, nút sửa sai |
+| `logs/` | Prompt + response **thô** từng lượt — bằng chứng cho R5 |
+
+## Lời gọi AI nằm ở đâu
+
+`aiDecide()` trong [`tutor-core.js`](tutor-core.js):
+
 ```
-`aiDecide()` đã viết sẵn prompt kèm **luật cứng lớp ④** (deadline / chấm điểm / điểm cá nhân / thao tác hệ thống → luôn UNGROUNDED, không để mô hình tự quyết). Hàm `logTrace()` ghi prompt + response thô để nộp bằng chứng R5.
+POST https://generativelanguage.googleapis.com/v1beta/interactions
+{ "model": "models/gemini-3.6-flash", "input": <prompt> }
+```
 
-> ⚠️ **Không commit API key.** Key truyền vào qua biến môi trường hoặc ô nhập tạm trong phiên demo.
+Prompt do `buildPrompt()` dựng: nhét **toàn bộ 10 trang tài liệu** + **luật cứng**
+(deadline / quy chế / điểm cá nhân / thao tác hệ thống → luôn 🔴, kể cả khi học viên
+khẳng định tài liệu có nói) + yêu cầu trả JSON.
 
-## Sơ đồ luồng
+Response là mảng `steps`; `extractText()` bóc phần `model_output`.
+Nếu model khai một `citation_page` **không có trong tài liệu**, `aiDecide()` gắn cờ
+`fabricated_page` — trích dẫn bịa bị lộ ra chứ không bị nuốt.
 
-![Luồng trải nghiệm](../docs/cp2-flow.png)
+> ⚠️ `gemini-2.0-flash` đã bị Google khai tử ngày 17/9 và endpoint `:generateContent`
+> trả 404 với key này. Đó là lý do code dùng Interactions API + `gemini-3.6-flash`.
 
-Nguồn render: `docs/cp2-flow.html` · ảnh: `docs/cp2-flow.png`
+## Đo
 
-## 4 đường đi trải nghiệm — bấm thử
+```bash
+GEMINI_API_KEY=xxx node eval/run_eval.mjs
+```
 
-| Nút mẫu | Đường đi (spec.md §6) | Kết quả mong đợi |
-|---|---|---|
-| 🟢 Happy path | Có căn cứ | Trả lời + trích dẫn `[trang N]` |
-| 🟡 Low-confidence | Câu hỏi mơ hồ ("hi") | Hỏi lại **một câu** để thu hẹp, không đoán |
-| 🔴 Không căn cứ | `T04628` — commit sau deadline | **Không sinh nội dung** + chỉ hỏi TA |
-| 🔴 Ngoài thẩm quyền | Xin xem điểm cá nhân | Từ chối + nêu lý do thẩm quyền |
+Kết quả → [`../eval/run_results.md`](../eval/run_results.md) · bộ ca → [`../eval/golden_set.json`](../eval/golden_set.json)
 
-Nút **"📌 Tài liệu có nói mà"** = đường **correction** (HAX G9).
+## Phụ trách
+
+`tutor-core.js` + prompt: **ĐOÀN DUY BÁCH** · giao diện: **NGUYỄN VĂN SƠN** ·
+golden set + đo: **TRẦN THỊ THUÝ** · spec + lát cắt: **PHAN DUY BẢO**
