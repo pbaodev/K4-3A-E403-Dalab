@@ -74,7 +74,7 @@ Không phải "học viên nói chung": 70 học viên có thật trong chatlog 
 - **#4 (trả lời dài)** — chi phí mỗi lần chỉ là ~1 phút đọc thừa, **không ai mất điểm vì nó**. Tần suất cao nhưng impact mỗi lần thấp nhất trong 4 ứng viên.
 
 ### Ứng viên chọn + lý do *(bằng số)*
-Chọn **#1**. Đây là ứng viên duy nhất mà **chi phí một lần sai là mất điểm số thật**, không phải mất thời gian. Cụ thể `T04628`: học viên hỏi commit sau nửa đêm có bị tính muộn không, tutor bịa ra một chính sách chấm bài — làm theo là hỏng bài nộp. Cộng thêm ba lợi thế thi đấu: **(a)** 86,7% ca nằm ở chính khoá K4 → pain đang sống, không phải lịch sử; **(b)** đã có sẵn **150 ca thật** để dựng golden set, không phải bịa case; **(c)** tutor đã làm đúng 13,3% số lần → chứng minh hành vi mục tiêu **khả thi với chính mô hình đang chạy**, việc của nhóm là làm nó nhất quán chứ không phải phát minh cái mới.
+Chọn **#1**. Đây là ứng viên duy nhất mà **chi phí một lần sai là mất điểm số thật**, không phải mất thời gian. Cụ thể `T04628`: học viên hỏi commit sau nửa đêm có bị tính muộn không, tutor bịa ra một chính sách chấm bài — làm theo là hỏng bài nộp. Cộng thêm ba lợi thế thi đấu: **(a)** 130/150 ca nằm ở chính khoá **K4** → pain đang sống, không phải lịch sử (riêng trong K4, tỷ lệ tutor trả lời như thể biết là **116/130 = 89,2%**, cao hơn mức chung 86,7%); **(b)** đã có sẵn **150 ca thật** để dựng golden set, không phải bịa case; **(c)** tutor đã làm đúng 13,3% số lần → chứng minh hành vi mục tiêu **khả thi với chính mô hình đang chạy**, việc của nhóm là làm nó nhất quán chứ không phải phát minh cái mới.
 
 ---
 

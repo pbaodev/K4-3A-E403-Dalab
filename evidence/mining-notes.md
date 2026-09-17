@@ -25,15 +25,39 @@
 
 ## 3 · Kết quả đếm
 
+> **Mẫu số:** mọi con số dưới đây đếm trên **toàn dataset 13.494 lượt (K3 + K4)**, không phải riêng K4.
+> Dataset gồm K3 = 10.397 lượt / 1.177 học viên và K4 = 3.097 lượt / 448 học viên.
+
 | Chỉ số | Số | Tỷ lệ |
 |---|---|---|
-| Lượt học viên tự gõ (bỏ câu mẫu) | 10.427 | 77,3% tổng lượt |
+| Lượt học viên tự gõ (bỏ 3.067 câu mẫu) | 10.427 | 77,3% tổng lượt |
 | Trả lời **không có trích dẫn** tài liệu | 3.781 | **28,0%** tổng lượt |
 | Câu **ngoài phạm vi tài liệu đang mở** | **150** | 1,4% câu tự gõ — **70 học viên** |
-| ├─ trong đó thuộc khoá K4 (chính lớp mình) | **130** | **86,7%** |
-| ├─ tutor **từ chối / chuyển hướng đúng** | 20 | **13,3%** |
-| └─ tutor **trả lời như thể biết** | **130** | **86,7%** ← PAIN |
-| Trong nhóm "trả lời như thể biết": có gắn `[trang N]` | 10 | **trích dẫn giả** — nguy hiểm nhất |
+
+150 ca đó được cắt theo **hai chiều khác nhau**. Không trộn hai bảng này:
+
+**A · Cắt theo hành vi tutor** — đây là chỗ sinh ra con số PAIN
+
+| Hành vi | Số | Tỷ lệ /150 |
+|---|---|---|
+| tutor **từ chối / chuyển hướng đúng** | 20 | **13,3%** |
+| tutor **trả lời như thể biết** | **130** | **86,7%** ← PAIN |
+| ├─ trong đó có gắn `[trang N]` | 10 | **trích dẫn giả** — nguy hiểm nhất |
+
+**B · Cắt theo khoá** — đây là chỗ chứng minh pain đang sống ở chính lớp mình
+
+| Khoá | Câu tự gõ | Ngoài phạm vi | Trả lời như thể biết | Từ chối đúng |
+|---|---|---|---|---|
+| **K4** (lớp mình) | 2.555 | **130** (5,1%) | 116 — **89,2%** | 14 — 10,8% |
+| K3 (khoá trước) | 7.872 | 20 (0,3%) | 14 — 70,0% | 6 — 30,0% |
+| **Tổng** | 10.427 | **150** | **130 — 86,7%** | **20 — 13,3%** |
+
+> ⚠️ **Trùng số — phải phân biệt khi bảo vệ.** Có **hai** con số 130 khác nhau, cùng chia cho 150, cùng ra 86,7%:
+> - 130 = số ca ngoài phạm vi **thuộc khoá K4** (bảng B, cắt theo khoá)
+> - 130 = số ca tutor **trả lời như thể biết** (bảng A, cắt theo hành vi)
+>
+> Hai tập này **không trùng nhau** — giao nhau chỉ **116 ca**. Khi nói "86,7%" phải nói rõ đang nói bảng nào.
+> Câu an toàn nhất, không nhập nhằng: **"trong 130 câu ngoài phạm vi của riêng khoá K4, tutor trả lời như thể biết 116 câu — 89,2%."**
 
 **Phát hiện cốt lõi:** tutor **không nhất quán**. Cùng một loại câu hỏi ngoài phạm vi, 13,3% số lần nó nói thẳng "tôi không biết", 86,7% số lần nó trả lời trôi chảy như thể có căn cứ. Học viên không có cách nào phân biệt hai trường hợp đó — vì cả hai đều được viết bằng cùng một giọng tự tin.
 
