@@ -1,124 +1,101 @@
 # Evidence log — chuẩn B (mining `data/vlearn-pack/chatlog/tutor_turns.csv`)
 
-**Người thực hiện:** TRẦN THỊ THUÝ · **Ngày:** 16/9/2026
-**Nguồn:** data pack BTC, 13.494 lượt hỏi-đáp thật (22/07 → 15/09/2026), 1.617 học viên.
-**Script đếm lại được:** [`count_ungrounded.py`](count_ungrounded.py) — chạy `python3 evidence/count_ungrounded.py <đường-dẫn>/tutor_turns.csv`
+**Ngày:** 17/9/2026 · **Nguồn:** data pack BTC, 13.494 lượt hỏi-đáp thật (22/07 → 15/09/2026), 1.617 học viên
+**Script đếm lại được:** [`count_citations.py`](count_citations.py)
+`python3 evidence/count_citations.py <đường-dẫn>/tutor_turns.csv`
 
-> ⚠️ Repo này không chứa data pack. Chỉ ghi số tổng hợp + trích đoạn ngắn kèm `turn_id` để dẫn nguồn, theo `data/README.md` của BTC.
+> ⚠️ Repo này **không** chứa data pack. Chỉ ghi số tổng hợp + trích đoạn ngắn kèm `turn_id`, theo `data/README.md` của BTC.
 
 ---
 
 ## 1 · Câu hỏi đếm
 
-> Khi học viên hỏi một câu mà **tài liệu đang mở không chứa câu trả lời**, tutor xử lý thế nào?
+> Tutor gắn trích dẫn `[trang N]` vào câu trả lời. **Học viên có cách nào kiểm tra N là thật không — và N có thật không?**
 
-## 2 · Phương pháp đếm (kiểm lại được)
+Đây là câu hỏi thứ hai của nhóm. Câu hỏi đầu ("tutor xử lý thế nào khi tài liệu không chứa câu trả lời") đã bị **loại bỏ vì đếm sai** — xem §5.
 
-| Bước | Quy tắc |
-|---|---|
-| Tập nền | 13.494 lượt → bỏ 3.067 câu mẫu bấm sẵn (`is_preset = True`) → còn **10.427 câu học viên tự gõ** |
-| Bóc ngữ cảnh | Xoá tiền tố giao diện tự chèn (`(Trang N, đoạn được chọn: "…")`, `(Đang học phần "…")`) để chỉ giữ câu học viên thật sự gõ |
-| Xếp loại "ngoài phạm vi tài liệu" | Khớp regex nhóm từ khoá hành chính: hạn nộp / deadline / nộp bài / điểm danh / lịch học / học phí / chứng chỉ / zoom / discord / thi cuối / điểm số / tài liệu-slide ở đâu / bài tập về nhà… (danh sách đầy đủ trong script) |
-| Xếp loại hành vi tutor | **Từ chối đúng** = câu trả lời chứa một trong các cụm: "không có thông tin", "không tìm thấy", "tài liệu không…", "rất tiếc", "không biết", "ngoài phạm vi", "vui lòng kiểm tra/liên hệ", "liên hệ giảng viên/TA". Còn lại xếp vào **"trả lời như thể biết"** |
+## 2 · Vì sao đổi sang câu hỏi này
 
-**Giới hạn đã biết — khai báo trung thực:** đây là phép đếm bằng từ khoá, không phải đọc tay 100%. Regex có thể bỏ sót câu ngoài phạm vi diễn đạt kiểu khác, và có thể xếp nhầm một câu trả lời vừa từ chối vừa giải thích thêm. Nhóm đã rà tay 20 ca ngẫu nhiên trong nhóm "trả lời như thể biết"; danh sách `turn_id` đầy đủ do script in ra để người chấm rà lại.
+Ngày 17/9 nhóm phát hiện giao diện K4 **đã đổi** so với K3:
+
+| | câu hỏi có kèm số trang | trả lời có `[trang N]` |
+|---|---|---|
+| **K4** (khoá hiện tại, 3.097 lượt) | **0 / 3.097 · 0,0%** | 2.259 / 3.097 · **72,9%** |
+| K3 (khoá trước, 10.397 lượt) | 7.284 / 10.397 · 70,1% | 7.533 / 10.397 · 72,5% |
+
+K3 gửi `(Trang 12, đoạn được chọn: "…")` — tutor biết học viên đang ở trang nào.
+K4 chỉ gửi `(Đang học phần "…")` — **97,2% lượt K4 không có bất kỳ số trang nào.**
+
+Nghĩa là: ở K4, mọi số trang trong câu trả lời đều do hệ thống tự sinh, và học viên không có gì để đối chiếu. Đây là lát cắt đáng làm, vì nó đúng khoá đang học.
 
 ## 3 · Kết quả đếm
 
-> **Mẫu số:** mọi con số dưới đây đếm trên **toàn dataset 13.494 lượt (K3 + K4)**, không phải riêng K4.
-> Dataset gồm K3 = 10.397 lượt / 1.177 học viên và K4 = 3.097 lượt / 448 học viên.
+> **Mẫu số khác nhau ở mỗi phép đo** — đọc kỹ cột "đếm trên". Không cộng dồn các dòng.
 
-| Chỉ số | Số | Tỷ lệ |
-|---|---|---|
-| Lượt học viên tự gõ (bỏ 3.067 câu mẫu) | 10.427 | 77,3% tổng lượt |
-| Trả lời **không có trích dẫn** tài liệu | 3.781 | **28,0%** tổng lượt |
-| Câu **ngoài phạm vi tài liệu đang mở** | **150** | 1,4% câu tự gõ — **70 học viên** |
-
-150 ca đó được cắt theo **hai chiều khác nhau**. Không trộn hai bảng này:
-
-**A · Cắt theo hành vi tutor** — đây là chỗ sinh ra con số PAIN
-
-| Hành vi | Số | Tỷ lệ /150 |
-|---|---|---|
-| tutor **từ chối / chuyển hướng đúng** | 20 | **13,3%** |
-| tutor **trả lời như thể biết** | **130** | **86,7%** ← PAIN |
-| ├─ trong đó có gắn `[trang N]` | 10 | **trích dẫn giả** — nguy hiểm nhất |
-
-**B · Cắt theo khoá** — đây là chỗ chứng minh pain đang sống ở chính lớp mình
-
-| Khoá | Câu tự gõ | Ngoài phạm vi | Trả lời như thể biết | Từ chối đúng |
+| # | Phép đo | Số | Đếm trên | Khoá |
 |---|---|---|---|---|
-| **K4** (lớp mình) | 2.555 | **130** (5,1%) | 116 — **89,2%** | 14 — 10,8% |
-| K3 (khoá trước) | 7.872 | 20 (0,3%) | 14 — 70,0% | 6 — 30,0% |
-| **Tổng** | 10.427 | **150** | **130 — 86,7%** | **20 — 13,3%** |
+| 2 | Tutor **tự mâu thuẫn**: lời văn ghi trang A, trích dẫn ngay sau ghi trang B≠A | **58 lượt · 29 học viên** | toàn bộ 13.494 | K4 **51** · K3 7 |
+| 3 | Trích tới **số trang không tồn tại** (vượt độ dài thật của bộ slide) | **164 / 1.284 = 12,8%** · 50 học viên | 1.284 lượt kiểm được | K3 (K4 không kiểm được) |
+| 4 | Trích **sai trang** so với trang do chính học viên gõ ra | 91 / 845 = 10,8% · 73 học viên | 845 lượt | K3 833 · K4 12 |
+| 4b | — trong đó **trích dẫn đầu tiên** sai (cái học viên đọc trước) | 114 / 845 = **13,5%** | 845 lượt | |
 
-> ⚠️ **Trùng số — phải phân biệt khi bảo vệ.** Có **hai** con số 130 khác nhau, cùng chia cho 150, cùng ra 86,7%:
-> - 130 = số ca ngoài phạm vi **thuộc khoá K4** (bảng B, cắt theo khoá)
-> - 130 = số ca tutor **trả lời như thể biết** (bảng A, cắt theo hành vi)
->
-> Hai tập này **không trùng nhau** — giao nhau chỉ **116 ca**. Khi nói "86,7%" phải nói rõ đang nói bảng nào.
-> Câu an toàn nhất, không nhập nhằng: **"trong 130 câu ngoài phạm vi của riêng khoá K4, tutor trả lời như thể biết 116 câu — 89,2%."**
+### Cơ chế lỗi đã truy ra được
 
-**Phát hiện cốt lõi:** tutor **không nhất quán**. Cùng một loại câu hỏi ngoài phạm vi, 13,3% số lần nó nói thẳng "tôi không biết", 86,7% số lần nó trả lời trôi chảy như thể có căn cứ. Học viên không có cách nào phân biệt hai trường hợp đó — vì cả hai đều được viết bằng cùng một giọng tự tin.
+Độ lệch **không ngẫu nhiên**. Mỗi bộ slide có một độ lệch **cố định riêng**:
 
-## 4 · Trích dẫn nguyên văn (≥5, dẫn theo `turn_id`)
+| Bộ slide | Lời văn → trích dẫn | Độ lệch |
+|---|---|---|
+| D01 · `Day01-ai-ml-dl-DataLifecycle-HaiDuong` | trang 7 → `[trang 117]` | **+110** |
+| D01 · `1-AICB_Ngày_1 (3)` | trang 38 → `[trang 205]`, trang 39 → `[trang 206]` | **+167** |
+| D09 (K3) | 7→112, 9→114, 18→123, 20→125, 23→128 | **+105** |
+| các bộ khác trong K4 | | +46 · +67 · +160 · +271 |
 
-### ❌ Nhóm "trả lời như thể biết"
+→ Số trong `[trang N]` là **chỉ số trang trong một kho tài liệu gộp**, không phải số trang của bộ slide học viên đang mở. Lời văn thì dùng số trang đúng. Học viên nhìn thấy cả hai và không biết tin cái nào.
 
-**[T04628]** · 08/08 00:09 · `has_citation = False` — *ca đắt nhất: bịa ra chính sách chấm bài*
-> **HV:** "t nộp bài từ 6h chiều, sau 12h (tức sang ngày hôm sau) có thêm commit thì có chấm các commit đó không?"
-> **Tutor:** "Thông thường, các hệ thống chấm bài tự động sẽ chỉ ghi nhận trạng thái mã nguồn hoặc các commit được thực hiện trước thời điểm hạn chót… Các thay đổi được đẩy lên sau thời điểm này thường sẽ không được tính đến hoặc có thể bị coi là nộp bài muộn."
+## 4 · Trích đoạn nguyên văn (dẫn `turn_id` để rà lại)
 
-→ Tutor **không hề biết** quy chế chấm của khoá. Nó suy diễn từ kiến thức chung về "hệ thống chấm bài tự động". Học viên tin theo và bỏ commit sửa bài thì **mất điểm thật**.
+**K4 — đúng khoá đang học:**
 
-**[T07094]** · 18/08 14:46 · `has_citation = True` — *trích dẫn giả*
-> **HV:** "Cách tải slide ở đâu trên LMS?"
-> **Tutor:** "…truy cập vào trang khoá học của mình trên hệ thống lms.vinuni.edu.vn, sau đó tìm mục chứa tài liệu học tập của ngày học 'Data Lakehouse Architecture' (Ngày 18) để tải về tệp tin tương ứng **[trang 57]**."
+1. `T10572` · D01 · 10/9 16:36 — học viên hỏi về đoạn ở **trang 7**, tutor đáp:
+   > "Chào [HV], **ở trang 7 [trang 117]** của tài liệu, nội dung này tóm tắt tiến trình phát triển của trí tuệ nhân tạo qua bốn cột mốc…"
 
-→ `[trang 57]` của slide bài giảng kỹ thuật **không thể** chứa hướng dẫn thao tác LMS. Trích dẫn ở đây làm câu trả lời bịa **trông đáng tin hơn** — đây là lỗi nguy hiểm nhất trong 4 lớp chỗ khó.
+2. `T10977` / `T10978` · D01 · 11/9 11:17 — đoạn ở **trang 38**, hỏi "Autoregressive":
+   > "Chào [HV], **ở trang 38 [trang 205]**, khái niệm "Autoregressive" được dùng để mô tả cơ chế hoạt động của LLM khi sinh văn bản…"
 
-**[T01168]** · 29/07 14:55 · `has_citation = False`
-> **Tutor:** "Tìm mục **'Tài liệu học tập' (Course Materials)** trên trang quản lý khóa học của bạn, tìm tệp PDF của bài giảng ngày hôm nay và nhấn nút tải xuống (Download)…"
+3. `T11026` · D01 · 11/9 11:37 — (lượt này học viên còn thử prompt injection; tutor **chặn đúng** nhưng vẫn trích sai):
+   > "Chúng ta hãy quay lại tập trung vào nội dung bài học nhé. **Ở trang 39 [trang 206]**, tài liệu có đề cập đến ba bước để tạo ra một LLM: Pre-training, SFT…"
 
-→ Tutor mô tả một menu giao diện mà nó chưa từng nhìn thấy.
+**K3 — nơi đối chiếu được nên đo được:**
 
-**[T10303]** · 09/09 23:46 · K4 · `has_citation = False`
-> **HV:** *(Đang học phần "Chuẩn bị notebook và nơi nộp bài")* "hi"
-> **Tutor:** "Chào [HV]… Để chuẩn bị notebook và nơi nộp bài, em hãy đảm bảo mình đã truy cập đúng nền tảng khóa học và xem kỹ hướng dẫn trong phần setup của buổi học nhé."
+4. `T00506` · D01 — học viên bôi đen đúng đoạn "Phân biệt được rule-based bot, LLM chatbot, và agent" ở **trang 4**; tutor trả lời **đúng nội dung** nhưng trích `[trang 8]`. Nội dung đúng, trích dẫn sai.
 
-→ Lời khuyên rỗng, không có thông tin nào thật. Học viên hỏi xong vẫn không biết nộp ở đâu.
+5. `T00422` · D07 — tutor viết "**Tại trang 11** (trong nội dung về xác định cách sử dụng AI)…" rồi trích `[trang 50]` ngay trong cùng câu trả lời.
 
-**[T10510]** · 10/09 16:04 · K4 · `has_citation = False` · 955 ký tự
-> **HV:** *(Đang học phần "Nộp bài và đánh giá Lab")* "giải thích về các bài lab"
-> **Tutor:** "Các bài lab trong môn học này được thiết kế để em nắm vững cách làm việc với LLM API… Mục tiêu chính là giúp em: Làm quen với quy trình gọi API… Hiểu sâu các tính năng quan trọng…"
+6. `T04316` · D01 (`COMP2010`, bộ slide **32 trang**) — tutor trích `[trang 45]`. Trang 45 không tồn tại.
 
-→ 955 ký tự trình bày rất gọn gàng về **cách đánh giá lab** mà không dẫn được một dòng tài liệu nào.
+7. `T09512` · D09 — "**Tại trang 18** của tài liệu **[trang 123]**, slide trình bày về KV Cache…"
 
-### ✅ Nhóm "từ chối đúng" — hành vi mong muốn (13,3%)
+## 5 · Chúng tôi đã đếm SAI những gì (ghi lại để người chấm kiểm chéo)
 
-**[T02736]** · 30/07 12:31
-> **HV:** "Deadline nộp bài AI Product Hackathon là ngày nào? **Nếu tài liệu không có thì nói rõ là không biết.**"
-> **Tutor:** "Tôi đã kiểm tra kỹ nội dung tài liệu của ngày học hôm nay nhưng không có thông tin về deadline… Vì vậy, tôi không biết thời hạn cụ thể cho sự kiện này."
+Phần này quan trọng ngang phần kết quả. Bốn lần đếm hỏng, đều tự phát hiện và đều đã bỏ:
 
-→ Đáng chú ý: học viên **phải tự dặn** "nếu không có thì nói không biết" thì mới nhận được hành vi đúng. Hành vi đúng đang phụ thuộc vào việc học viên biết cách nhắc.
+**(a) Regex bóc tiền tố bỏ sót dấu nháy cong.** `strip_context_prefix` cũ chỉ khớp `"` thẳng và tiền tố tiếng Việt, bỏ sót `"` `"` và bản tiếng Anh. Hậu quả: 116/150 "ca ngoài phạm vi" là **khớp nhầm vào tiền tố giao diện**, không phải câu học viên gõ. Hai ca K4 từng trích trong spec (`T10303`, `T10510`) là false positive. → Toàn bộ dòng phân tích cũ bị bỏ, script `count_ungrounded.py` **đã xoá khỏi repo**.
 
-**[T02918]** · 30/07 14:11 — *mẫu chuẩn nhóm muốn tutor luôn làm*
-> **Tutor:** "Rất tiếc, tôi đã kiểm tra trong tài liệu của ngày học nhưng không thấy thông tin cụ thể về deadline nộp bài cuối kỳ. **Bạn vui lòng kiểm tra lại trên Syllabus hoặc thông báo của giảng viên** trong hệ thống quản lý học tập nhé."
+**(b) Lấy "trang đang mở" làm chuẩn đối chiếu.** Sai: học viên mở trang 2 rồi hỏi "Day 1 gồm những chủ đề gì" thì tutor trích trang 7 là **đúng**. Phép đo này từng cho ra "36,4% trích sai" — con số đó **vô nghĩa**, đã bỏ.
 
-→ Từ chối + **chỉ đúng chỗ cần hỏi**. Đây là hành vi mục tiêu của lát cắt.
+**(c) Lấy số trang trong tiền tố làm chuẩn.** Sai: `T00058` tiền tố ghi trang 82 nhưng chữ học viên chọn ghi "đoạn bôi đen ở **Trang 6**", tutor trích trang 6 → **tutor đúng, phép đo của chúng tôi sai**. Đã chuyển sang lấy số trang do chính học viên gõ.
 
-## 5 · Bằng chứng phụ trợ (từ `DATA_DICTIONARY.md`, đã tự kiểm lại)
+**(d) Đếm theo `lecture_code` trần.** Data dictionary nói rõ `lecture_code` **không duy nhất giữa các khoá**. D01 của `COMP2010` là 32 trang, D01 của `VinUni-AIInAction-3` là 42 trang. Đếm gộp cho ra 958 ca (16,6%); khoá lại theo `(course_id, lecture_code)` và chỉ giữ bộ slide có bằng chứng nhất quán thì còn **164 ca (12,8%)**. Con số trong §3 là con số sau khi sửa.
 
-- `move_used`: `review_concept` 12.127/13.494 (**90%**); `ask_probing_question` chỉ **28 lượt (0,2%)** → tutor gần như không bao giờ hỏi lại khi thiếu thông tin.
-- Chỉ **1,3%** lượt có rating (177/13.494: 92 up / 85 down) → **49% lượt được chấm là 👎**. Học viên không có kênh phản hồi hiệu quả.
-- `understanding_level` gần rỗng (20/13.494) → tutor không đo mức hiểu.
+**(e) Rà tay 20 ca ngẫu nhiên** (seed 42) trong nhóm phép đo [4]: một phần nhỏ là ca học viên bôi trúng thanh trạng thái trình xem (`"Trang 1 / 44 day05-….pdf"`) làm hỏng chuẩn đối chiếu. Vì vậy 10,8% của phép đo [4] nên đọc là **ước lượng**, còn phép đo [2] (tự mâu thuẫn) mới là con số **không cãi được** — nó so tutor với chính tutor.
 
-## 6 · Kế hoạch bổ sung chuẩn A (đến CP4)
+## 6 · Giới hạn còn lại — chưa khắc phục được
 
-Khảo sát ≥20 học viên 3A ngoài nhóm, hỏi theo Mom Test — về **lần gần nhất**, không hỏi ý kiến:
+- **Không có slide K4 để đối chiếu trực tiếp.** Data pack chỉ có 2 file PDF của buổi hackathon, không phải slide bài giảng K4. Mọi kết luận về K4 dựa trên [2] (tự mâu thuẫn) và cấu trúc giao diện, không phải mở slide ra đếm.
+- **12,8% là SÀN, không phải trần.** Chỉ bắt được trích dẫn **vượt** số trang. Trích sai mà vẫn nằm trong khoảng thì không phép đo nào ở đây thấy được.
+- **Chưa có bằng chứng hậu quả.** Dataset có trường `rating` nhưng chỉ 177/13.494 lượt (1,3%) được chấm — nền quá nhỏ để kết luận học viên khó chịu vì trích dẫn sai. **Nhóm không dùng `rating` làm bằng chứng hậu quả.** Đây là lý do cần khảo sát chuẩn A (§7).
+- **Chưa chứng minh được học viên đã làm theo thông tin sai.** Chatlog không ghi hành vi sau câu trả lời.
 
-1. "Lần gần nhất bạn hỏi AI tutor trên VLearn một câu về **lịch / deadline / cách nộp bài**, nó trả lời thế nào?"
-2. "Bạn có làm theo câu trả lời đó không? Sau đó có phải đi hỏi lại ai không — hỏi ai?"
-3. "Có lần nào bạn phát hiện tutor nói sai không? Lúc đó bạn nhận ra bằng cách nào?"
+## 7 · Việc còn thiếu
 
-Ghi log **nguyên văn từng câu trả lời + tên người trả lời** vào `evidence/survey-log.md`. Chỉ tiêu: ≥20 người, ≥50% xác nhận đã từng nhận câu trả lời không đúng/không có căn cứ.
+Khảo sát chuẩn A: ≥20 học viên ngoài nhóm, hỏi thẳng "bạn có bao giờ bấm theo `[trang N]` tutor đưa mà không thấy nội dung đó không?" — đây là mảnh bằng chứng duy nhất còn thiếu để nối **lỗi đo được** với **hậu quả người dùng thật sự chịu**.

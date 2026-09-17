@@ -4,7 +4,13 @@
 **Đội trưởng:** PHAN DUY BẢO — 2A202602767
 **Repo:** https://github.com/pbaodev/K4-3A-E403-Dalab
 
+> ⚠️ **BẢN ĐÃ NỘP CP1 (16/9) — GIỮ NGUYÊN LÀM LỊCH SỬ, KHÔNG SỬA.**
+> Các con số ở mục 3 và 4 (86,7% · 150 ca · 130/150) **đã bị thay thế ngày 17/9** sau khi nhóm phát hiện regex bóc tiền tố bị hỏng và bốn phép đếm sai.
+> Bản đang dùng: [`spec.md`](../spec.md) §1 · lý do đổi: [`spec.md`](../spec.md) §9 changelog · chi tiết bốn lỗi đếm: [`evidence/mining-notes.md`](../evidence/mining-notes.md) §5.
+> Script `count_ungrounded.py` nhắc ở mục 4 đã bị xoá, thay bằng [`evidence/count_citations.py`](../evidence/count_citations.py).
+
 ---
+
 
 **1 · Hướng:** Track **A — VLearn Tutor**, đề **A1** (tối ưu AI tutor hiện có).
 
