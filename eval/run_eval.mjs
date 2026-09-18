@@ -21,10 +21,14 @@ const gs = JSON.parse(readFileSync(new URL("./golden_set.json", import.meta.url)
 // --merge      : ghép với kết quả đã có trong run1-raw.json thay vì chạy lại toàn bộ
 const only  = (process.argv.find(a => a.startsWith("--only=")) ?? "").split("=")[1] || null;
 const merge = process.argv.includes("--merge");
+// --run=2      : số lượt chạy. Mỗi lượt ghi file RIÊNG — không bao giờ ghi đè bằng chứng lượt trước.
+const RUN   = Number((process.argv.find(a => a.startsWith("--run=")) ?? "--run=1").split("=")[1]);
+const RAW   = `./run${RUN}-raw.json`;
+const REPORT = RUN === 1 ? "./run_results.md" : `./run${RUN}-results.md`;
 
 let results = [];
 if (merge) {
-  try { results = JSON.parse(readFileSync(new URL("./run1-raw.json", import.meta.url), "utf8")); }
+  try { results = JSON.parse(readFileSync(new URL(RAW, import.meta.url), "utf8")); }
   catch { results = []; }
 }
 const todo = gs.cases.filter(c => (!only || c.kind === only) && !results.some(r => r.id === c.id));
@@ -75,15 +79,15 @@ const byGroup = (fn) => {
 mkdirSync(new URL("../codebase/logs/", import.meta.url), { recursive: true });
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 writeFileSync(new URL(`../codebase/logs/trace-${stamp}.json`, import.meta.url), JSON.stringify(getTrace(), null, 2));
-writeFileSync(new URL("./run1-raw.json", import.meta.url), JSON.stringify(results, null, 2));
+writeFileSync(new URL(RAW, import.meta.url), JSON.stringify(results, null, 2));
 
 const pct = (a, b) => `${a}/${b} = ${(a / b * 100).toFixed(0)}%`;
 const L = [];
-L.push(`# Kết quả chạy golden set — lượt 1`);
+L.push(`# Kết quả chạy golden set — lượt ${RUN}`);
 L.push(``);
 L.push(`**Chạy lúc:** ${new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })} · **Provider:** \`${CONFIG.provider}\` · **Model:** \`${CONFIG.model}\` · **AI thật:** ${CONFIG.USE_REAL_AI ? "CÓ" : "KHÔNG"}`);
-L.push(`**Lệnh chạy lại:** \`${ENV}=xxx node eval/run_eval.mjs\``);
-L.push(`**Log prompt + response thô:** \`codebase/logs/trace-${stamp}.json\` · **Kết quả máy đọc:** \`eval/run1-raw.json\``);
+L.push(`**Lệnh chạy lại:** \`${ENV}=xxx node eval/run_eval.mjs --run=${RUN}\``);
+L.push(`**Log prompt + response thô:** \`codebase/logs/trace-${stamp}.json\` · **Kết quả máy đọc:** \`eval/run${RUN}-raw.json\``);
 L.push(``);
 L.push(`## Tỷ lệ đạt: **${pct(pass, results.length)}**`);
 L.push(``);
@@ -131,5 +135,5 @@ for (const r of fails) {
   L.push(`- **Nguyên nhân:** ⬜ *(điền tay sau khi đọc log)*`);
   L.push(``);
 }
-writeFileSync(new URL("./run_results.md", import.meta.url), L.join("\n") + "\n");
-console.log(`ĐẠT ${pct(pass, results.length)}  ->  eval/run_results.md`);
+writeFileSync(new URL(REPORT, import.meta.url), L.join("\n") + "\n");
+console.log(`ĐẠT ${pct(pass, results.length)}  ->  eval/${REPORT.slice(2)}`);

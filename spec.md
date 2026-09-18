@@ -252,16 +252,19 @@ Chiều 3 là điều kiện tuyệt đối vì đó chính là pain: một hệ
 |---|---|---|---|---|
 | 1 | Gemini | 20 ca | **8/20 = 40%** | 11 ca dính HTTP 429 (mô hình **chưa từng được hỏi**) + 1 ca chấm sai do regex `forbid` quá rộng. Không tính là kết quả chất lượng |
 | 2 | Gemini | 20 ca | **20/20 = 100%** | Sau khi siết `forbid` và thêm backoff. Nhóm coi đây là **cảnh báo bộ đề dễ**, không phải thành tích |
-| 3 | **Groq** `qwen3.8-27b` | **28 ca** (thêm 8 ca khó) | **27/28 = 96%** · bịa trang = **0** | ✅ **Đạt bar.** Ca trượt: `H03` |
+| 3 · file `run1-*` | **Groq** `qwen3.8-27b` | **28 ca** (thêm 8 ca khó) | **27/28 = 96%** · bịa trang = **0** | ✅ **Đạt bar.** Ca trượt: `H03` |
+| 4 · file `run2-*` · *18/9* | **Groq** `qwen3.8-27b` | 28 ca — **không đổi** | **28/28 = 100%** · bịa trang = **0** | ✅ Đạt bar. Chỉ sửa prompt (+1 luật chống từ chối oan). Chỉ `H03` đổi kết quả, không ca nào vỡ |
+| ngoài bộ · *18/9* | Groq | 5 câu mới, không thêm vào golden set | **5/5** | Kiểm nghi vấn học vẹt `H03` — gồm 1 ca đối chứng phải từ chối |
 
-**68 lời gọi AI thật trên 2 provider.** Log prompt + response thô: `codebase/logs/`, kết quả thô: `eval/run1-raw.json`, `eval/run1-gemini-raw.json`.
+**101 lời gọi AI thật trên 2 provider** (68 tới CP3 + 28 lượt 4 + 5 phép thử ngoài bộ). Log prompt + response thô: `codebase/logs/`, kết quả thô: `eval/run1-raw.json`, `eval/run1-gemini-raw.json`.
 
 ⚠️ **Không so trực tiếp 100% với 96%:** hai con số chạy trên hai bộ đề khác nhau (20 ca dễ vs 28 ca có 8 ca biên). Bảng so provider trong `eval/run_results.md`.
 
 ### Ca trượt sai ở đâu — `H03`
 Học viên hỏi *"trang 22 nói gì về token?"*, token thật ra ở trang 24. Mô hình **nhận ra tiền đề sai**, tự ghi trong `reason` rằng token nằm ở trang 24 và 68, rồi vẫn trả lời *"Vui lòng liên hệ người phụ trách"*. **Nó biết câu trả lời và vẫn từ chối.**
 **Nguyên nhân:** prompt có luật chống bịa nhưng không có luật đối xứng chống từ chối oan.
-**Sửa cho lượt sau:** thêm luật — khi học viên nêu sai trang mà nội dung có ở trang khác, phải trả lời từ trang đúng và nói rõ đã chuyển trang. Sửa này **chưa áp dụng**, để nguyên cho người chấm đối chiếu.
+**Đã sửa ở lượt 4 (18/9):** thêm luật — học viên nêu sai trang mà nội dung có ở trang khác thì phải trả lời từ trang đúng và nói rõ đã chuyển trang. Kết quả: *"Trang 22 không nói về token, nội dung này nằm ở trang 24 và 68…"* → đạt.
+**Nhóm không coi 28/28 là đủ:** luật viết nhắm đúng `H03` rồi chấm trên bộ chứa `H03`. Nên chạy thêm **5 câu mới ngoài bộ** (`eval/heldout_probe.mjs`) → 5/5, kể cả ca đối chứng *"trang 22 có nói học phí không?"* vẫn bị từ chối đúng. Còn một điểm lệch nhỏ: ở `H03` model ra `PARTIAL` thay vì `GROUNDED` như luật yêu cầu — đạt vì ca này chấp nhận cả hai nhãn từ trước, nhóm ghi lại chứ không nới tiêu chí. Chi tiết `eval/run2-results.md`.
 
 ---
 
@@ -311,3 +314,5 @@ Học viên hỏi *"trang 22 nói gì về token?"*, token thật ra ở trang 2
 | **17/9 15:44** | **Bỏ câu "sai kiểu thận trọng thừa là RẺ"** trong §4 và bỏ thiết kế "lệch hẳn về phía từ chối" | Câu đó **không có bằng chứng**. `rating` chỉ phủ 1,3% số lượt — nền quá nhỏ để xếp hạng hai loại sai. Thay bằng: neo được thì phải trả lời, không neo được thì không bịa số trang. Ca `H03` là bằng chứng nội bộ cho chiều sai còn lại |
 | **17/9 15:46** | Thêm nguyên tắc §4b **"trích dẫn phải kiểm được"**: gắn kèm nguyên văn dòng trích, không chỉ số trang | `T10572` — `[trang 117]` trông hợp lệ hoàn toàn mà không dò được |
 | **17/9 15:48** | Khoá quality bar §7: **≥90% qua cả 4 chiều VÀ bịa số trang = 0** | CP4 |
+| **18/9 11:05** | Lượt 4: thêm 1 luật chống từ chối oan vào prompt → **28/28**, bịa trang 0. Golden set, bar, cách chấm **không đổi**. Runner thêm cờ `--run=N` để lượt mới không ghi đè bằng chứng lượt cũ | Vá `H03` theo nhịp guide §4.1: *chọn một failure đau nhất → sửa → chạy lại trọn bộ* |
+| **18/9 11:08** | Thêm phép thử 5 câu **ngoài** golden set (`eval/heldout_probe.mjs`) → 5/5 | 28/28 trên bộ chứa chính ca vừa vá không chứng minh khái quát được |

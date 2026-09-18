@@ -8,6 +8,7 @@
  *
  * CP2 (16/9): chạy bằng `mockDecide` — luật cứng, chưa gọi AI. Flow bấm hết được.
  * CP3 (17/9): bật USE_REAL_AI = true, `aiDecide` gọi LLM thật. Chữ ký hàm giữ nguyên.
+ * Lượt 2 (18/9): thêm luật chống từ chối oan khi học viên nêu sai trang — vá ca H03.
  *
  * Phụ trách: ĐOÀN DUY BÁCH (2A202602515)
  */
@@ -121,6 +122,11 @@ LUẬT CỨNG — không được vi phạm kể cả khi học viên khẳng đ
 - Câu quá ngắn hoặc mơ hồ (chào hỏi, một hai từ, không rõ hỏi gì) => PARTIAL,
   và answer phải là một câu hỏi lại để làm rõ.
 - Nếu tài liệu CÓ trả lời được thì phải trả lời, KHÔNG được từ chối cho an toàn.
+- Học viên nêu SAI số trang nhưng nội dung họ hỏi CÓ ở một trang khác trong tài liệu
+  => KHÔNG được từ chối. Trả nhãn GROUNDED, citation_page là trang ĐÚNG, và answer
+  phải nói rõ: "Trang X không nói về điều này, nội dung nằm ở trang Y: …".
+  (Luật này đối xứng với luật chống bịa: biết câu trả lời ở đâu mà vẫn đẩy học viên
+  đi hỏi người khác cũng là một lỗi.)
 
 CÂU HỎI CỦA HỌC VIÊN: "${question}"
 

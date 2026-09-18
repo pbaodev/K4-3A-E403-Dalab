@@ -1,21 +1,3 @@
-# Kết quả kiểm thử — tổng hợp các lượt
-
-> **Quality bar (khoá 21:00 17/9):** ≥90% ca qua cả 4 chiều **VÀ** bịa số trang = 0.
-
-| Lượt | Ngày | Provider | Bộ đề | Kết quả | Bịa trang | Đổi gì | Chi tiết |
-|---|---|---|---|---|---|---|---|
-| Gemini 1 | 17/9 | gemini-3.6-flash | 20 ca | 8/20 = 40% | — | — | 11 ca dính 429, model chưa từng được hỏi · [`run1-gemini-results.md`](run1-gemini-results.md) |
-| Gemini 2 | 17/9 | gemini-3.6-flash | 20 ca | 20/20 = 100% | 0 | siết regex `forbid`, thêm backoff | coi là cảnh báo bộ đề dễ → thêm 8 ca biên |
-| **1** | 17/9 | Groq qwen3.8-27b | **28 ca** | **27/28 = 96%** ✅ đạt bar | 0 | — | trượt `H03` (từ chối oan) · [`run1-results.md`](run1-results.md) |
-| **2** | 18/9 | Groq qwen3.8-27b | **28 ca** | **28/28 = 100%** ✅ đạt bar | 0 | +1 luật chống từ chối oan | chỉ `H03` đổi, không ca nào vỡ · [`run2-results.md`](run2-results.md) |
-| ngoài bộ | 18/9 | Groq qwen3.8-27b | 5 câu mới | 5/5 | 0 | — | kiểm nghi vấn học vẹt `H03` · [`heldout_probe.mjs`](heldout_probe.mjs) |
-
-⚠️ 28/28 ở lượt 2 **không** được đọc là "hệ thống hoàn hảo": luật được viết nhắm đúng `H03` rồi chấm trên bộ chứa `H03`. Phép thử 5 câu ngoài bộ là câu trả lời của nhóm cho nghi vấn đó — xem [`run2-results.md`](run2-results.md).
-
----
-
-*Bên dưới: báo cáo gốc lượt 1, giữ nguyên.*
-
 # Kết quả chạy golden set — lượt 1
 
 **Chạy lúc:** 14:54:08 17/9/2026 · **Provider:** `groq` · **Model:** `qwen/qwen3.8-27b` · **AI thật:** CÓ
