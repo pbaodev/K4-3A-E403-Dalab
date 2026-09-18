@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Dalab — Demo slides</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  @page{size:1920px 1080px;margin:0}
+  :root{
+    --navy:#16225a; --ink:#2b3350; --body:#3d4661; --muted:#6b7593;
+    --cream:#fdfaf4; --line:#e6e7ee; --white:#fff;
+    --green:#2e9b70; --blue:#3c7cc0; --purple:#6f5cc4; --orange:#c07a1e; --red:#b3261e;
+    --tint-blue:#eaf2fb; --tint-purple:#f1eefb; --tint-orange:#fdf3e4; --tint-green:#eaf7f1; --tint-red:#fdeceb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--cream)}
+  body{font-family:"Be Vietnam Pro",system-ui,sans-serif;color:var(--body)}
+  .slide{width:1920px;height:1080px;padding:64px 88px 0;position:relative;overflow:hidden;
+         display:flex;flex-direction:column;page-break-after:always;break-after:page;background:var(--cream)}
+  .slide:last-child{page-break-after:auto;break-after:auto}
+  .top{display:flex;justify-content:space-between;align-items:center}
+  .eyebrow{font-size:18px;font-weight:700;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+  .eyebrow i{font-style:normal;color:#f0781e;margin-right:10px}
+  .time{font-size:17px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--line);
+        border-radius:8px;padding:7px 14px}
+  h1{font-size:58px;font-weight:800;color:var(--navy);letter-spacing:-.02em;line-height:1.08;
+     margin-top:22px;max-width:1500px;text-wrap:balance}
+  .lead{font-size:26px;line-height:1.5;color:var(--ink);margin-top:18px;max-width:1500px}
+  .lead b{color:var(--navy)}
+  .body{flex:1;min-height:0;margin-top:40px;display:grid;gap:28px}
+  .foot{display:flex;justify-content:space-between;align-items:center;padding:22px 0 30px;
+        font-size:16px;color:var(--muted);border-top:1px solid var(--line);margin-top:28px}
+  .foot b{color:var(--navy)}
+  .src{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:15px}
+
+  .card{background:#fff;border-radius:16px;padding:30px 34px;box-shadow:0 2px 14px rgba(22,34,90,.06);
+        display:flex;flex-direction:column;min-height:0}
+  .card h3{font-size:17px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+  .card p,.card li{font-size:23px;line-height:1.5}
+  .card b{color:var(--navy)}
+  .card ul{list-style:none;margin-top:14px;display:grid;gap:12px}
+  .card li{padding-left:24px;position:relative}
+  .card li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+
+  .big{font-size:88px;font-weight:800;color:var(--navy);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+  .big small{font-size:34px;font-weight:700;color:var(--muted);letter-spacing:0}
+  .cap{font-size:21px;line-height:1.45;margin-top:12px;color:var(--ink)}
+  .cap b{color:var(--navy)}
+  .red{color:var(--red)!important}
+
+  .quote{background:#1c1f2b;color:#e8ebf3;border-radius:16px;padding:30px 36px;font-size:27px;line-height:1.55}
+  .quote .who{font-family:"JetBrains Mono",monospace;font-size:16px;color:#9aa3bd;margin-bottom:12px;letter-spacing:.04em}
+  .quote mark{background:#b3261e;color:#fff;padding:1px 8px;border-radius:5px}
+  .quote .ok{background:#2e9b70;color:#fff;padding:1px 8px;border-radius:5px}
+
+  table{width:100%;border-collapse:collapse;font-size:22px}
+  th{font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+     text-align:left;padding:0 18px 14px}
+  td{padding:17px 18px;border-top:1px solid var(--line);vertical-align:top;line-height:1.4}
+  td b{color:var(--navy)}
+  tr.pick td{background:var(--tint-green)}
+  tr.pick td:first-child{border-radius:10px 0 0 10px} tr.pick td:last-child{border-radius:0 10px 10px 0}
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tagk{display:inline-block;font-size:15px;font-weight:700;letter-spacing:.08em;padding:5px 12px;border-radius:6px}
+  .k-g{background:var(--tint-green);color:#1d7a56} .k-p{background:var(--tint-orange);color:#8a5a0e}
+  .k-u{background:var(--tint-red);color:var(--red)} .k-x{background:#eef0f5;color:var(--muted)}
+
+  .slice{background:var(--navy);color:#fff;border-radius:18px;padding:34px 40px;font-size:30px;line-height:1.5}
+  .slice b{color:#ffd28a;font-weight:700}
+  .demo{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .step{background:#fff;border-radius:16px;padding:32px 32px;box-shadow:0 2px 14px rgba(22,34,90,.06);display:flex;flex-direction:column;gap:14px}
+  .step .n{font-size:16px;font-weight:700;letter-spacing:.14em;color:var(--muted)}
+  .step .q{font-family:"JetBrains Mono",monospace;font-size:23px;background:#f3f4f8;border-radius:8px;padding:12px 14px;color:var(--ink);line-height:1.45}
+  .step p{font-size:25px;line-height:1.5}
+  .step b{color:var(--navy)}
+
+  .bars{display:grid;gap:22px;margin-top:10px}
+  .bar{display:grid;grid-template-columns:260px 1fr 150px;align-items:center;gap:20px;font-size:22px}
+  .bar .lab b{color:var(--navy);display:block}
+  .bar .lab span{font-size:17px;color:var(--muted)}
+  .track{height:46px;background:#eef0f5;border-radius:8px;position:relative;overflow:visible}
+  .fill{height:100%;border-radius:8px;background:var(--green)}
+  .fill.muted{background:#b9c0d3}
+  .barline{position:absolute;top:-12px;bottom:-12px;width:3px;background:var(--red);left:90%}
+  .bar:first-child .barline::after{content:"bar 90%";position:absolute;top:-30px;left:-34px;font-size:16px;font-weight:700;color:var(--red);white-space:nowrap}
+  .val{font-size:30px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+
+  .grid2{grid-template-columns:1fr 1fr} .grid3{grid-template-columns:1.25fr 1fr 1fr}
+  .g64{grid-template-columns:1.5fr 1fr}
+</style>
+</head>
+<body>
+
+<!-- ============ 1 · USER & JOB ============ -->
+<section class="slide">
+  <div class="top"><div class="eyebrow"><i>●</i>01 · User &amp; Job</div><div class="time">45 giây</div></div>
+  <h1>Học viên K4 bấm theo <span class="red">[trang N]</span> tutor đưa — và không ai kiểm được N có thật không</h1>
+  <p class="lead"><b>Job:</b> khi đang đọc slide và có chỗ không hiểu, tôi muốn kiểm lại được câu giải thích vừa đọc nằm ở đâu trong tài liệu, để tin được nó mà không phải dò lại cả bộ slide.</p>
+  <div class="body grid3">
+    <div class="card">
+      <h3>Giao diện K4 gửi số trang</h3>
+      <div class="big" style="margin-top:18px">0<small> / 3.097</small></div>
+      <p class="cap">câu hỏi K4 có kèm số trang — K3 là <b>70,1%</b>. Giao diện đã đổi.</p>
+      <div class="big" style="margin-top:26px">72,9<small>%</small></div>
+      <p class="cap">câu trả lời K4 <b>vẫn gắn <span class="src">[trang N]</span></b> — 2.259 lượt không ai đối chiếu được.</p>
+    </div>
+    <div class="card">
+      <h3>Chỗ kiểm được thì sai thật</h3>
+      <div class="big" style="margin-top:18px">58</div>
+      <p class="cap">lượt tutor <b>tự mâu thuẫn</b> trong một câu · 29 học viên · <b>51 lượt là K4</b></p>
+      <div class="big" style="margin-top:26px">12,8<small>%</small></div>
+      <p class="cap">lượt trích tới trang <b>không tồn tại</b> trong bộ slide · 164/1.284 · đây là <b>sàn</b></p>
+    </div>
+    <div class="quote" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="who">T10572 · K4 · D01 · 10/9 16:36</div>
+      <p style="font-size:30px;line-height:1.6">"Chào [HV], <span class="ok">ở trang 7</span> <mark>[trang 117]</mark> của tài liệu, nội dung này tóm tắt tiến trình phát triển của trí tuệ nhân tạo…"</p>
+      <div class="who" style="margin:22px 0 0">Lời văn đúng, trích dẫn sai. Mỗi bộ slide lệch một hằng số riêng: +110 · +167 · +105 · +271 → số trích dẫn trỏ vào chỉ mục kho tài liệu gộp.</div>
+    </div>
+  </div>
+  <div class="foot"><span>Nguồn: <b>13.494 lượt hỏi-đáp thật</b>, data pack BTC · đếm lại: <span class="src">evidence/count_citations.py</span></span><span>Nhóm Dalab · 3A · E403</span></div>
+</section>
+
+<!-- ============ 2 · VÌ SAO CHỌN ============ -->
+<section class="slide">
+  <div class="top"><div class="eyebrow"><i>●</i>02 · Vì sao chọn tính năng này</div><div class="time">45 giây</div></div>
+  <h1>Bốn ứng viên — chọn cái duy nhất học viên <span class="red">không tự phát hiện được</span></h1>
+  <div class="body" style="grid-template-rows:auto 1fr">
+    <div class="card" style="padding:26px 30px 12px">
+      <table>
+        <tr><th style="width:32%">Ứng viên</th><th style="width:24%">Tần suất</th><th>Mỗi lần tốn gì</th><th style="width:15%"></th></tr>
+        <tr class="pick"><td><b>Trích dẫn [trang N] không kiểm được / trỏ sai</b></td><td class="num">72,9% lượt K4 có trích dẫn · 12,8% trỏ sai (sàn)</td><td>Mất phương tiện tự kiểm duy nhất — <b>không có tín hiệu nào để nghi</b></td><td><span class="tagk k-g">CHỌN</span></td></tr>
+        <tr><td>Trả lời không trích dẫn gì</td><td class="num">3.781 lượt · 28,0%</td><td>Tự dò lại ~2–3 phút. Tutor không hứa gì nên không dẫn sai</td><td><span class="tagk k-x">LOẠI</span></td></tr>
+        <tr><td>Không hỏi lại khi câu hỏi mơ hồ</td><td class="num">K4: 321 câu · 12,6% · hỏi ngược chỉ 0,2%</td><td>Một lượt thừa — học viên <b>thấy ngay</b> câu lạc đề và hỏi lại</td><td><span class="tagk k-x">LOẠI</span></td></tr>
+        <tr><td>Trả lời quá dài</td><td class="num">median 1.012 ký tự / câu hỏi 34</td><td>~1 phút đọc thừa, không ai bị dẫn sai</td><td><span class="tagk k-x">LOẠI</span></td></tr>
+      </table>
+    </div>
+    <div class="grid2" style="display:grid;gap:24px">
+      <div class="card" style="background:var(--tint-green);box-shadow:none"><p><b>Khác biệt quyết định không phải tần suất</b> mà là <b>ai nhận ra lỗi</b>. Ba ứng viên kia học viên thấy ngay khi đọc. Trích dẫn sai thì câu trả lời vẫn đúng nội dung, giọng tự tin, trông hợp lệ — <span class="src">T00506</span>: giải thích chuẩn, chỉ mỗi số trang sai.</p></div>
+      <div class="card" style="background:var(--tint-blue);box-shadow:none"><p><b>Kiểm thử được bằng máy.</b> Trích dẫn là một con số: so với danh sách trang có thật là biết đúng sai. Ba ứng viên kia đều cần người đọc và chấm tay.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Chi tiết: <span class="src">spec.md §2</span> · số ứng viên #3 đã đếm lại ngày 17/9 bằng bộ bóc tiền tố đã sửa</span><span>Nhóm Dalab · 3A · E403</span></div>
+</section>
+
+<!-- ============ 3 · GIẢI PHÁP & DEMO ============ -->
+<section class="slide">
+  <div class="top"><div class="eyebrow"><i>●</i>03 · Giải pháp &amp; demo live</div><div class="time">2 phút</div></div>
+  <div class="slice" style="margin-top:26px">Một <b>học viên K4 đang đọc slide</b> cần <b>hỏi về nội dung đang đọc</b> được AI <b>quyết định câu trả lời có neo vào một trang CÓ THẬT hay không — và chỉ gắn số trang khi neo được</b>, giúp <b>mở đúng trang đó kiểm lại trong một lần bấm</b>.</div>
+  <p class="lead" style="font-size:23px"><b>Conditional</b> — neo được thì tự trả lời kèm nguyên văn dòng trích; không neo được thì <b>không sinh số trang, không sinh nội dung</b>, chỉ đúng người cần hỏi. Deadline / điểm / quy chế: <b>luật cứng, luôn 🔴</b>.</p>
+  <div class="body demo" style="margin-top:28px">
+    <div class="step">
+      <div class="n">DEMO 1 · CA CHUẨN</div>
+      <div class="q">Transformer khác cách đọc tuần tự ở chỗ nào?</div>
+      <p><span class="tagk k-g">🟢 CÓ CĂN CỨ — TRANG 22</span></p>
+      <p>Hiện <b>nguyên văn dòng trích</b> ngay dưới nhãn — đối chiếu tại chỗ, không rời trang.</p>
+    </div>
+    <div class="step">
+      <div class="n">DEMO 2 · CHỖ KHÓ ① — TRANG KHÔNG TỒN TẠI</div>
+      <div class="q">giải thích giúp mình trang 99</div>
+      <p><span class="tagk k-u">🔴 NGOÀI TÀI LIỆU</span></p>
+      <p>Tài liệu có 10 trang. Hệ thống <b>không bịa trang 99</b>. Model mà khai trang không có thật → UI chặn và báo đỏ.</p>
+    </div>
+    <div class="step">
+      <div class="n">DEMO 3 · CHỖ KHÓ ④ — MẤT ĐIỂM THẬT</div>
+      <div class="q">t nộp bài từ 6h chiều, sau 12h có thêm commit thì có chấm không?</div>
+      <p><span class="tagk k-u">🔴 NGOÀI TÀI LIỆU</span></p>
+      <p>Không đoán quy chế. Chỉ đúng người: <b>TA trực kênh #hoi-dap</b>, kèm lý do.</p>
+    </div>
+  </div>
+  <div class="foot"><span>AI thật: <b>Groq · qwen3.8-27b</b> · mọi prompt + response thô trong <span class="src">codebase/logs/</span></span><span>Nhóm Dalab · 3A · E403</span></div>
+</section>
+
+<!-- ============ 4 · KẾT QUẢ ĐO ============ -->
+<section class="slide">
+  <div class="top"><div class="eyebrow"><i>●</i>04 · Kết quả đo</div><div class="time">45 giây</div></div>
+  <h1>96% → 100%: vá đúng một lỗi, không ca nào vỡ — và thử 5 câu mới để chắc không học vẹt</h1>
+  <p class="lead">Bar khoá 21:00 17/9: <b>≥90% ca qua cả 4 chiều VÀ bịa số trang = 0</b>. 4 chiều: đúng nhãn · đúng trang · không bịa trang · không bịa nội dung. Sai 1 là trượt cả ca.</p>
+  <div class="body g64">
+    <div class="card">
+      <h3>28 ca golden set · 19 ca mang turn_id thật · 8 ca biên khó</h3>
+      <div class="bars" style="margin-top:44px">
+        <div class="bar"><div class="lab"><b>Lượt 1</b><span>17/9 · prompt gốc</span></div><div class="track"><div class="fill muted" style="width:96.4%"></div><div class="barline"></div></div><div class="val">27/28</div></div>
+        <div class="bar"><div class="lab"><b>Lượt 2</b><span>18/9 · +1 luật chống từ chối oan</span></div><div class="track"><div class="fill" style="width:100%"></div><div class="barline"></div></div><div class="val">28/28</div></div>
+      </div>
+      <p class="cap" style="margin-top:36px">Bịa số trang: <b>lượt 1 = 0</b> · <b>lượt 2 = 0</b>. Golden set và bar <b>không đổi</b> giữa hai lượt — chỉ sửa prompt.</p>
+      <p class="cap" style="margin-top:14px;color:var(--muted);font-size:18px">Trước đó: Gemini 20 ca → 8/20 (11 ca dính 429, model chưa từng được hỏi) → 20/20 — nhóm coi là dấu hiệu bộ đề dễ nên thêm 8 ca biên khó.</p>
+    </div>
+    <div class="card" style="background:var(--tint-orange);box-shadow:none">
+      <h3>Failure đáng kể nhất · H03</h3>
+      <div class="q" style="font-family:'JetBrains Mono',monospace;font-size:20px;background:#fff;border-radius:8px;padding:12px 14px;margin-top:16px">trang 22 nói gì về token?</div>
+      <p style="margin-top:16px;font-size:21px">Token thật ra ở trang 24. Model <b>tự ghi trong reason</b> "token ở trang 24 và 68" — rồi vẫn bảo học viên <b>đi hỏi người phụ trách</b>.</p>
+      <p style="margin-top:12px;font-size:21px"><b>Nguyên nhân:</b> prompt có luật chống bịa nhưng không có luật đối xứng chống từ chối oan.</p>
+      <p style="margin-top:12px;font-size:21px"><b>Sửa:</b> thêm 1 luật đối xứng. Lượt 2: <i>“Trang 22 không nói về token, nội dung này nằm ở trang 24…”</i> Thử thêm <b>5 câu mới ngoài bộ: 5/5</b> — kể cả câu hỏi học phí vẫn bị từ chối đúng.</p>
+    </div>
+  </div>
+  <div class="foot"><span><span class="src">eval/run1-results.md</span> · <span class="src">eval/run2-results.md</span> · chạy lại: <span class="src">GROQ_API_KEY=… node eval/run_eval.mjs --run=2</span></span><span>Nhóm Dalab · 3A · E403</span></div>
+</section>
+
+<!-- ============ 5 · USER THẬT NÓI GÌ ============ -->
+<section class="slide">
+  <div class="top"><div class="eyebrow"><i>●</i>05 · User thật nói gì</div><div class="time">45 giây</div></div>
+  <h1>Học viên đã phải tự dặn tutor "không biết thì nói không biết"</h1>
+  <div class="body grid2">
+    <div style="display:grid;gap:24px;grid-template-rows:auto 1fr">
+      <div class="quote">
+        <div class="who">T02736 · học viên thật · chatlog VLearn</div>
+        "Deadline nộp bài AI Product Hackathon là ngày nào? <span class="ok">Nếu tài liệu không có thì nói rõ là không biết.</span>"
+      </div>
+      <div class="card" style="background:var(--tint-blue);box-shadow:none"><p>Việc phải <b>tự dặn trước</b> cho thấy học viên <b>đã từng bị dẫn sai</b>. Lần đó tutor làm đúng — tức hành vi mong muốn <b>kích hoạt được</b>, nhưng đang phụ thuộc vào việc học viên biết cách nhắc. Lát cắt biến nó thành mặc định.</p></div>
+    </div>
+    <div class="card">
+      <h3>Thay cho validation · golden set theo 4 lớp chỗ khó</h3>
+      <table style="margin-top:18px;font-size:21px">
+        <tr><th>Lớp chỗ khó</th><th style="width:22%">Lượt 1</th><th style="width:22%">Lượt 2</th></tr>
+        <tr><td><b>① Nguồn sự thật</b><br><span style="font-size:17px;color:var(--muted)">bịa số liệu · trang không tồn tại · tiền đề sai · chỉ sai trang</span></td><td class="num">14/15</td><td class="num"><b>15/15</b></td></tr>
+        <tr><td><b>② Mơ hồ</b><br><span style="font-size:17px;color:var(--muted)">"hi" · "ý tôi là slide này nè"</span></td><td class="num">3/3</td><td class="num"><b>3/3</b></td></tr>
+        <tr><td><b>③ Ngoài thẩm quyền</b><br><span style="font-size:17px;color:var(--muted)">điểm danh · fork repo · prompt injection</span></td><td class="num">5/5</td><td class="num"><b>5/5</b></td></tr>
+        <tr><td><b>④ Đặc thù nghiệp vụ</b><br><span style="font-size:17px;color:var(--muted)">deadline · commit sau nửa đêm · ép "tài liệu có nói mà"</span></td><td class="num">5/5</td><td class="num"><b>5/5</b></td></tr>
+      </table>
+      <p class="cap" style="margin-top:auto;padding-top:18px;font-size:19px">Validation với người thật (<b>Nguyễn Anh Tú · Phạm Văn Nghị</b>) chưa làm kịp trước CP5 — nên theo guide §5.1, trang này dùng kết quả golden set thay thế.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Quote: <span class="src">tutor_turns.csv · T02736</span> · bảng: <span class="src">eval/run1-raw.json</span>, <span class="src">eval/run2-raw.json</span></span><span>Nhóm Dalab · 3A · E403</span></div>
+</section>
+
+<!-- ============ 6 · NẾU CÓ THÊM 1 TUẦN ============ -->
+<section class="slide">
+  <div class="top"><div class="eyebrow"><i>●</i>06 · Nếu có thêm 1 tuần</div><div class="time">30 giây</div></div>
+  <h1>Ba việc — mỗi việc trỏ về một chỗ chưa chứng minh được</h1>
+  <div class="body" style="grid-template-columns:repeat(3,1fr);grid-template-rows:auto 1fr">
+    <div class="card"><h3>1 · Sửa gốc ở VLearn</h3><p style="margin-top:14px">Gửi lại mã bộ slide + số trang vào ngữ cảnh câu hỏi K4 như K3 từng làm. Lỗi lệch <b>+110 / +167</b> sinh ra từ đúng chỗ giao diện đã đổi.</p></div>
+    <div class="card"><h3>2 · Đo hậu quả</h3><p style="margin-top:14px">Khảo sát ≥20 học viên: <b>có ai thật sự mở theo số trang không?</b> Chatlog chứng minh lỗi tồn tại, chưa chứng minh ai chịu nó.</p></div>
+    <div class="card"><h3>3 · Chạy trên slide K4 thật</h3><p style="margin-top:14px">Thay fixture 10 trang bằng bộ slide đầy đủ; đo lại trên 51 ca K4 tự mâu thuẫn làm golden set mới.</p></div>
+    <div class="slice" style="grid-column:1/-1;display:flex;flex-direction:column;justify-content:center;font-size:29px">
+      <span style="font-size:17px;letter-spacing:.16em;font-weight:700;color:#9fb0e6;margin-bottom:14px">BÀI HỌC LỚN NHẤT</span>
+      <p>Pain đầu tiên của nhóm dựng trên <b>150 ca — 116 ca là regex khớp nhầm</b> vào chữ giao diện tự chèn. Bốn lần đếm sai, đều tự phát hiện. Từ đó mọi con số trong bài đều kèm script đếm lại được và một dòng <b>giới hạn</b>: lọc bằng từ khoá thì phải đọc mẫu đầu ra trước khi tin con số.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Bốn lỗi đếm: <span class="src">evidence/mining-notes.md §5</span> · changelog: <span class="src">spec.md §9</span></span><span>Nhóm Dalab · 3A · E403</span></div>
+</section>
+
+</body>
+</html>
