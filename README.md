@@ -41,8 +41,8 @@ Không cần clone, không cần cài. Bốn nút mẫu chạy đúng bốn đư
 | CP1 · Canvas + repo công khai | 19:30 · 16/9 | ✅ |
 | CP2 · Flow bấm được | 21:00 · 16/9 | ✅ |
 | CP3 · AI thật + đo lượt 1 | 16:00 · 17/9 | ✅ **27/28 = 96%** · `qwen3.8-27b` trên Groq · [kết quả](eval/run_results.md) |
-| CP4 · Chốt spec + khoá quality bar | 21:00 · 17/9 | ⬜ |
-| CP5 · Slide PDF + video dự phòng | 13:00 · 18/9 | ⬜ |
+| CP4 · Chốt spec + khoá quality bar | 21:00 · 17/9 | ✅ bar: ≥90% qua cả 4 chiều **và** bịa trang = 0 · [spec §7](spec.md) · lượt 2 (18/9): **28/28** + 5/5 câu ngoài bộ |
+| CP5 · Slide PDF + video dự phòng | 13:00 · 18/9 | 🟡 [`demo-slides.pdf`](demo-slides.pdf) ✅ · video dự phòng ⬜ · dry run ⬜ |
 | CP6 · Thuyết trình | 17:30 · 18/9 | ⬜ |
 
 ## 🔒 Bảo mật dữ liệu
