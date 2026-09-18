@@ -139,7 +139,10 @@ Chọn **#1**. Ba lý do, mỗi lý do có số đi kèm:
 | Quyết định phân loại có/không có căn cứ + sinh câu trả lời | 🟢 **AI THẬT** — 1 lời gọi LLM, có log prompt + response thô trong `codebase/logs/` |
 | Nội dung tài liệu đang mở | 🟡 Fixture — trích đoạn từ 2 slide + transcript trong data pack |
 | Giao diện trang học VLearn | 🟡 Mock — trang tĩnh mô phỏng khung tutor |
-| Bảng định tuyến "hỏi ai cho phần này" | 🟡 Mock — bảng cứng 4 dòng (TA / giảng viên / Syllabus / kênh lớp) |
+| Bảng định tuyến "hỏi ai cho phần này" | 🟡 Mock — bảng cứng 5 dòng (TA #hoi-dap / TA nhắn riêng / giảng viên / Syllabus / giảng viên cho câu nội dung ngoài tài liệu). Chọn dòng bằng **luật regex**, không để model chọn — dùng chung cho cả đường AI thật và mock |
+| Nút **"Tài liệu có nói mà"** (G9) | 🟠 **Làm một phần** — ghép đoạn học viên dán vào câu hỏi rồi hỏi lại. **Chưa** chạy lại phân loại *chỉ trên đoạn đó*, **chưa** ghi ca vào log để bổ sung golden set như §6 mô tả |
+| Chip feedback 👍/👎 + "sai chỗ nào?" (G15) | 🟠 **Chỉ giao diện** — bấm được, **chưa lưu** đi đâu |
+| Lớp chặn trích dẫn (`fabricated_page` + hạ nhãn) | 🟢 **Thật**, có test không cần mạng: `node eval/guard_test.mjs` → 12/12 |
 
 ### Automation: ✅ **Conditional** *(AI tự làm ca neo được, chuyển người ca không neo được)*
 
@@ -215,6 +218,8 @@ Mỗi lớp ≥2 ca, **mọi ca đều có mã trong** [`eval/golden_set.json`](
 **Khi bị đòi ngoài phạm vi (③):** từ chối + nêu lý do thẩm quyền, không xin lỗi vòng vo, chỉ thẳng người có quyền trả lời. Không đổi vai kể cả khi bị ép bằng prompt injection (`H08`; có thật trong pack: `T11020`, `T11026`).
 **Case đặc thù nghiệp vụ (④):** mọi câu chạm deadline / điểm / quy chế **luôn** đi đường 🔴 kể cả khi mô hình thấy "có vẻ biết" — luật cứng trong prompt, không phụ thuộc phán đoán của mô hình.
 **Luật chung cho cả bốn đường:** số trang chỉ được hiện ra khi nó có thật trong tài liệu đang nạp. Không neo được thì **im lặng về số trang**, không đoán.
+**Model tự nhận 🟢 mà khai trang không có thật** (kiểu `T10572` — `[trang 117]`): code chặn số trang **và hạ nhãn xuống 🟡** kèm lý do. Không để màu xanh "đáng tin" đi cùng một câu trả lời không neo vào đâu.
+**Giới hạn của lớp chặn:** nó chỉ biết trang có **tồn tại** hay không. Trích một trang có thật nhưng sai chỗ thì lọt qua — ca này được đỡ bằng khối **nguyên văn trang được trích** hiện ngay dưới nhãn, để học viên tự thấy lệch.
 
 ---
 
@@ -316,3 +321,4 @@ Học viên hỏi *"trang 22 nói gì về token?"*, token thật ra ở trang 2
 | **17/9 15:48** | Khoá quality bar §7: **≥90% qua cả 4 chiều VÀ bịa số trang = 0** | CP4 |
 | **18/9 11:05** | Lượt 4: thêm 1 luật chống từ chối oan vào prompt → **28/28**, bịa trang 0. Golden set, bar, cách chấm **không đổi**. Runner thêm cờ `--run=N` để lượt mới không ghi đè bằng chứng lượt cũ | Vá `H03` theo nhịp guide §4.1: *chọn một failure đau nhất → sửa → chạy lại trọn bộ* |
 | **18/9 11:08** | Thêm phép thử 5 câu **ngoài** golden set (`eval/heldout_probe.mjs`) → 5/5 | 28/28 trên bộ chứa chính ca vừa vá không chứng minh khái quát được |
+| **18/9 11:48** | **Sửa 2 lỗi lõi** phát hiện khi rà code: (1) model khai `[trang 117]` thì số trang bị chặn nhưng nhãn **vẫn 🟢** → giờ hạ xuống 🟡; (2) đường AI thật định tuyến **mọi** câu 🔴 về "Syllabus trên LMS" — câu commit sau nửa đêm đáng ra phải về TA → giờ dùng chung luật định tuyến với đường mock, thêm dòng "giảng viên" cho câu nội dung ngoài tài liệu. Thêm `eval/guard_test.mjs` (12 ca, không cần mạng, dùng đúng số trang bịa lấy từ chatlog). Khai trong §4 hai phần mới làm một nửa: nút "Tài liệu có nói mà" và chip feedback | Golden set **không bắt được** cả hai lỗi: nó không chấm định tuyến, và model trong lượt chạy thật không bịa trang lần nào nên nhánh hạ nhãn chưa bao giờ được chạy. Prompt không đổi → kết quả 28/28 lượt 2 vẫn nguyên giá trị |

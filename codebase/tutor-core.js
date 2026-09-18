@@ -45,6 +45,13 @@ const HARD_BLOCK = [
   { re: /(lịch học|buổi sau|zoom|link lớp|lms|tải slide|tài liệu ở đâu|học phí|chứng chỉ)/i, route: "logistics", topic: "thông tin hành chính của khoá" }
 ];
 
+/** Chỉ đúng người cho câu 🔴 — cùng bảng luật với đường mock, để AI thật và mock định tuyến giống nhau.
+ *  Không khớp luật hành chính nào => câu hỏi nội dung ngoài tài liệu => giảng viên. */
+function routeFor(question) {
+  const rule = HARD_BLOCK.find(r => r.re.test(question));
+  return ROUTES[rule ? rule.route : "content"];
+}
+
 const AMBIGUOUS = /^(hi|hii|hello|chào|xin chào|hả|ok|\?|\.{1,3}|[a-z]{1,6})$/i;
 
 /** Tìm trang có nội dung khớp — bản mock dùng khớp từ khoá, CP3 thay bằng retrieval thật.
@@ -101,7 +108,7 @@ export function mockDecide(question) {
     label: "UNGROUNDED",
     reason: `Không tìm thấy đoạn nào trong "${DOC.lecture}" trả lời được câu này.`,
     answer: "Câu này mình không tìm được căn cứ trong tài liệu bạn đang mở. Mình không đoán để tránh nói sai.",
-    route: ROUTES.logistics, citation: null
+    route: ROUTES.content, citation: null
   };
 }
 
@@ -172,14 +179,21 @@ export async function aiDecide(question, apiKey) {
     return { label: "PARSE_ERROR", reason: "Model không trả về JSON hợp lệ.", answer: text.slice(0, 300), citation: null, route: null };
   }
   const page = DOC.pages.find(p => p.page === Number(parsed.citation_page)) ?? null;
+  // Trang model khai nhưng KHÔNG có trong tài liệu => trích dẫn bịa, phải lộ ra.
+  const fabricated_page = parsed.citation_page != null && !page ? Number(parsed.citation_page) : null;
+  // Quyết định trung tâm (spec §4): chỉ được 🟢 khi neo vào trang CÓ THẬT.
+  // Model tự nhận GROUNDED mà trang bịa => hạ xuống 🟡, không để màu xanh "đáng tin" che lỗi.
+  let label = parsed.label, reason = parsed.reason ?? "";
+  if (fabricated_page != null && label === "GROUNDED") {
+    label = "PARTIAL";
+    reason = `Model khai [trang ${fabricated_page}] nhưng tài liệu không có trang đó — không neo được, nên không xếp 🟢. ${reason}`;
+  }
   return {
-    label: parsed.label,
-    reason: parsed.reason ?? "",
+    label, reason,
     answer: parsed.answer ?? "",
     citation: page,
-    // Trang model khai nhưng KHÔNG có trong tài liệu => trích dẫn bịa, phải lộ ra.
-    fabricated_page: parsed.citation_page != null && !page ? Number(parsed.citation_page) : null,
-    route: parsed.label === "UNGROUNDED" ? ROUTES.logistics : null
+    fabricated_page,
+    route: label === "UNGROUNDED" ? routeFor(question) : null
   };
 }
 

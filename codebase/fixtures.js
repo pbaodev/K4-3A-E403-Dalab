@@ -18,12 +18,13 @@ export const DOC = {
   ]
 };
 
-// Bảng định tuyến — mock, 4 dòng cứng (xem spec.md §4 "Mức prototype").
+// Bảng định tuyến — mock, 5 dòng cứng (xem spec.md §4 "Mức prototype").
 export const ROUTES = {
   deadline:  { who: "TA trực kênh #hoi-dap trên Discord", why: "quy định hạn nộp do BTC công bố, không nằm trong slide" },
   grading:   { who: "Giảng viên phụ trách buổi",          why: "tiêu chí chấm nằm trong rubric của khoá, không nằm trong slide" },
   logistics: { who: "Syllabus trên LMS",                   why: "lịch học và thao tác hệ thống không nằm trong tài liệu bài giảng" },
-  grades:    { who: "TA qua tin nhắn riêng",               why: "điểm cá nhân là thông tin riêng, tutor không có quyền truy cập" }
+  grades:    { who: "TA qua tin nhắn riêng",               why: "điểm cá nhân là thông tin riêng, tutor không có quyền truy cập" },
+  content:   { who: "Giảng viên phụ trách buổi",           why: "câu hỏi về nội dung nằm ngoài tài liệu đang mở — giảng viên trả lời được hoặc chỉ tài liệu khác" }
 };
 
 // 4 câu mẫu — mỗi câu chạy đúng MỘT đường đi trong spec.md §6.
